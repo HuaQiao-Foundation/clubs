@@ -1,0 +1,75 @@
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import ErrorBoundary from './components/ErrorBoundary'
+import LoadingFallback from './components/LoadingFallback'
+import Footer from './components/Footer'
+import RouteTracker from './components/RouteTracker'
+import './App.css'
+
+// Eager load only the landing page for instant display
+import Dashboard from './components/Dashboard'
+import AboutPage from './components/AboutPage'
+
+// Lazy load all other pages (loaded on demand)
+const KanbanBoard = lazy(() => import('./components/KanbanBoard'))
+const MemberDirectory = lazy(() => import('./components/MemberDirectory'))
+const ServiceProjectsPage = lazy(() => import('./components/ServiceProjectsPage'))
+const PartnersPage = lazy(() => import('./components/PartnersPage'))
+const TimelineView = lazy(() => import('./components/TimelineView'))
+const PhotoGallery = lazy(() => import('./components/PhotoGallery'))
+const ImpactPage = lazy(() => import('./components/ImpactPage'))
+const SpeakerBureauView = lazy(() => import('./components/SpeakerBureauView'))
+const CalendarView = lazy(() => import('./components/CalendarView'))
+const EventsListView = lazy(() => import('./components/EventsListView'))
+const Availability = lazy(() => import('./components/Availability'))
+
+// Development-only component for testing error boundary
+const ErrorTest = import.meta.env.DEV ? lazy(() => import('./components/ErrorTest')) : null
+
+function App() {
+  return (
+    <ErrorBoundary>
+      <Router>
+        <RouteTracker />
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-1">
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
+                {/* Dashboard - Home page (eager loaded) */}
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/about" element={<AboutPage />} />
+
+                {/* Primary Sections (lazy loaded) */}
+                <Route path="/members" element={<MemberDirectory />} />
+                <Route path="/calendar" element={<CalendarView />} />
+                <Route path="/projects" element={<ServiceProjectsPage />} />
+                <Route path="/speakers" element={<KanbanBoard />} />
+                <Route path="/timeline" element={<TimelineView />} />
+                <Route path="/photos" element={<PhotoGallery />} />
+
+                {/* Secondary Sections (lazy loaded) */}
+                <Route path="/partners" element={<PartnersPage />} />
+                <Route path="/impact" element={<ImpactPage />} />
+
+                {/* Legacy/Other Routes (lazy loaded) */}
+                <Route path="/speakers-bureau" element={<SpeakerBureauView />} />
+                <Route path="/events-list" element={<EventsListView />} />
+                <Route path="/availability" element={<Availability />} />
+
+                {/* Redirects for backwards compatibility */}
+                <Route path="/service-projects" element={<Navigate to="/projects" replace />} />
+                <Route path="/speaker-bureau" element={<Navigate to="/speakers-bureau" replace />} />
+
+                {/* Development-only route for testing error boundary */}
+                {import.meta.env.DEV && ErrorTest && <Route path="/error-test" element={<ErrorTest />} />}
+              </Routes>
+            </Suspense>
+          </div>
+          <Footer />
+        </div>
+      </Router>
+    </ErrorBoundary>
+  )
+}
+
+export default App

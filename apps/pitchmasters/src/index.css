@@ -1,0 +1,157 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Self-hosted fonts for China-friendly design */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/Montserrat-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/Montserrat-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/SourceSans3-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Source Sans 3';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/SourceSans3-SemiBold.woff2') format('woff2');
+}
+
+/* Base styles with Toastmasters brand compliance */
+:root {
+  --toastmasters-blue: #004165;
+  --toastmasters-maroon: #772432;
+  --toastmasters-gray: #A9B2B1;
+}
+
+body {
+  font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  color: var(--toastmasters-blue);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-weight: 600;
+  color: var(--toastmasters-blue);
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 640px) {
+  body {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+}
+
+/* Touch targets minimum 44px */
+button, .btn, .touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Toastmasters brand utility classes */
+.tm-blue { color: var(--toastmasters-blue); }
+.tm-maroon { color: var(--toastmasters-maroon); }
+.tm-gray { color: var(--toastmasters-gray); }
+
+.bg-tm-blue { background-color: var(--toastmasters-blue); }
+.bg-tm-maroon { background-color: var(--toastmasters-maroon); }
+.bg-tm-gray { background-color: var(--toastmasters-gray); }
+
+/* Enhanced Mobile-First Touch Optimization */
+@layer utilities {
+  /* Enhanced touch targets */
+  .min-h-touch {
+    min-height: 44px;
+  }
+
+  .min-w-touch {
+    min-width: 44px;
+  }
+
+  /* Optimal touch targets (48px for Material Design) */
+  .touch-target-large {
+    min-width: 48px;
+    min-height: 48px;
+  }
+
+  /* Mobile typography optimizations */
+  .leading-tight {
+    line-height: 1.25;
+  }
+
+  .leading-mobile {
+    line-height: 1.4;
+  }
+
+  /* Active states for mobile feedback */
+  .active-press {
+    transform: scale(0.98);
+    transition: transform 100ms ease-out;
+  }
+
+  /* Thumb-friendly zones */
+  .thumb-zone {
+    padding-bottom: 44px; /* Safe area for thumbs */
+  }
+
+  /* Mobile-optimized spacing */
+  .mobile-spacing {
+    padding: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .mobile-spacing {
+      padding: 1.5rem;
+    }
+  }
+
+  /* Focus states for accessibility */
+  .focus-visible {
+    outline: 2px solid var(--toastmasters-blue);
+    outline-offset: 2px;
+  }
+
+  /* Card hover animations */
+  .card-hover {
+    transition: transform 200ms ease-out, box-shadow 200ms ease-out;
+  }
+
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-hover:active {
+    transform: translateY(0) scale(0.98);
+  }
+}

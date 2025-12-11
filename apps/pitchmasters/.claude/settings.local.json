@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(touch:*)",
+      "Bash(chmod:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npm run build:*)",
+      "Bash([ -f public/robots.txt ])",
+      "Bash([ -f public/_headers ])",
+      "Bash([ -f public/.htaccess ])",
+      "Bash([ -f docs/security/search-engine-blocking.md ])",
+      "Bash(mkdir:*)",
+      "Bash(for:*)",
+      "Bash(do git mv \"$file\" sql-scripts/)",
+      "Bash(done)",
+      "Bash(tree:*)",
+      "Bash(git mv:*)",
+      "Bash(rmdir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

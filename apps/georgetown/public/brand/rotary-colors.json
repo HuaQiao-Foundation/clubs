@@ -1,0 +1,181 @@
+{
+  "rotary_official_colors": {
+    "primary": {
+      "azure": {
+        "name": "Azure",
+        "pantone": "PMS 2175C",
+        "cmyk": "C100 M56 Y0 K0",
+        "hex": "#0067c8",
+        "rgb": "0, 103, 200",
+        "usage": "One-color Masterbrand Signature and Mark of Excellence",
+        "colorBlindSafe": true
+      },
+      "royalBlue": {
+        "name": "Rotary Royal Blue",
+        "pantone": "PMS 286C",
+        "cmyk": "C100 M80 Y9 K2",
+        "hex": "#0c3c7c",
+        "rgb": "23, 69, 143",
+        "usage": "Word 'Rotary' in Masterbrand Signature",
+        "colorBlindSafe": true
+      },
+      "gold": {
+        "name": "Rotary Gold",
+        "pantone": "PMS 130C",
+        "cmyk": "C0 M41 Y100 K0",
+        "hex": "#f7a81b",
+        "rgb": "247, 168, 27",
+        "usage": "Wheel in Masterbrand Signature and Mark of Excellence",
+        "colorBlindSafe": true
+      }
+    },
+    "secondary": {
+      "skyBlue": {
+        "name": "Sky Blue",
+        "pantone": "PMS 2202C",
+        "cmyk": "C96 M11 Y2 K0",
+        "hex": "#00a2e0",
+        "rgb": "0, 162, 224",
+        "usage": "Interact logo",
+        "colorBlindSafe": true
+      },
+      "cranberry": {
+        "name": "Cranberry",
+        "pantone": "PMS 214C",
+        "cmyk": "C13 M100 Y37 K0",
+        "hex": "#d41367",
+        "rgb": "212, 19, 103",
+        "colorBlindSafe": false,
+        "note": "May be confused with brown/gray by protanopia users"
+      },
+      "cardinal": {
+        "name": "Cardinal",
+        "pantone": "PMS 485C",
+        "cmyk": "C6 M98 Y100 K1",
+        "hex": "#e02927",
+        "rgb": "224, 41, 39",
+        "usage": "End Polio Now logo",
+        "colorBlindSafe": true
+      },
+      "turquoise": {
+        "name": "Turquoise",
+        "pantone": "PMS 7466C",
+        "cmyk": "C96 M1 Y31 K0",
+        "hex": "#00adbb",
+        "rgb": "0, 173, 187",
+        "colorBlindSafe": true
+      },
+      "orange": {
+        "name": "Orange",
+        "pantone": "PMS 2018C",
+        "cmyk": "C0 M66 Y100 K0",
+        "hex": "#ff7600",
+        "rgb": "255, 118, 0",
+        "colorBlindSafe": true
+      },
+      "violet": {
+        "name": "Violet",
+        "pantone": "PMS 2070C",
+        "cmyk": "C53 M100 Y0 K0",
+        "hex": "#901f93",
+        "rgb": "144, 31, 147",
+        "colorBlindSafe": false,
+        "note": "May appear similar to blue for deuteranopia users"
+      },
+      "grass": {
+        "name": "Grass",
+        "pantone": "PMS 355C",
+        "cmyk": "C99 M12 Y100 K2",
+        "hex": "#009739",
+        "rgb": "1, 151, 57",
+        "colorBlindSafe": false,
+        "note": "Problematic for red-green color blindness"
+      }
+    },
+    "neutrals": {
+      "powderBlue": {
+        "name": "Powder Blue",
+        "pantone": "PMS 290C",
+        "hex": "#b9d9eb",
+        "rgb": "185, 217, 235"
+      },
+      "slate": {
+        "name": "Slate",
+        "pantone": "PMS 2165C",
+        "hex": "#657f99",
+        "rgb": "101, 127, 153"
+      },
+      "charcoal": {
+        "name": "Charcoal",
+        "pantone": "Cool Gray 11C",
+        "hex": "#54565a",
+        "rgb": "84, 86, 90"
+      },
+      "pewter": {
+        "name": "Pewter",
+        "pantone": "Cool Gray 8C",
+        "hex": "#898a8d",
+        "rgb": "137, 138, 141"
+      },
+      "smoke": {
+        "name": "Smoke",
+        "pantone": "Cool Gray 5C",
+        "hex": "#b1b1b1",
+        "rgb": "177, 177, 177"
+      },
+      "silver": {
+        "name": "Silver",
+        "pantone": "Cool Gray 2C",
+        "hex": "#d0cfcd",
+        "rgb": "208, 207, 205"
+      },
+      "white": {
+        "name": "White",
+        "hex": "#ffffff",
+        "rgb": "255, 255, 255"
+      },
+      "black": {
+        "name": "Black",
+        "hex": "#000000",
+        "rgb": "0, 0, 0"
+      }
+    }
+  },
+  "colorBlindAnalysis": {
+    "safePalette": [
+      "#0067c8",
+      "#17458f",
+      "#f7a81b",
+      "#00a2e0",
+      "#e02927",
+      "#00adbb",
+      "#ff7600"
+    ],
+    "recommendations": {
+      "primary": "Use Azure (#0067c8), Royal Blue (#17458f), and Gold (#f7a81b) for critical UI elements",
+      "accent": "Orange (#ff7600) and Cardinal (#e02927) are excellent for CTAs and alerts",
+      "avoid": "Grass (#009739), Violet (#901f93), and Cranberry (#d41367) for critical information"
+    }
+  },
+  "cssVariables": {
+    "note": "Recommended CSS custom properties for consistent theming",
+    "variables": {
+      "--rotary-azure": "#0067c8",
+      "--rotary-royal-blue": "#17458f",
+      "--rotary-gold": "#f7a81b",
+      "--rotary-sky-blue": "#00a2e0",
+      "--rotary-cardinal": "#e02927",
+      "--rotary-turquoise": "#00adbb",
+      "--rotary-orange": "#ff7600",
+      "--rotary-charcoal": "#54565a",
+      "--rotary-pewter": "#898a8d",
+      "--rotary-smoke": "#b1b1b1",
+      "--rotary-silver": "#d0cfcd"
+    }
+  },
+  "meta": {
+    "source": "Rotary International Brand Center - Colors",
+    "lastUpdated": "2025-12-02",
+    "note": "Colors must be used in pure forms, never altered nor screened per Rotary brand guidelines"
+  }
+}

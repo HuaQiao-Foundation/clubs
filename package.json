@@ -1,0 +1,24 @@
+{
+  "name": "clubs-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:georgetown": "npm run dev --workspace=rotary-speakers",
+    "dev:pitchmasters": "npm run dev --workspace=pitchmasters-club-management",
+    "dev": "npm run dev:georgetown & npm run dev:pitchmasters",
+    "build:georgetown": "npm run build --workspace=rotary-speakers",
+    "build:pitchmasters": "npm run build --workspace=pitchmasters-club-management",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "clean": "rm -rf node_modules apps/*/node_modules apps/*/dist"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

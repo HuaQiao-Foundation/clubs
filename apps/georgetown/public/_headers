@@ -1,0 +1,8 @@
+# Cloudflare Pages Headers
+# Security and SEO blocking headers for Georgetown Rotary internal tool
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex

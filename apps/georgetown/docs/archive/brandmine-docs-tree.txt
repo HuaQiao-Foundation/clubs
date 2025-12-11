@@ -1,0 +1,66 @@
+./docs
+├── archive
+│   ├── card-system-documentation.md
+│   ├── CEO-WORKFLOW-ADDING-BRANDS.md
+│   ├── CLEAN-BUILD-PLAN.md
+│   ├── deployment-checklist.md
+│   ├── hugo-implementation-plan.md
+│   ├── HUGO-MIGRATION.md
+│   ├── IMAGE-INTEGRATION-REPORT.md
+│   ├── multilingual-fix-checklist.md
+│   ├── multilingual-launch-summary.md
+│   ├── multilingual-readiness-report.md
+│   ├── people-system-usage.md
+│   ├── temp-audit-report.md
+│   ├── temp-folder-comprehensive-inventory.md
+│   ├── temp-folder-detailed-assessment.md
+│   ├── week-1-link-audit-report.md
+│   └── week-1-summary.md
+├── BACKLOG.md
+├── brandmine-brand-guide.md
+├── brandmine-vision-mission-values.md
+├── database
+│   ├── contact-forms.md
+│   ├── guides
+│   │   └── setup-guide.md
+│   ├── README.md
+│   ├── schema-design.md
+│   └── sql
+│       ├── 001-contacts-table.sql
+│       ├── 002-duplicate-prevention.sql
+│       ├── 003-data-retention-policy.sql
+│       └── queries.sql
+├── dev-charter.md
+├── dev-journal
+│   ├── 2025-10-03-color-fix.md
+│   ├── 2025-10-03-pagefind-search.md
+│   ├── 2025-10-03-pill-styling.md
+│   ├── 2025-10-03-session-summary.md
+│   ├── 2025-10-03-supabase-setup.md
+│   ├── 2025-10-03-translation-import.md
+│   ├── 2025-10-04-edge-to-edge-layout-accessibility.md
+│   ├── 2025-10-04-token-system-fix-panel-implementation.md
+│   ├── 2025-10-05-founder-profile-redesign.md
+│   ├── 2025-10-05-founder-profile-social-quick-facts.md
+│   ├── 2025-10-05-founder-profiles-restructure.md
+│   ├── 2025-10-05-hero-gradients-search-footer.md
+│   ├── 2025-10-05-insight-articles-ui-enhancements.md
+│   ├── 2025-10-06-about-page-cta-standardization.md
+│   ├── 2025-10-06-cta-button-hover-standardization.md
+│   ├── 2025-10-06-home-page-7-panel-flow.md
+│   ├── 2025-10-06-supabase-documentation-reorganization.md
+│   ├── 2025-10-08-workflow-alignment-georgetown-to-brandmine.md
+│   └── 2025-10-08-workflow-documentation-cleanup.md
+├── DOCUMENTATION-STRUCTURE-REPORT.md
+├── hugo-technical-standards.md
+├── reference-data
+│   ├── env-local-setup.md
+│   └── README.md
+├── TAXONOMY-STANDARDS.md
+└── workflows
+    ├── ceo-coo-cto-workflow.md
+    ├── database-migration-workflow.md
+    ├── portrait-styling-workflow.md
+    └── translation-workflow.md
+
+8 directories, 56 files

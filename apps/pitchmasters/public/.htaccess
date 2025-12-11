@@ -1,0 +1,35 @@
+# Apache configuration for private internal tool
+# Block search engines and bots
+
+# Set X-Robots-Tag header
+Header set X-Robots-Tag "noindex, nofollow, noarchive, nosnippet, noimageindex, nocache"
+
+# Block specific user agents
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Block search engine bots
+  RewriteCond %{HTTP_USER_AGENT} (googlebot|bingbot|slurp|duckduckbot|baiduspider|yandexbot) [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|twitterbot|linkedinbot|whatsapp) [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} (ahrefsbot|semrushbot|dotbot|majesticbot) [NC,OR]
+
+  # Block AI training bots
+  RewriteCond %{HTTP_USER_AGENT} (gptbot|chatgpt|ccbot|anthropic|claude-web|perplexitybot) [NC,OR]
+  RewriteCond %{HTTP_USER_AGENT} (amazonbot|applebot) [NC,OR]
+
+  # Block archiving bots
+  RewriteCond %{HTTP_USER_AGENT} (ia_archiver|wayback|archive\.org) [NC]
+
+  # Return 403 Forbidden for blocked bots
+  RewriteRule ^.*$ - [F,L]
+</IfModule>
+
+# Prevent directory browsing
+Options -Indexes
+
+# Cache control for privacy
+<IfModule mod_headers.c>
+  Header set Cache-Control "private, no-cache, no-store, must-revalidate"
+  Header set Pragma "no-cache"
+  Header set Expires "0"
+</IfModule>

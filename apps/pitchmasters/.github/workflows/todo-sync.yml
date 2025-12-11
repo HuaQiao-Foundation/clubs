@@ -1,0 +1,173 @@
+name: TODO.md to GitHub Issues Sync
+
+on:
+  push:
+    paths:
+      - 'TODO.md'
+    branches:
+      - main
+      - develop
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync-todos:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # Need history to detect changes
+
+      - name: Parse TODO.md
+        id: parse
+        run: |
+          echo "Parsing TODO.md for tasks..."
+
+          # Extract tasks with specific patterns
+          # In Progress tasks
+          grep -E "^- \[ \] \*\*.*\*\*" TODO.md | head -5 > in_progress.txt || true
+
+          # Ready tasks
+          sed -n '/### Ready \(This Sprint\)/,/### Backlog/p' TODO.md | grep -E "^- \[ \] \*\*.*\*\*" > ready.txt || true
+
+          # Completed tasks (for closing issues)
+          grep -E "^- \[x\] \*\*.*\*\*" TODO.md | head -5 > completed.txt || true
+
+          echo "Tasks parsed successfully"
+
+      - name: Create/Update Issues
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Read parsed tasks
+            const inProgressTasks = fs.readFileSync('in_progress.txt', 'utf8').split('\n').filter(Boolean);
+            const readyTasks = fs.readFileSync('ready.txt', 'utf8').split('\n').filter(Boolean);
+            const completedTasks = fs.readFileSync('completed.txt', 'utf8').split('\n').filter(Boolean);
+
+            // Function to extract task title from markdown
+            function extractTitle(line) {
+              const match = line.match(/\*\*(.*?)\*\*/);
+              return match ? match[1] : line;
+            }
+
+            // Function to extract story points
+            function extractPoints(line) {
+              const match = line.match(/\((\d+) pts?\)/);
+              return match ? match[1] : null;
+            }
+
+            // Function to extract tags
+            function extractTags(line) {
+              const tags = [];
+              const tagMatches = line.match(/@(\w+)/g);
+              if (tagMatches) {
+                tags.push(...tagMatches.map(t => t.substring(1)));
+              }
+              const priorityMatch = line.match(/#(\w+)/);
+              if (priorityMatch) {
+                tags.push(priorityMatch[1]);
+              }
+              return tags;
+            }
+
+            // Get existing issues
+            const { data: existingIssues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'todo-sync'
+            });
+
+            // Process in-progress tasks
+            for (const task of inProgressTasks) {
+              const title = extractTitle(task);
+              const points = extractPoints(task);
+              const tags = extractTags(task);
+
+              // Check if issue exists
+              const existing = existingIssues.find(i => i.title.includes(title));
+
+              if (!existing) {
+                // Create new issue
+                const labels = ['todo-sync', 'in-progress', ...tags].filter(Boolean);
+                const body = `## Task from TODO.md\n\n**Status**: In Progress\n${points ? `**Story Points**: ${points}\n` : ''}\n\nThis issue was automatically created from TODO.md`;
+
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: `[Sprint] ${title}`,
+                  body: body,
+                  labels: labels
+                });
+
+                console.log(`Created issue: ${title}`);
+              }
+            }
+
+            // Process ready tasks
+            for (const task of readyTasks) {
+              const title = extractTitle(task);
+              const points = extractPoints(task);
+              const tags = extractTags(task);
+
+              // Check if issue exists
+              const existing = existingIssues.find(i => i.title.includes(title));
+
+              if (!existing) {
+                // Create new issue
+                const labels = ['todo-sync', 'ready', ...tags].filter(Boolean);
+                const body = `## Task from TODO.md\n\n**Status**: Ready\n${points ? `**Story Points**: ${points}\n` : ''}\n\nThis issue was automatically created from TODO.md`;
+
+                await github.rest.issues.create({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  title: `[Sprint] ${title}`,
+                  body: body,
+                  labels: labels
+                });
+
+                console.log(`Created issue: ${title}`);
+              }
+            }
+
+            // Close completed tasks
+            for (const task of completedTasks) {
+              const title = extractTitle(task);
+
+              const existing = existingIssues.find(i => i.title.includes(title));
+
+              if (existing) {
+                await github.rest.issues.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existing.number,
+                  state: 'closed',
+                  state_reason: 'completed'
+                });
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: existing.number,
+                  body: '✅ Task marked as completed in TODO.md'
+                });
+
+                console.log(`Closed issue: ${title}`);
+              }
+            }
+
+      - name: Update Project Board
+        if: github.event_name == 'push'
+        uses: actions/github-script@v7
+        continue-on-error: true # Project board update is optional
+        with:
+          script: |
+            console.log('Project board sync would happen here if configured');
+            // This would require GitHub Projects API v2
+            // Implementation depends on specific project setup
