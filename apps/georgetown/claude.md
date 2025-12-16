@@ -1,5 +1,23 @@
 # Georgetown Rotary Speaker Management - MVP
 
+## Monorepo Context
+
+**Location**: `apps/georgetown/` within the `clubs` monorepo
+**Sibling Apps**: Pitchmasters Toastmasters management (`apps/pitchmasters/`)
+**Root Documentation**: See `/CLAUDE.md` for monorepo structure and shared conventions
+
+**Running from monorepo root**:
+```bash
+npm run dev:georgetown      # Development server (port 5180)
+npm run build:georgetown    # Production build
+```
+
+**Running from this directory**:
+```bash
+npm run dev                 # Development server (port 5180)
+npm run build               # Production build
+```
+
 ## Business Context
 **Organization**: Georgetown Rotary Club (~50 members)  
 **Problem**: Speaker coordination chaos (email chains, double-booking, manual processes)  

@@ -48,6 +48,13 @@ export default defineConfig({
       cacheLocation: undefined
     })
   ],
+  server: {
+    port: 5180,
+    host: true
+  },
+  preview: {
+    port: 5180
+  },
   assetsInclude: ['**/*.svg'],
   build: {
     assetsDir: 'assets',

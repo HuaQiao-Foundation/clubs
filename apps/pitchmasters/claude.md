@@ -1,5 +1,23 @@
 # Pitchmasters Toastmasters Club Management - MVP
 
+## Monorepo Context
+
+**Location**: `apps/pitchmasters/` within the `clubs` monorepo
+**Sibling Apps**: Georgetown Rotary management (`apps/georgetown/`)
+**Root Documentation**: See `/CLAUDE.md` for monorepo structure and shared conventions
+
+**Running from monorepo root**:
+```bash
+npm run dev:pitchmasters    # Development server (port 5190)
+npm run build:pitchmasters  # Production build
+```
+
+**Running from this directory**:
+```bash
+npm run dev                 # Development server (port 5190)
+npm run build               # Production build
+```
+
 ## Business Context (from PDD)
 Building the world's first mobile-optimized, multi-club Toastmasters platform specifically designed for startup founders (18-80), solving operational pain points while enabling global community connections.
 

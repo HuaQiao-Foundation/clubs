@@ -28,8 +28,8 @@ npm install
 npm run dev
 
 # Run individual apps
-npm run dev:georgetown
-npm run dev:pitchmasters
+npm run dev:georgetown      # Runs on http://localhost:5180
+npm run dev:pitchmasters    # Runs on http://localhost:5190
 ```
 
 ### Build
