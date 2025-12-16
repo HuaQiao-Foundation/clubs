@@ -447,6 +447,29 @@ WHERE table_name = 'speakers'
 ORDER BY ordinal_position;
 ```
 
+### Generate Database Backup (pg_dump)
+
+**Working Command** (verified 2025-12-16):
+
+```bash
+pg_dump 'postgresql://postgres.zooszmqdrdocuiuledql:S&5TN3Avce6MyuES@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres' > georgetown_backup.sql
+```
+
+**Key details**:
+- Uses **session pooler** on port 6543 (not transaction pooler on 5432)
+- Host: `aws-1-ap-southeast-1.pooler.supabase.com`
+- Password contains special characters - use single quotes to wrap connection string
+- Supabase no longer supports direct database connections via `db.*.supabase.co`
+
+**Restore from backup**:
+```bash
+psql 'postgresql://postgres.zooszmqdrdocuiuledql:S&5TN3Avce6MyuES@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres' < georgetown_backup.sql
+```
+
+**Alternative methods**:
+- Supabase Dashboard → Database → Backups (download via UI)
+- SQL Editor → Run queries → Export results
+
 ---
 
 ## Questions or Issues?

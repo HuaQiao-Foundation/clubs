@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pg_dump:*)",
+      "Bash(nslookup:*)",
+      "Bash(wait)",
+      "Bash(ls:*)",
+      "Bash(npm run dev:*)",
+      "Bash(psql:*)",
+      "Bash(chmod:*)",
+      "Bash(./scripts/backup-database.sh:*)",
+      "Bash(source:*)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(DATABASE_URL='postgresql://postgres.rmorlqozjwbftzowqmps:Bqj%5E%246jk5%25WX3%24fE@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres?pgbouncer=true')",
+      "Bash(set -a)",
+      "Bash(set +a)",
+      "Bash(export PGHOST=aws-1-ap-southeast-1.pooler.supabase.com)",
+      "Bash(export PGPORT=6543)",
+      "Bash(export PGDATABASE=postgres)",
+      "Bash(export PGUSER=postgres.rmorlqozjwbftzowqmps:*)",
+      "Bash(export PGPASSWORD:*)",
+      "Bash(./scripts/backup-with-rotation.sh:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}
