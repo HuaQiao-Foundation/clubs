@@ -21,7 +21,12 @@
       "Bash(export PGUSER=postgres.rmorlqozjwbftzowqmps:*)",
       "Bash(export PGPASSWORD:*)",
       "Bash(./scripts/backup-with-rotation.sh:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(ssh:*)",
+      "Bash(ssh-add:*)",
+      "Bash(curl:*)"
     ]
   }
 }
