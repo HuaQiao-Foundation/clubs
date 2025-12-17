@@ -4,6 +4,7 @@ import type { ServiceProject } from '../types/database'
 import { getAreaOfFocusColor, getAreaOfFocusLabel } from '../utils/areaOfFocusColors'
 import { format } from 'date-fns'
 import ServiceProjectModal from './ServiceProjectModal'
+import ShareButton from './ShareButton'
 
 interface ServiceProjectDetailModalProps {
   project: ServiceProject
@@ -36,6 +37,7 @@ export default function ServiceProjectDetailModal({
             <h2 className="text-xl font-bold">Project Details</h2>
           </div>
           <div className="flex items-center gap-2">
+            <ShareButton project={project} variant="default" />
             <button
               onClick={() => setIsEditMode(true)}
               className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"

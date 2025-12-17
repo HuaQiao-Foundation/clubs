@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { LayoutGrid, List, Columns3, Download, Settings, X } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import type { ServiceProject } from '../types/database'
@@ -192,6 +193,7 @@ export default function ServiceProjectsPage() {
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
 
   const columnSettingsRef = useRef<HTMLDivElement>(null)
+  const [searchParams, setSearchParams] = useSearchParams()
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -204,6 +206,24 @@ export default function ServiceProjectsPage() {
   useEffect(() => {
     loadProjects()
   }, [])
+
+  // Handle incoming share URLs (e.g., /projects?id=abc123)
+  useEffect(() => {
+    const projectId = searchParams.get('id')
+
+    if (projectId && projects.length > 0) {
+      const project = projects.find((p) => p.id === projectId)
+
+      if (project) {
+        setSelectedProject(project)
+        setIsViewModalOpen(true)
+        setSearchParams({})
+      } else {
+        console.warn(`Project with id ${projectId} not found`)
+        setSearchParams({})
+      }
+    }
+  }, [searchParams, projects, setSearchParams])
 
   // Click outside handler for column settings dropdown
   useEffect(() => {

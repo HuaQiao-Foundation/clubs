@@ -1,0 +1,8 @@
+{
+  "share": {
+    "share": "Share",
+    "share_project": "Share this project",
+    "link_copied": "Link copied to clipboard",
+    "copy_failed": "Unable to copy link"
+  }
+}

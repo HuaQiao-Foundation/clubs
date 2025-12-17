@@ -8,7 +8,9 @@ See [Backlog Management System](docs/backlog-management-system.md) for process a
 
 | ID | Priority | Status | Feature | Project | Type | Estimate | Added | Notes |
 |----|----------|--------|---------|---------|------|----------|-------|-------|
-| MONO-001 | P2 | Backlog | Setup backlog management system | Monorepo | Docs | XS | 2025-12-17 | ✅ Initial setup complete |
+| MONO-001 | P2 | Done | Setup backlog management system | Monorepo | Docs | XS | 2025-12-17 | ✅ Complete - Moved archive to docs/archive/ |
+| MONO-002 | P1 | Done | Migrate from npm to pnpm workspaces | Monorepo | Tech Debt | M | 2025-12-17 | ✅ Complete - Commit e0764d8 |
+| GEO-001 | P2 | Backlog | Add web sharing capability | Georgetown | Feature | M | 2025-12-17 | Enable sharing of events, speakers, and content via Web Share API |
 
 ## Legend
 
@@ -49,10 +51,11 @@ See [Backlog Management System](docs/backlog-management-system.md) for process a
 
 ## Quick Stats
 
-- **Total Items**: 1
+- **Total Items**: 3
 - **P0/P1 Items**: 0
 - **In Progress**: 0
 - **Blocked**: 0
+- **Done (pending archive)**: 2
 
 ---
 

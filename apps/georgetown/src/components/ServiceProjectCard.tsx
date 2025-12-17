@@ -6,7 +6,8 @@
 import type { ServiceProject } from '../types/database'
 import { getAreaOfFocusColor } from '../utils/areaOfFocusColors'
 import { format, parseISO } from 'date-fns'
-import { Award, Users, MapPin, Calendar, Edit2 } from 'lucide-react'
+import { Award, Users, MapPin, Calendar } from 'lucide-react'
+import ShareButton from './ShareButton'
 
 type ServiceProjectCardProps = {
   project: ServiceProject
@@ -40,7 +41,7 @@ export default function ServiceProjectCard({ project, onClick }: ServiceProjectC
             {project.area_of_focus}
           </span>
         </div>
-        <Edit2 size={14} className="text-gray-400 flex-shrink-0 ml-2" />
+        <ShareButton project={project} variant="icon-only" className="ml-2" />
       </div>
 
       {/* Project Details */}

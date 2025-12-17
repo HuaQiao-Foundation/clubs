@@ -37,7 +37,17 @@
       "Bash(grep:*)",
       "Bash(vite build:*)",
       "Bash(npx vite build:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:georgetown:*)",
+      "Bash(pnpm clean:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm approve-builds:*)",
+      "Bash(pnpm rebuild:*)",
+      "Bash(timeout 15 pnpm dev:georgetown:*)",
+      "Bash(pkill:*)",
+      "Bash(pnpm build:georgetown:*)",
+      "Bash(git rm:*)",
+      "Bash(lsof:*)"
     ]
   }
 }
