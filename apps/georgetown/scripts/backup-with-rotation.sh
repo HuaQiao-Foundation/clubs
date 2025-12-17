@@ -86,7 +86,18 @@ echo ""
 
 # Run pg_dump
 echo "Running pg_dump..."
-if pg_dump > "$BACKUP_FILE" 2>&1; then
+echo "Connection details:"
+echo "  Host: $PGHOST"
+echo "  Port: $PGPORT"
+echo "  Database: $PGDATABASE"
+echo "  User: $PGUSER"
+echo "  pg_dump path: $(which pg_dump 2>&1 || echo 'pg_dump not found in PATH')"
+echo ""
+
+# Create a temporary file for error output
+ERROR_LOG=$(mktemp)
+
+if pg_dump > "$BACKUP_FILE" 2>"$ERROR_LOG"; then
     # Get file size and line count
     SIZE=$(ls -lh "$BACKUP_FILE" | awk '{print $5}')
     LINES=$(wc -l < "$BACKUP_FILE")
@@ -98,9 +109,20 @@ if pg_dump > "$BACKUP_FILE" 2>&1; then
     echo "  File: $BACKUP_FILE"
     echo "  Size: $SIZE"
     echo "  Lines: $LINES"
+    rm -f "$ERROR_LOG"
 else
     echo -e "${RED}✗ Backup failed${NC}"
+    echo ""
+    echo "Error details:"
+    cat "$ERROR_LOG"
+    echo ""
+    echo "Environment check:"
+    echo "  PATH: $PATH"
+    echo "  Current directory: $(pwd)"
+    echo "  Script PID: $$"
+    echo "  Date/Time: $(date '+%Y-%m-%d %H:%M:%S')"
     rm -f "$BACKUP_FILE"  # Remove incomplete backup
+    rm -f "$ERROR_LOG"
     exit 1
 fi
 
