@@ -7,7 +7,7 @@
  *
  * Supported routes:
  * - /speakers/:uuid - Speaker details with portrait, topic
- * - /projects/:uuid - Service project details with image, description
+ * - /projects?id=uuid - Service project details with image, description
  *
  * How it works:
  * 1. Detect crawler user agents (Telegram, WhatsApp, Facebook, etc.)
@@ -96,13 +96,12 @@ export async function onRequest(context: {
     }
   }
 
-  // Process service project URLs: /projects/:uuid
-  const projectMatch = url.pathname.match(/^\/projects\/([^/]+)$/)
-  if (projectMatch) {
-    const projectId = projectMatch[1]
+  // Process service project URLs: /projects?id=uuid
+  if (url.pathname === '/projects') {
+    const projectId = url.searchParams.get('id')
 
     // Validate UUID format
-    if (UUID_REGEX.test(projectId)) {
+    if (projectId && UUID_REGEX.test(projectId)) {
       try {
         // Fetch project data from Supabase
         const { data: project, error } = await supabase
@@ -121,7 +120,7 @@ export async function onRequest(context: {
             title: project.project_name,
             description: project.description || `${project.area_of_focus} project - Georgetown Rotary`,
             image: project.image_url || '',
-            url: `${url.origin}/projects/${project.id}`,
+            url: `${url.origin}/projects?id=${project.id}`,
           })
 
           // Return modified HTML
