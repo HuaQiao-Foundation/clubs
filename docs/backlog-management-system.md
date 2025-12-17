@@ -9,7 +9,7 @@ This document defines the backlog management system for the Clubs monorepo. The 
 ### Components
 
 1. **BACKLOG.md** - Main backlog tracking file (root level)
-2. **Project-specific backlogs** - Optional backlogs per app (`apps/*/BACKLOG.md`)
+2. **Archive** - Completed items organized by year (`docs/archive/backlog-YYYY.md`)
 3. **Documentation** - This file (process and best practices)
 
 ### Roles
@@ -131,7 +131,7 @@ Include variety in backlog:
 2. **Update status**: Change to "In Progress"
 3. **Work on it**: Implement the feature/fix
 4. **Complete**: Change status to "Done", add completion date to notes
-5. **Archive periodically**: Move "Done" items to archive file quarterly
+5. **Archive periodically**: Move "Done" items to `docs/archive/backlog-YYYY.md` quarterly
 
 ### Blocking Issues
 
@@ -145,15 +145,17 @@ If blocked:
 
 ```
 clubs/
-├── BACKLOG.md                    # Main backlog (all projects)
-├── BACKLOG-ARCHIVE.md            # Completed/cancelled items
+├── BACKLOG.md                           # Main backlog (all projects)
 ├── docs/
-│   └── backlog-management-system.md  # This file
+│   ├── archive/
+│   │   ├── backlog-2025.md             # 2025 completed/cancelled items
+│   │   └── backlog-2026.md             # 2026 completed/cancelled items (future)
+│   └── backlog-management-system.md    # This file
 └── apps/
     ├── georgetown/
-    │   └── BACKLOG.md            # Optional: Georgetown-specific
+    │   └── BACKLOG.md                   # Optional: Georgetown-specific
     └── pitchmasters/
-        └── BACKLOG.md            # Optional: Pitchmasters-specific
+        └── BACKLOG.md                   # Optional: Pitchmasters-specific
 ```
 
 ## Integration with Development

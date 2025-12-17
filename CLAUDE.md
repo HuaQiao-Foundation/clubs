@@ -123,7 +123,7 @@ Both apps are deployed to Cloudflare Pages:
 This monorepo uses a markdown-based backlog management system:
 
 - **[BACKLOG.md](BACKLOG.md)** - Active backlog with all pending/in-progress items
-- **[BACKLOG-ARCHIVE.md](BACKLOG-ARCHIVE.md)** - Completed and cancelled items
+- **[Archive](docs/archive/)** - Completed and cancelled items (by year)
 - **[Backlog Management System](docs/backlog-management-system.md)** - Process, best practices, and workflow
 
 ### Quick Workflow

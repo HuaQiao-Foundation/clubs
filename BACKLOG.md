@@ -56,4 +56,4 @@ See [Backlog Management System](docs/backlog-management-system.md) for process a
 
 ---
 
-💡 **Tip**: Keep backlog focused and lean (max 30-50 items). Archive completed items quarterly to [BACKLOG-ARCHIVE.md](BACKLOG-ARCHIVE.md).
+💡 **Tip**: Keep backlog focused and lean (max 30-50 items). Archive completed items quarterly to [docs/archive/backlog-2025.md](docs/archive/backlog-2025.md).
