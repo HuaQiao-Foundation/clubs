@@ -4,6 +4,8 @@ import ErrorBoundary from './components/ErrorBoundary'
 import LoadingFallback from './components/LoadingFallback'
 import Footer from './components/Footer'
 import RouteTracker from './components/RouteTracker'
+import { UpdatePrompt } from './components/UpdatePrompt'
+import { OfflineIndicator } from './components/OfflineIndicator'
 import './App.css'
 
 // Eager load only the landing page for instant display
@@ -67,6 +69,10 @@ function App() {
           </div>
           <Footer />
         </div>
+
+        {/* PWA Components */}
+        <UpdatePrompt />
+        <OfflineIndicator />
       </Router>
     </ErrorBoundary>
   )

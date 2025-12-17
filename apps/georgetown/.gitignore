@@ -26,3 +26,7 @@ dist-ssr
 # Exports (may contain sensitive member data)
 exports/*.csv
 exports/*.xlsx
+
+# PWA / Lighthouse
+.lighthouseci
+lighthouseci/

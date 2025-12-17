@@ -44,6 +44,13 @@ A real-time collaborative speaker database for Georgetown Rotary Club members to
 - **Touch-Friendly**: 44px minimum touch targets, gesture-based navigation
 - **China-Accessible**: Self-hosted fonts, no external CDNs, deployed on Cloudflare Pages
 
+### Progressive Web App (PWA)
+- **📱 Installable**: Add to home screen on iOS, Android, and desktop browsers
+- **🔌 Offline Support**: View cached members, speakers, and events without internet connection
+- **⚡ Fast Performance**: Instant load times with intelligent caching strategies
+- **🔄 Auto-Updates**: Prompted when new version available (user-controlled)
+- **🌏 China-Safe**: Zero external CDN dependencies, fully self-hosted service worker
+
 ## Setup Instructions
 
 ### 1. Set up Supabase Database
@@ -71,11 +78,22 @@ A real-time collaborative speaker database for Georgetown Rotary Club members to
 # Install dependencies
 npm install
 
-# Run development server
+# Run development server (PWA disabled for fast HMR)
 npm run dev
+
+# Test PWA features in development
+npm run dev:pwa
+
+# Preview production PWA build locally
+npm run preview:pwa
+
+# Run Lighthouse PWA audit
+npm run lighthouse
 ```
 
-The application will be available at `http://localhost:5173`
+The application will be available at `http://localhost:5180`
+
+**Note**: Use `npm run dev` (not `dev:pwa`) for normal development. The PWA is disabled by default to ensure fast Hot Module Replacement (HMR).
 
 ### 4. Build for Production
 
@@ -83,7 +101,10 @@ The application will be available at `http://localhost:5173`
 npm run build
 ```
 
-The built files will be in the `dist` directory.
+The built files will be in the `dist` directory, including:
+- Service worker (`sw.js`) for offline support
+- Web app manifest for installability
+- Optimized assets with precaching
 
 ## Database Schema
 

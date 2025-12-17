@@ -113,6 +113,13 @@ CTO generates structured documentation using standard Georgetown Rotary format f
 - ✅ README.md tracks all plans with status table
 - ✅ Link to dev journals as phases complete
 
+**Prompts (`docs/prompts/`)** - Handoff prompts and instructions:
+- ✅ Detailed handoff instructions for other developers
+- ✅ Troubleshooting guides with investigation steps
+- ✅ Use naming: `topic-handoff.md` or `topic-instructions.md`
+- ✅ README.md tracks all prompts with status table
+- ✅ Created when work needs to be handed off or resumed later
+
 **ADR (`docs/adr/`)** - Architecture Decision Records:
 - ✅ Document WHY behind major technical decisions
 - ✅ Framework choices, architecture patterns, technology selections
@@ -138,11 +145,12 @@ CTO generates structured documentation using standard Georgetown Rotary format f
 **Decision Tree for New Documentation:**
 1. Is it a major architectural decision? → `docs/adr/NNN-decision.md`
 2. Is it a multi-session implementation plan? → `docs/plans/YYYY-MM-topic.md`
-3. Is it about a completed implementation? → `docs/dev-journals/YYYY-MM-DD-topic.md`
-4. Is it a repeatable process? → `docs/workflows/topic-workflow.md`
-5. Is it a database migration? → `docs/database/NNN-description.sql`
-6. Is it a one-time report? → `docs/archive/` (or `temp/` for CEO review)
-7. Is it strategic governance? → Ask CEO before creating root-level doc
+3. Is it a handoff or troubleshooting guide? → `docs/prompts/topic-handoff.md`
+4. Is it about a completed implementation? → `docs/dev-journals/YYYY-MM-DD-topic.md`
+5. Is it a repeatable process? → `docs/workflows/topic-workflow.md`
+6. Is it a database migration? → `docs/database/NNN-description.sql`
+7. Is it a one-time report? → `docs/archive/` (or `temp/` for CEO review)
+8. Is it strategic governance? → Ask CEO before creating root-level doc
 
 **See [docs/README.md](docs/README.md) for complete organization guide**
 

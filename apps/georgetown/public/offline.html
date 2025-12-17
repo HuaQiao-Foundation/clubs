@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Georgetown Rotary Club</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0067C8 0%, #004080 100%);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    h1 {
+      font-size: 32px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 12px;
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    #status {
+      margin: 24px 0;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      font-weight: 500;
+    }
+
+    .status-online {
+      background: rgba(34, 197, 94, 0.3);
+      color: #dcfce7;
+    }
+
+    .status-offline {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fecaca;
+    }
+
+    button {
+      background: #F7A81B;
+      color: #1f2937;
+      border: none;
+      padding: 14px 32px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #e09916;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(247, 168, 27, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .feature-list {
+      margin-top: 30px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .feature-list h2 {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #F7A81B;
+    }
+
+    .feature-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .feature-list li {
+      padding: 8px 0;
+      padding-left: 24px;
+      position: relative;
+      font-size: 14px;
+    }
+
+    .feature-list li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #F7A81B;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Rotary Wheel Icon -->
+    <div class="icon">📡</div>
+
+    <h1>You're Offline</h1>
+
+    <p>
+      Your internet connection appears to be offline.
+      Don't worry - some features are still available!
+    </p>
+
+    <div id="status" class="status-offline">
+      Checking connection...
+    </div>
+
+    <button onclick="location.reload()">Try Again</button>
+
+    <div class="feature-list">
+      <h2>While Offline You Can:</h2>
+      <ul>
+        <li>View recently accessed members</li>
+        <li>Browse cached speaker information</li>
+        <li>See past event details</li>
+        <li>Review club directory</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Connection status monitoring
+    function updateStatus() {
+      const statusEl = document.getElementById('status');
+
+      if (navigator.onLine) {
+        statusEl.textContent = 'Connection restored! Reloading...';
+        statusEl.className = 'status-online';
+
+        // Auto-reload after brief delay
+        setTimeout(() => {
+          location.reload();
+        }, 1000);
+      } else {
+        statusEl.textContent = 'Still offline - waiting for connection';
+        statusEl.className = 'status-offline';
+      }
+    }
+
+    // Initial check
+    updateStatus();
+
+    // Listen for connection changes
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+
+    // Poll every 5 seconds as backup (online/offline events not 100% reliable)
+    setInterval(() => {
+      if (navigator.onLine) {
+        updateStatus();
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
