@@ -227,12 +227,17 @@ function injectMetaTags(
       `<meta name="twitter:description" content="${escapeHtml(meta.description)}" />`
     )
 
-  // Add image tag if available
+  // Add image tags if available (both OG and Twitter)
   if (meta.image) {
-    modifiedHtml = modifiedHtml.replace(
-      /<meta property="og:image" content="[^"]*" \/>/,
-      `<meta property="og:image" content="${escapeHtml(meta.image)}" />`
-    )
+    modifiedHtml = modifiedHtml
+      .replace(
+        /<meta property="og:image" content="[^"]*" \/>/,
+        `<meta property="og:image" content="${escapeHtml(meta.image)}" />`
+      )
+      .replace(
+        /<meta name="twitter:image" content="[^"]*" \/>/,
+        `<meta name="twitter:image" content="${escapeHtml(meta.image)}" />`
+      )
   }
 
   // Also update document title
