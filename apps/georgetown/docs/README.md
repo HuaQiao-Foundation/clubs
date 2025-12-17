@@ -2,7 +2,7 @@
 
 **Purpose**: Organized technical and business documentation for Georgetown Rotary Club's speaker management system.
 
-**Last Updated**: 2025-10-17
+**Last Updated**: 2025-12-17
 
 ---
 
@@ -28,12 +28,16 @@ docs/
 │   ├── kanban-design-standards.md
 │   └── responsive-design-standard.md
 │
-├── database/                          ← SQL migrations (56 files)
-├── dev-journals/                      ← Implementation history (27 files)
-├── workflows/                         ← Repeatable processes (9 files)
+├── database/                          ← SQL migrations (68+ files)
+├── dev-journals/                      ← Implementation history (46 files)
+├── workflows/                         ← Repeatable processes & operations
+│   ├── operational/                   ← Runtime operations (backups, etc.)
+│   └── testing/                       ← Test checklists
 ├── user-guides/                       ← End-user documentation (1 file)
-├── reference-data/                    ← Rotary International data (3 files)
-└── archive/                           ← Completed/superseded docs (27 files)
+├── reference/                         ← Rotary International data (3 files)
+├── knowledge-transfer/                ← Reusable patterns & best practices
+│   └── best-practices/                ← Best practices from other projects
+└── archive/                           ← Completed/superseded docs (40+ files)
 ```
 
 ---
@@ -70,27 +74,43 @@ docs/
 
 ### dev-journals/
 **Purpose**: Implementation logs and feature documentation
-**Contents**: 27 dated entries documenting completed work
+**Contents**: 46 dated entries documenting completed work (consolidated from dev-journal/ and dev-journals/)
 **Naming**: `YYYY-MM-DD-topic-description.md` (e.g., `2025-10-17-mobile-first-optimization.md`)
 
 ### workflows/
-**Purpose**: Repeatable process documentation
-**Contents**: 9 workflow guides
+**Purpose**: Repeatable process documentation and operational procedures
+**Structure**:
+- Root level: General workflows (deployment, migration, dev-journal, etc.)
+- `operational/`: Runtime operations (automated backups, database operations)
+- `testing/`: Test checklists and QA procedures
 **Key Files**:
 - [ceo-coo-cto-workflow.md](workflows/ceo-coo-cto-workflow.md) - Team coordination
 - [database-migration-workflow.md](workflows/database-migration-workflow.md) - How to do migrations
 - [cloudflare-deployment-workflow.md](workflows/cloudflare-deployment-workflow.md) - Deployment process
 - [dev-journal-workflow.md](workflows/dev-journal-workflow.md) - How to document work
+- [operational/automated-backups.md](workflows/operational/automated-backups.md) - Backup procedures
+- [testing/phase3-rsvp-attendance-testing.md](workflows/testing/phase3-rsvp-attendance-testing.md) - RSVP testing checklist
 
 ### user-guides/
 **Purpose**: End-user documentation for Rotary members
 **Contents**: 1 guide
 **File**: [timeline-user-guide.md](user-guides/timeline-user-guide.md) - Using timeline feature
 
-### reference-data/
-**Purpose**: Rotary International official data
+### reference/
+**Purpose**: Rotary International official data (formerly reference-data/)
 **Contents**: 3 reference documents
 **Update**: Annually in June (before new Rotary year)
+
+### knowledge-transfer/
+**Purpose**: Reusable patterns, components, and best practices
+**Structure**:
+- `best-practices/`: Best practices from other projects (formerly "best practices from our other projects")
+- `reusable-components/`: Shareable React components
+- `reusable-hooks/`: Shareable React hooks
+- `reusable-utilities/`: Shareable utility functions
+**Key Files**:
+- [react-spa-playbook.md](knowledge-transfer/react-spa-playbook.md) - React SPA patterns
+- [toastmasters-adaptation-guide.md](knowledge-transfer/toastmasters-adaptation-guide.md) - Adapting this codebase
 
 ### archive/
 **Purpose**: Completed or superseded documentation
@@ -114,7 +134,10 @@ docs/
 - **How to deploy?** → [workflows/cloudflare-deployment-workflow.md](workflows/cloudflare-deployment-workflow.md)
 - **How feature X was built?** → Search [dev-journals/](dev-journals/) by date
 - **Database schema?** → [database/README.md](database/README.md) and migration files
-- **Rotary official data?** → [reference-data/](reference-data/)
+- **Rotary official data?** → [reference/](reference/)
+- **Reusable patterns?** → [knowledge-transfer/](knowledge-transfer/)
+- **Testing procedures?** → [workflows/testing/](workflows/testing/)
+- **Backup procedures?** → [workflows/operational/](workflows/operational/)
 
 ---
 
@@ -200,14 +223,15 @@ Move docs to `archive/` when:
 - **Root files**: 1 (README.md only)
 - **Governance docs**: 6 strategic documents (includes BACKLOG.md)
 - **Standards docs**: 4 design/code patterns
-- **Database migrations**: 56 files
-- **Dev journals**: 27 implementation logs
-- **Workflows**: 9 process guides
+- **Database migrations**: 68+ files
+- **Dev journals**: 46 implementation logs (consolidated)
+- **Workflows**: 13+ process guides (including operational & testing subdirs)
 - **User guides**: 1 end-user document
 - **Reference data**: 3 Rotary documents
-- **Archived**: 27 completed/superseded docs
+- **Knowledge transfer**: 20+ reusable patterns, components, hooks
+- **Archived**: 40+ completed/superseded docs
 
-**Total documentation**: 134 files organized across 9 directories
+**Total documentation**: 160+ files organized across 11 directories
 
 ---
 
@@ -231,5 +255,16 @@ Move docs to `archive/` when:
 
 **Structure Model**: Based on [Brandmine documentation best practices](https://brandmine.com)
 **Maintained by**: CTO (Claude Code)
-**Last Reorganization**: 2025-10-17 (world-class structure implementation)
-**Next Review**: 2025-11-17
+**Last Reorganization**: 2025-12-17 (consolidated directories, improved organization)
+**Next Review**: 2026-01-17
+
+---
+
+## 📋 Recent Changes (2025-12-17)
+
+- ✅ Merged `dev-journal/` into `dev-journals/` (46 total files)
+- ✅ Renamed `reference-data/` to `reference/` for consistency
+- ✅ Consolidated `operations/`, `protocols/`, and `checklists/` into `workflows/` subdirectories
+- ✅ Renamed `knowledge-transfer/best practices from our other projects/` to `best-practices/`
+- ✅ Updated all directory references and file counts
+- ✅ Enhanced navigation shortcuts

@@ -11,6 +11,12 @@ See [Backlog Management System](docs/backlog-management-system.md) for process a
 | MONO-001 | P2 | Done | Setup backlog management system | Monorepo | Docs | XS | 2025-12-17 | ✅ Complete - Moved archive to docs/archive/ |
 | MONO-002 | P1 | Done | Migrate from npm to pnpm workspaces | Monorepo | Tech Debt | M | 2025-12-17 | ✅ Complete - Commit e0764d8 |
 | GEO-001 | P2 | Backlog | Add web sharing capability | Georgetown | Feature | M | 2025-12-17 | Enable sharing of events, speakers, and content via Web Share API |
+| GEO-002 | P2 | Backlog | Add Umami analytics integration | Georgetown | Feature | S | 2025-12-17 | Integrate Umami analytics for usage tracking |
+| GEO-003 | P2 | Backlog | Add screenshots to PWA manifest | Georgetown | Feature | S | 2025-12-17 | Add app screenshots to manifest for better app store presentation |
+| HUA-001 | P2 | Backlog | Add Umami analytics integration | HuaQiao | Feature | S | 2025-12-17 | Integrate Umami analytics for usage tracking |
+| HUA-002 | P2 | Backlog | Add screenshots to PWA manifest | HuaQiao | Feature | S | 2025-12-17 | Add app screenshots to manifest for better app store presentation |
+| PIT-001 | P2 | Backlog | Add Umami analytics integration | Pitchmasters | Feature | S | 2025-12-17 | Integrate Umami analytics for usage tracking |
+| PIT-002 | P2 | Backlog | Add screenshots to PWA manifest | Pitchmasters | Feature | S | 2025-12-17 | Add app screenshots to manifest for better app store presentation |
 
 ## Legend
 
@@ -51,7 +57,7 @@ See [Backlog Management System](docs/backlog-management-system.md) for process a
 
 ## Quick Stats
 
-- **Total Items**: 3
+- **Total Items**: 9
 - **P0/P1 Items**: 0
 - **In Progress**: 0
 - **Blocked**: 0

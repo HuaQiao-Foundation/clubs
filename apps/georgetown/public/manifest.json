@@ -1,7 +1,8 @@
 {
-  "name": "Private System - Georgetown Rotary Internal Tool",
-  "short_name": "Private System",
-  "description": "Internal Georgetown Rotary Club tool - Access restricted to authorized members only",
+  "id": "/",
+  "name": "Georgetown Rotary Club",
+  "short_name": "RC Georgetown",
+  "description": "Georgetown Rotary Club internal management tool",
   "icons": [
     {
       "src": "/assets/images/icons/favicon-16x16.png",

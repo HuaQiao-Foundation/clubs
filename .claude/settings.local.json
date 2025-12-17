@@ -49,7 +49,10 @@
       "Bash(git rm:*)",
       "Bash(lsof:*)",
       "Bash(pnpm add:*)",
-      "Bash(pnpm run build:*)"
+      "Bash(pnpm run build:*)",
+      "Bash(pnpm run lighthouse:*)",
+      "Bash(git reset:*)",
+      "Bash(git mv:*)"
     ]
   }
 }

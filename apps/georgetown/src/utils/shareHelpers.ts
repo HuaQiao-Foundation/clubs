@@ -12,6 +12,9 @@ export interface ShareData {
   url: string
 }
 
+// Track pending share operation to prevent "InvalidStateError: An earlier share has not yet completed"
+let isShareInProgress = false
+
 /**
  * Main share function with Web Share API and clipboard fallback
  * @param contentType - Type of content being shared ('project' or 'speaker')
@@ -22,9 +25,16 @@ export async function shareContent(
   onSuccess?: (method: 'native' | 'clipboard') => void,
   onError?: (error: Error) => void
 ): Promise<{ success: boolean; method?: 'native' | 'clipboard'; error?: Error }> {
+  // Prevent multiple simultaneous share operations
+  if (isShareInProgress) {
+    console.warn('Share already in progress, ignoring duplicate request')
+    return { success: false }
+  }
+
   try {
     // Try Web Share API first
     if (navigator.share && navigator.canShare && navigator.canShare(data)) {
+      isShareInProgress = true
       await navigator.share(data)
 
       // Track analytics
@@ -51,6 +61,9 @@ export async function shareContent(
     // Actual error - try clipboard fallback
     console.error('Share failed:', err)
     return await copyToClipboard(data.url, contentType, onSuccess, onError)
+  } finally {
+    // Always reset the flag when share completes or fails
+    isShareInProgress = false
   }
 }
 

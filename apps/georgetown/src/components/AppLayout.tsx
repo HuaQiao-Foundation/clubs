@@ -5,6 +5,7 @@ import BottomNav from './BottomNav'
 import DesktopSecondaryNav from './DesktopSecondaryNav'
 import FilterBar from './FilterBar'
 import OfflineBanner from './OfflineBanner'
+import InstallPrompt from './InstallPrompt'
 
 interface ViewConfig {
   id: string
@@ -135,6 +136,9 @@ export default function AppLayout({
 
       {/* Bottom Navigation */}
       {showBottomNav && <BottomNav />}
+
+      {/* iOS Install Prompt */}
+      <InstallPrompt />
     </div>
   )
 }
