@@ -1,22 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Users, Calendar, Target, Mic, Clock, Handshake } from 'lucide-react'
-
-const navItems = [
-  { path: '/members', icon: Users, label: 'Members' },
-  { path: '/calendar', icon: Calendar, label: 'Calendar' },
-  { path: '/speakers', icon: Mic, label: 'Speakers' },
-  { path: '/projects', icon: Target, label: 'Projects' },
-  { path: '/partners', icon: Handshake, label: 'Partners' },
-  { path: '/timeline', icon: Clock, label: 'Timeline' },
-]
+import { useBottomNavConfig } from '../hooks/useBottomNavConfig'
 
 export default function BottomNav() {
   const location = useLocation()
+  const { selectedNavItems } = useBottomNavConfig()
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 bg-[#0067c8] border-t border-[#0056a8] z-50 h-16 safe-area-inset-bottom shadow-lg">
       <div className="flex items-center justify-around h-full max-w-7xl mx-auto px-2">
-        {navItems.map((item) => {
+        {selectedNavItems.map((item) => {
           // Check if current path matches this nav item
           // For Calendar, also include /events-list as active
           const isActive = location.pathname === item.path ||

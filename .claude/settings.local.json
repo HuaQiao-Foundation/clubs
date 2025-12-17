@@ -52,7 +52,10 @@
       "Bash(pnpm run build:*)",
       "Bash(pnpm run lighthouse:*)",
       "Bash(git reset:*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(pnpm run build:georgetown:*)",
+      "Bash(pnpm dev:georgetown:*)",
+      "Bash(xargs kill:*)"
     ]
   }
 }

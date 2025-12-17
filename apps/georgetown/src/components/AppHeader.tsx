@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { Plus, Filter } from 'lucide-react'
+import { Plus, Filter, Settings } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -22,6 +22,8 @@ interface AppHeaderProps {
   filtersExpanded?: boolean
   onFiltersToggle?: () => void
   headerInfo?: ReactNode
+  showSettingsButton?: boolean
+  onSettingsClick?: () => void
 }
 
 export default function AppHeader({
@@ -36,6 +38,8 @@ export default function AppHeader({
   filtersExpanded = false,
   onFiltersToggle,
   headerInfo,
+  showSettingsButton = false,
+  onSettingsClick,
 }: AppHeaderProps) {
   const navigate = useNavigate()
   const hasViews = views && views.length > 0 && activeView && onViewChange
@@ -138,6 +142,18 @@ export default function AppHeader({
             >
               <Filter size={16} />
               <span className="text-sm">Filters</span>
+            </button>
+          )}
+
+          {/* Settings Button */}
+          {showSettingsButton && onSettingsClick && (
+            <button
+              onClick={onSettingsClick}
+              className="flex items-center justify-center p-2.5 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all min-w-[44px] min-h-[44px] md:min-h-[36px]"
+              aria-label="Navigation settings"
+              title="Customize navigation"
+            >
+              <Settings size={20} />
             </button>
           )}
 

@@ -160,20 +160,34 @@ export function generateProjectUrl(projectId: string): string {
 
 /**
  * Generate shareable URL for a speaker
+ * Uses new hybrid modal + URL routing format
  */
 export function generateSpeakerUrl(speakerId: string): string {
   const baseUrl = window.location.origin
-  return `${baseUrl}/speakers?id=${speakerId}`
+  return `${baseUrl}/speakers/${speakerId}`
 }
 
 /**
  * Extract ID from URL (for analytics)
  * Works for both projects and speakers
+ * Supports both legacy query params (?id=...) and new path params (/speakers/:id)
  */
 function extractIdFromUrl(url: string): string | undefined {
   try {
     const urlObj = new URL(url)
-    return urlObj.searchParams.get('id') || undefined
+
+    // Try query parameter first (legacy format for projects, backwards compatibility)
+    const queryId = urlObj.searchParams.get('id')
+    if (queryId) return queryId
+
+    // Try path parameter (new hybrid routing format for speakers)
+    const pathParts = urlObj.pathname.split('/').filter(Boolean)
+    // For /speakers/:id or /speakers/:id/edit, return the ID (second segment)
+    if (pathParts.length >= 2) {
+      return pathParts[1]
+    }
+
+    return undefined
   } catch {
     return undefined
   }

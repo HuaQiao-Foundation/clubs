@@ -12,7 +12,7 @@
  */
 
 import { useState, useEffect } from 'react'
-import { X, Share, Plus, Square } from 'lucide-react'
+import { X, Share, Plus } from 'lucide-react'
 
 export default function InstallPrompt() {
   const [showPrompt, setShowPrompt] = useState(false)

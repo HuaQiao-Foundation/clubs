@@ -25,7 +25,7 @@ import ShareButton from './ShareButton'
 import AppLayout from './AppLayout'
 import { Calendar, Pencil, BadgeCheck, LayoutGrid, Columns3, Table as TableIcon, Download, Settings, X, Link, ExternalLink } from 'lucide-react'
 import { format } from 'date-fns'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { getRotaryYearFromDate } from '../lib/rotary-year-utils'
 import { updateRotaryYearStats } from '../lib/timeline-stats'
 import { trackInteraction, trackCTA } from '../utils/analytics'
@@ -50,7 +50,6 @@ const viewConfigs = [
 
 export default function KanbanBoard() {
   const navigate = useNavigate()
-  const [searchParams, setSearchParams] = useSearchParams()
   const [speakers, setSpeakers] = useState<Speaker[]>([])
   const [activeId, setActiveId] = useState<string | null>(null)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -125,22 +124,9 @@ export default function KanbanBoard() {
     }
   }, [viewMode, navigate])
 
-  // Handle incoming shared speaker URLs (e.g., /speakers?id=abc123)
-  useEffect(() => {
-    const speakerId = searchParams.get('id')
-
-    if (speakerId && speakers.length > 0) {
-      const speaker = speakers.find((s) => s.id === speakerId)
-
-      if (speaker) {
-        setViewingSpeaker(speaker)
-        setSearchParams({})
-      } else {
-        console.warn(`Speaker with id ${speakerId} not found`)
-        setSearchParams({})
-      }
-    }
-  }, [searchParams, speakers, setSearchParams])
+  // Legacy query parameter handler removed - now using URL routing
+  // Shared speaker URLs use new format: /speakers/:id
+  // See SpeakerDetailRoute.tsx for implementation
 
   // Click outside handler for column settings dropdown
   useEffect(() => {

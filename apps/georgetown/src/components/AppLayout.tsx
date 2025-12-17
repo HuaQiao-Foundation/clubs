@@ -57,6 +57,10 @@ interface AppLayoutProps {
   filtersExpanded?: boolean
   onFiltersToggle?: () => void
 
+  // Settings button in header (optional)
+  showSettingsButton?: boolean
+  onSettingsClick?: () => void
+
   // Layout options
   showBottomNav?: boolean
   showSecondaryNav?: boolean
@@ -83,6 +87,8 @@ export default function AppLayout({
   showFiltersToggle = false,
   filtersExpanded = false,
   onFiltersToggle,
+  showSettingsButton = false,
+  onSettingsClick,
   showBottomNav = true,
   showSecondaryNav = true,
 }: AppLayoutProps) {
@@ -112,6 +118,8 @@ export default function AppLayout({
           showFiltersToggle={showFiltersToggle}
           filtersExpanded={filtersExpanded}
           onFiltersToggle={onFiltersToggle}
+          showSettingsButton={showSettingsButton}
+          onSettingsClick={onSettingsClick}
           headerInfo={headerInfo}
         />
         {showSecondaryNav && <DesktopSecondaryNav />}

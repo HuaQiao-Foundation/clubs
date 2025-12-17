@@ -4,6 +4,8 @@ import { supabase } from '../lib/supabase'
 import { Users, Calendar, Target, Mic, Clock, Handshake, BarChart3, Loader2, Camera } from 'lucide-react'
 import AppHeader from './AppHeader'
 import DesktopSecondaryNav from './DesktopSecondaryNav'
+import BottomNav from './BottomNav'
+import BottomNavSettings from './BottomNavSettings'
 import { trackCTA } from '../utils/analytics'
 
 interface DashboardStats {
@@ -24,6 +26,7 @@ export default function Dashboard() {
     upcomingSpeakers: 0,
   })
   const [loading, setLoading] = useState(true)
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
   useEffect(() => {
     fetchDashboardStats()
@@ -144,12 +147,17 @@ export default function Dashboard() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       {/* Header */}
       <div className="relative">
-        <AppHeader sectionName="DASHBOARD" showAddButton={false} />
+        <AppHeader
+          sectionName="DASHBOARD"
+          showAddButton={false}
+          showSettingsButton={true}
+          onSettingsClick={() => setIsSettingsOpen(true)}
+        />
         <DesktopSecondaryNav />
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 px-4 py-6 max-w-7xl mx-auto w-full">
+      <main className="flex-1 px-4 py-6 pb-20 max-w-7xl mx-auto w-full">
         {/* Hero Card - Club Identity */}
         <div className="bg-gradient-to-br from-[#0067c8] to-[#004a8a] text-white rounded-lg p-6 shadow-lg mb-6">
           <div className="flex items-center gap-4 mb-4">
@@ -270,7 +278,14 @@ export default function Dashboard() {
         </div>
       </main>
 
-      {/* Note: No BottomNav on Dashboard - accessed via logo tap from other pages */}
+      {/* Bottom Navigation */}
+      <BottomNav />
+
+      {/* Bottom Nav Settings Modal */}
+      <BottomNavSettings
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+      />
     </div>
   )
 }

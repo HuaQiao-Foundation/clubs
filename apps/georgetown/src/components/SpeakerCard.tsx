@@ -4,8 +4,8 @@ import type { Speaker, Member } from '../types/database'
 import { Calendar, Mail, Phone, Building, FileText, Pencil, BadgeCheck, ExternalLink, User, Link } from 'lucide-react'
 import { format } from 'date-fns'
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import SpeakerModal from './SpeakerModal'
-import SpeakerDetailModal from './SpeakerDetailModal'
 import LinkedInIcon from './LinkedInIcon'
 import SocialMediaIcons from './SocialMediaIcons'
 import ShareButton from './ShareButton'
@@ -18,8 +18,8 @@ interface SpeakerCardProps {
 }
 
 export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCardProps) {
+  const navigate = useNavigate()
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false)
   const [proposer, setProposer] = useState<Member | null>(null)
 
   useEffect(() => {
@@ -70,12 +70,12 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
   }
 
   const handleCardClick = () => {
-    setIsViewModalOpen(true)
+    // Navigate to detail view (URL routing)
+    navigate(`/speakers/${speaker.id}`)
   }
 
   const handleCloseModals = () => {
     setIsEditModalOpen(false)
-    setIsViewModalOpen(false)
   }
 
 
@@ -303,13 +303,7 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
         </div>
       </div>
 
-      {isViewModalOpen && (
-        <SpeakerDetailModal
-          speaker={speaker}
-          onClose={handleCloseModals}
-        />
-      )}
-
+      {/* Edit modal - still using local state for now */}
       {isEditModalOpen && (
         <SpeakerModal
           speaker={speaker}

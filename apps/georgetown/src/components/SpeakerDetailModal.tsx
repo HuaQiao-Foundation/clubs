@@ -11,9 +11,10 @@ import { trackModal } from '../utils/analytics'
 interface SpeakerDetailModalProps {
   speaker: Speaker
   onClose: () => void
+  onEdit?: () => void  // Optional: called when Edit button clicked (for URL routing)
 }
 
-export default function SpeakerDetailModal({ speaker, onClose }: SpeakerDetailModalProps) {
+export default function SpeakerDetailModal({ speaker, onClose, onEdit }: SpeakerDetailModalProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [proposer, setProposer] = useState<Member | null>(null)
 
@@ -49,7 +50,13 @@ export default function SpeakerDetailModal({ speaker, onClose }: SpeakerDetailMo
   }
 
   const handleEdit = () => {
-    setIsEditModalOpen(true)
+    // If onEdit prop provided (URL routing), use it
+    // Otherwise fall back to local modal state (backwards compatibility)
+    if (onEdit) {
+      onEdit()
+    } else {
+      setIsEditModalOpen(true)
+    }
   }
 
   const getStatusBadge = (status: string) => {

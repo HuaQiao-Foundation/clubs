@@ -13,8 +13,12 @@ import Dashboard from './components/Dashboard'
 import AboutPage from './components/AboutPage'
 
 // Lazy load all other pages (loaded on demand)
-const KanbanBoard = lazy(() => import('./components/KanbanBoard'))
+const SpeakersPage = lazy(() => import('./components/SpeakersPage'))
 const MemberDirectory = lazy(() => import('./components/MemberDirectory'))
+
+// Lazy load route components for modal views
+const SpeakerDetailRoute = lazy(() => import('./routes/SpeakerDetailRoute'))
+const SpeakerEditRoute = lazy(() => import('./routes/SpeakerEditRoute'))
 const ServiceProjectsPage = lazy(() => import('./components/ServiceProjectsPage'))
 const PartnersPage = lazy(() => import('./components/PartnersPage'))
 const TimelineView = lazy(() => import('./components/TimelineView'))
@@ -45,7 +49,13 @@ function App() {
                 <Route path="/members" element={<MemberDirectory />} />
                 <Route path="/calendar" element={<CalendarView />} />
                 <Route path="/projects" element={<ServiceProjectsPage />} />
-                <Route path="/speakers" element={<KanbanBoard />} />
+
+                {/* Speakers - Nested routes for hybrid modal + URL routing */}
+                <Route path="/speakers" element={<SpeakersPage />}>
+                  <Route path=":speakerId" element={<SpeakerDetailRoute />} />
+                  <Route path=":speakerId/edit" element={<SpeakerEditRoute />} />
+                </Route>
+
                 <Route path="/timeline" element={<TimelineView />} />
                 <Route path="/photos" element={<PhotoGallery />} />
 
