@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:pwa": "VITE_PWA_DEV=true vite --force",
     "build": "tsc -b && vite build && npm run build:functions",
-    "build:functions": "cd functions && npm install && tsc --project tsconfig.json && cd ..",
+    "build:functions": "cd functions && npm install && tsc --project tsconfig.json && cp package.json ../dist/functions/ && cd ..",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:pwa": "npm run build && vite preview",
