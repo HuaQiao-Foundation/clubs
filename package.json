@@ -2,23 +2,21 @@
   "name": "clubs-monorepo",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
   "scripts": {
-    "dev:georgetown": "npm run dev --workspace=rotary-speakers",
-    "dev:pitchmasters": "npm run dev --workspace=pitchmasters-club-management",
-    "dev": "npm run dev:georgetown & npm run dev:pitchmasters",
-    "build:georgetown": "npm run build --workspace=rotary-speakers",
-    "build:pitchmasters": "npm run build --workspace=pitchmasters-club-management",
-    "build": "npm run build --workspaces --if-present",
-    "lint": "npm run lint --workspaces --if-present",
-    "typecheck": "npm run typecheck --workspaces --if-present",
-    "clean": "rm -rf node_modules apps/*/node_modules apps/*/dist"
+    "dev:georgetown": "pnpm --filter rotary-speakers dev",
+    "dev:pitchmasters": "pnpm --filter pitchmasters-club-management dev",
+    "dev": "pnpm --parallel --filter \"./apps/*\" dev",
+    "build:georgetown": "pnpm --filter rotary-speakers build",
+    "build:pitchmasters": "pnpm --filter pitchmasters-club-management build",
+    "build": "pnpm --recursive --filter \"./apps/*\" build",
+    "lint": "pnpm --recursive --filter \"./apps/*\" lint",
+    "typecheck": "pnpm --recursive --filter \"./apps/*\" typecheck",
+    "clean": "rm -rf node_modules apps/*/node_modules apps/*/dist pnpm-lock.yaml"
   },
   "devDependencies": {},
   "engines": {
     "node": ">=18.0.0",
-    "npm": ">=9.0.0"
-  }
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@10.24.0"
 }

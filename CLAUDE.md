@@ -9,7 +9,9 @@ clubs/
 ├── apps/
 │   ├── georgetown/      # Rotary speakers and event management app
 │   └── pitchmasters/    # Toastmasters club management app
-├── package.json         # Root workspace config (npm workspaces)
+├── package.json         # Root workspace config
+├── pnpm-workspace.yaml  # pnpm workspace configuration
+├── .npmrc              # pnpm settings
 └── CLAUDE.md           # This file
 ```
 
@@ -34,32 +36,32 @@ Toastmasters club management application. Manages club meetings, member roles, s
 ### Running Applications
 
 ```bash
-# Run both apps simultaneously
-npm run dev
+# Run both apps simultaneously (in parallel)
+pnpm dev
 
 # Run individual apps
-npm run dev:georgetown      # Port 5180
-npm run dev:pitchmasters    # Port 5190
+pnpm dev:georgetown      # Port 5180
+pnpm dev:pitchmasters    # Port 5190
 
 # Build all apps
-npm run build
+pnpm build
 
 # Build individual apps
-npm run build:georgetown
-npm run build:pitchmasters
+pnpm build:georgetown
+pnpm build:pitchmasters
 ```
 
 ### Code Quality
 
 ```bash
 # Lint all apps
-npm run lint
+pnpm lint
 
 # Type check all apps
-npm run typecheck
+pnpm typecheck
 
 # Clean all dependencies and build artifacts
-npm run clean
+pnpm clean
 ```
 
 ## Shared Technologies
@@ -76,10 +78,12 @@ Both applications share:
 ## Monorepo Conventions
 
 ### Workspace Management
-- Uses npm workspaces (not Yarn or pnpm)
-- Dependencies are installed at root with `npm install`
+- Uses **pnpm workspaces** for fast, efficient monorepo management
+- Dependencies are installed at root with `pnpm install`
 - Each app maintains its own `package.json`
-- Shared dependencies are deduplicated automatically
+- Shared dependencies use hard links (content-addressable storage)
+- Locked to `pnpm@10.24.0` via `packageManager` field
+- Strict dependency resolution prevents phantom dependencies
 
 ### File Organization
 - Each app is self-contained in `apps/<app-name>/`
@@ -98,20 +102,21 @@ Both applications share:
 Both apps are deployed to Cloudflare Pages:
 
 ### Georgetown
-- Build command: `npm run build:georgetown`
+- Build command: `pnpm build:georgetown`
 - Build output directory: `apps/georgetown/dist`
 
 ### Pitchmasters
-- Build command: `npm run build:pitchmasters`
+- Build command: `pnpm build:pitchmasters`
 - Build output directory: `apps/pitchmasters/dist`
 
 ## When Working in This Codebase
 
 1. **Understand the context**: Check which app you're working on and refer to its specific CLAUDE.md
-2. **Use workspace commands**: Run commands from the root using the npm scripts
+2. **Use workspace commands**: Run commands from the root using `pnpm` scripts
 3. **Keep apps independent**: Avoid cross-dependencies between apps unless absolutely necessary
 4. **Check app-specific docs**: Each app has its own patterns and conventions documented in its CLAUDE.md
 5. **Environment setup**: Ensure the correct `.env` file exists for the app you're working on
+6. **Use pnpm**: This monorepo uses pnpm (not npm or yarn) for package management
 
 ## Project Backlog
 
