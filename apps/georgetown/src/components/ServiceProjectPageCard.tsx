@@ -24,13 +24,8 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
       onClick={handleCardClick}
       className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg cursor-pointer transition-shadow relative group"
     >
-      {/* Action Buttons - Top Right - Always Visible */}
-      <div className="absolute top-2 right-2 z-10 flex gap-2">
-        <ShareButton
-          project={project}
-          variant="icon-only"
-          className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 !min-h-0 !min-w-0"
-        />
+      {/* Edit Button - Top Right */}
+      <div className="absolute top-2 right-2 z-10">
         <button
           onClick={handleEditClick}
           className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 transition-all"
@@ -143,6 +138,15 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
             {project.status}
           </span>
         </div>
+      </div>
+
+      {/* Share Button - Bottom Right (subtle, no extra spacing) */}
+      <div className="absolute bottom-2 right-2 z-10">
+        <ShareButton
+          project={project}
+          variant="icon-only"
+          className="min-h-[36px] min-w-[36px] p-2 hover:bg-white/80 rounded-md transition-colors !border-0 !shadow-none !bg-transparent opacity-60 hover:opacity-100"
+        />
       </div>
     </div>
   )
