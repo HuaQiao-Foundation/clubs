@@ -30,3 +30,7 @@ exports/*.xlsx
 # PWA / Lighthouse
 .lighthouseci
 lighthouseci/
+
+# Cloudflare Functions (compiled .js files - source is .ts)
+functions/**/*.js
+functions/**/*.js.map

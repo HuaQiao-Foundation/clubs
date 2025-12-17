@@ -11,7 +11,7 @@
     "strict": true,
     "skipLibCheck": true,
     "types": ["@cloudflare/workers-types"],
-    "outDir": "../dist/functions"
+    "outDir": "."
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
