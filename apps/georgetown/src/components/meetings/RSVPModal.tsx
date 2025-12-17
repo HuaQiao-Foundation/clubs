@@ -38,7 +38,7 @@ const getEventTypeDisplayName = (type?: string): string => {
       return 'Board Meeting'
     case 'committee_meeting':
       return 'Committee Meeting'
-    case 'club_event':
+    case 'club_social':
       return 'Club Social'
     case 'service_project':
       return 'Service Project'

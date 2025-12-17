@@ -15,7 +15,7 @@ import { RSVPModal, RSVPListModal } from './meetings'
 interface Event {
   id: string
   date: string
-  type: 'club_meeting' | 'club_assembly' | 'board_meeting' | 'committee_meeting' | 'club_event' | 'service_project' | 'holiday' | 'observance'
+  type: 'club_meeting' | 'club_assembly' | 'board_meeting' | 'committee_meeting' | 'club_social' | 'service_project' | 'holiday' | 'observance'
   title: string
   description?: string
   agenda?: string
