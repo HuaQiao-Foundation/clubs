@@ -221,3 +221,90 @@ ls functions/
 3. `apps/georgetown/.gitignore` - Added functions/**/*.js
 
 **Status**: ✅ FIXED LOCALLY - Ready to deploy and test
+
+---
+
+### Attempt 6: Verify Deployment Actually Working
+**Time**: 2025-12-17 22:15 SGT
+**Hypothesis**: Functions compiled locally but not deploying to Cloudflare
+
+**User Report**: Telegram still not showing clickable link preview, just plain text
+
+**Testing**:
+```bash
+curl -A "TelegramBot" https://georgetown-rotary.pages.dev/speakers/test-uuid | grep "og:title"
+# Result: Still shows default "Georgetown Rotary Speakers"
+# Expected: Should show speaker-specific title
+```
+
+**Finding**: ❌ Middleware NOT running on Cloudflare
+- Functions compile locally ✅
+- Functions exist at apps/georgetown/functions/_middleware.js ✅  
+- But Cloudflare is NOT executing them ❌
+
+**New hypothesis**: Cloudflare's build process might be:
+1. Running `pnpm build:georgetown` ✅
+2. Deploying `apps/georgetown/dist/` as static files ✅
+3. BUT: Not deploying `apps/georgetown/functions/` separately ❌
+
+**Root cause suspect**: Monorepo structure - Cloudflare might not see functions/ when root directory is not the project root
+
+
+---
+
+### Attempt 7: Identify Cloudflare Configuration Issue
+**Time**: 2025-12-17 22:20 SGT
+**Hypothesis**: Cloudflare Root Directory configuration preventing Functions deployment
+
+**Discovery** 🎯:
+Found in `docs/plans/2025-12-17-cloudflare-setup-summary.md:122`:
+```
+Root Directory: (blank - monorepo root)
+```
+
+**The Problem**:
+- Cloudflare Root Directory: `/` (monorepo root)
+- Cloudflare looks for Functions at: `/functions`
+- But Functions are actually at: `/apps/georgetown/functions`
+- Result: Cloudflare never finds the Functions! ❌
+
+**Why this matters**:
+Cloudflare Pages looks for Functions relative to the Root Directory setting.
+- If Root Directory = blank → looks at `/functions`
+- Our functions are at `/apps/georgetown/functions`
+- Cloudflare can't find them!
+
+**Solution needed**: Change Cloudflare Root Directory to `apps/georgetown`
+
+---
+
+### Attempt 8: Solution - Update Cloudflare Root Directory
+**Time**: 2025-12-17 22:25 SGT
+**Action**: Configure Cloudflare to use correct root directory
+
+**Cloudflare Pages Settings to Change**:
+
+Navigate to: Cloudflare Dashboard → Pages → georgetown-rotary → Settings → Builds & deployments
+
+**Current settings**:
+```
+Root directory: (blank)
+Build command: pnpm build:georgetown
+Build output directory: apps/georgetown/dist
+```
+
+**New settings** ✅:
+```
+Root directory: apps/georgetown
+Build command: pnpm build
+Build output directory: dist
+```
+
+**Why this works**:
+1. Root directory `apps/georgetown` makes Cloudflare treat that as the project root
+2. Functions at `/functions` (relative) = `apps/georgetown/functions` (absolute) ✅
+3. Build command `pnpm build` works because georgetown's package.json has `"build"` script
+4. Build output `dist` (relative) = `apps/georgetown/dist` (absolute) ✅
+
+**Important**: This requires changing settings in Cloudflare Dashboard, cannot be done via code.
+
