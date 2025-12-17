@@ -110,6 +110,10 @@ export async function onRequest(context: {
           .eq('id', projectId)
           .single()
 
+        if (error) {
+          console.error('Error fetching project:', error)
+        }
+
         if (!error && project) {
           // Get the base HTML response
           const response = await next()
