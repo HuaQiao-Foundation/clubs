@@ -47,7 +47,9 @@
       "Bash(pkill:*)",
       "Bash(pnpm build:georgetown:*)",
       "Bash(git rm:*)",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm run build:*)"
     ]
   }
 }

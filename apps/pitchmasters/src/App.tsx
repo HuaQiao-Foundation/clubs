@@ -7,6 +7,8 @@ import MemberProfilePage from './pages/MemberProfilePage';
 import CommunityPage from './pages/CommunityPage';
 import FaviconTestPage from './pages/FaviconTestPage';
 import { usePerformanceMetrics } from './hooks/usePerformanceMetrics';
+import { UpdatePrompt } from './components/UpdatePrompt';
+import { OfflineIndicator } from './components/OfflineIndicator';
 
 function App() {
   const { logMetrics, isGoodLCP, isGoodCLS, isGoodFCP } = usePerformanceMetrics();
@@ -27,18 +29,22 @@ function App() {
   }, [logMetrics, isGoodLCP, isGoodCLS, isGoodFCP]);
 
   return (
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/members" element={<MembersPage />} />
-          <Route path="/members/:memberId" element={<MemberProfilePage />} />
-          <Route path="/community" element={<CommunityPage />} />
-          <Route path="/favicon-test" element={<FaviconTestPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/members" element={<MembersPage />} />
+            <Route path="/members/:memberId" element={<MemberProfilePage />} />
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/favicon-test" element={<FaviconTestPage />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Layout>
+      </BrowserRouter>
+      <UpdatePrompt />
+      <OfflineIndicator />
+    </>
   );
 }
 
