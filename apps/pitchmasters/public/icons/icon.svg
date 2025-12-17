@@ -1,0 +1,19 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with 20% padding for maskable icon -->
+  <rect width="512" height="512" fill="#E31F26"/>
+
+  <!-- Safe zone content (80% of size, centered) -->
+  <g transform="translate(51.2, 51.2)">
+    <!-- White circle background -->
+    <circle cx="204.8" cy="204.8" r="180" fill="white"/>
+
+    <!-- PM letters in Toastmasters red -->
+    <text x="204.8" y="280"
+          font-family="Arial, sans-serif"
+          font-size="200"
+          font-weight="bold"
+          fill="#E31F26"
+          text-anchor="middle"
+          dominant-baseline="middle">PM</text>
+  </g>
+</svg>

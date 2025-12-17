@@ -31,14 +31,23 @@ A multi-club Toastmasters management platform designed specifically for startup-
 # Install dependencies
 npm install
 
-# Start development server
+# Start development server (without PWA)
 npm run dev
+
+# Start development server (with PWA enabled for testing)
+npm run dev:pwa
 
 # Build for production
 npm run build
 
-# Preview production build
+# Preview production build (without PWA)
 npm run preview
+
+# Preview production build (with PWA)
+npm run preview:pwa
+
+# Run Lighthouse CI tests
+npm run lighthouse
 
 # Type checking
 npm run typecheck
@@ -85,6 +94,19 @@ Run the schema in `docs/database/schema.sql` in your Supabase SQL editor to crea
 - Self-hosted fonts and assets
 - No Google Fonts or external CDNs
 - Network independence for blocked regions
+- Service worker with China-safe caching strategies
+
+### 📲 Progressive Web App (PWA)
+- **Installable** on mobile devices and desktops
+- **Offline support** with intelligent caching
+- **User-controlled updates** (no auto-refresh)
+- **Offline indicator** shows connection status
+- **Smart caching strategies**:
+  - Auth endpoints: Never cached (security)
+  - Mutations: Never cached (data integrity)
+  - Storage/images: Cache-first (30 days)
+  - API reads: Network-first with 5-min cache
+- **Lighthouse score**: 90+ accessibility, passing performance metrics
 
 ## Tech Stack
 

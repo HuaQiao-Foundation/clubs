@@ -89,12 +89,15 @@ Claude Code generates structured documentation using standard Pitchmasters forma
 6. Confirm understanding before proceeding
 
 ## Tech Stack (from TIS Section 1)
-React 19.1.1 + TypeScript + Vite 7.1.6 | Supabase PostgreSQL | Cloudflare Pages | Tailwind CSS | Self-hosted fonts | Free Tier First
+React 19.1.1 + TypeScript + Vite 7.1.6 | Supabase PostgreSQL | Cloudflare Pages | Tailwind CSS | Self-hosted fonts | Free Tier First | PWA with Offline Support
 
 ## Commands
-- `npm run dev`: Start development server
-- `npm run build`: Production build
+- `npm run dev`: Start development server (PWA disabled for fast HMR)
+- `npm run dev:pwa`: Start development server with PWA enabled for testing
+- `npm run build`: Production build (includes PWA service worker)
 - `npm run preview`: Test production build locally
+- `npm run preview:pwa`: Build and preview with PWA enabled
+- `npm run lighthouse`: Run Lighthouse CI audit (accessibility, performance, PWA)
 
 ## Task Management Workflow
 
@@ -129,8 +132,55 @@ OR
 - **Free tier first** - No payment features until Phase 4
 - **Toastmasters brand compliance** - Official colors, fonts, disclaimers
 - **Mobile-first** - Founders primarily use phones
-- **China-friendly** - Self-hosted assets, zero external dependencies
+- **China-friendly** - Self-hosted assets, zero external dependencies, service worker with China-safe caching
 - **Community-focused** - Cross-club guest system, recognition features
+- **PWA with offline support** - Installable, user-controlled updates, intelligent caching strategies
+
+## PWA Implementation Notes
+**Completed**: 2025-12-17 (replicated from Georgetown Rotary Club app)
+
+### Features Implemented
+- ✅ Service worker with offline support (China-safe, no Google CDN)
+- ✅ User-controlled update prompts (no auto-updates)
+- ✅ Offline indicator banner with connection status
+- ✅ Branded offline fallback page (Toastmasters red/blue theme)
+- ✅ Lighthouse CI testing configured
+- ✅ PWA manifest with Toastmasters branding
+
+### Key Files
+- `vite.config.ts`: VitePWA plugin configuration (lines 15-135)
+- `src/components/UpdatePrompt.tsx`: User update notification
+- `src/components/OfflineIndicator.tsx`: Connection status banner
+- `public/offline.html`: Offline fallback page
+- `lighthouserc.json`: Lighthouse CI configuration
+- `src/vite-env.d.ts`: TypeScript declarations for PWA
+
+### Caching Strategies
+- **Auth endpoints** (`/auth/*`): NetworkOnly (never cached for security)
+- **Mutations** (POST/PUT/DELETE): NetworkOnly (never cached for data integrity)
+- **Storage/images**: CacheFirst (30 days, optimized for performance)
+- **API reads** (GET): NetworkFirst (5-min cache with 3s timeout)
+
+### Development Workflow
+- **`npm run dev`**: PWA disabled (fast HMR, no service worker conflicts)
+- **`npm run dev:pwa`**: PWA enabled for local testing
+- **`npm run preview:pwa`**: Build and preview with PWA
+- **`npm run lighthouse`**: Run automated Lighthouse audit
+
+### Testing PWA Features
+1. **Service Worker**: Build → Preview → DevTools → Application → Service Workers
+2. **Update Prompt**: Make code change → Build → Reload → Wait up to 60s
+3. **Offline Mode**: Load page → DevTools → Network → Offline → Navigate
+4. **Lighthouse**: `npm run lighthouse` (tests offline.html for PWA compliance)
+
+### Icons Status
+✅ **Icons created** - All PWA icons generated:
+- ✅ 192x192px (icon-192x192.png) - Home screen icon
+- ✅ 512x512px (icon-512x512.png) - Splash screen
+- ✅ apple-touch-icon.png (180x180) - iOS devices
+- Design: "PM" letters on Toastmasters red (#E31F26) background
+- Layout: 20% padding for maskable icon support
+- Location: `public/icons/` (auto-copied to `dist/icons/`)
 
 ## Quality Gates (from PDD Section 7)
 - [ ] Meeting planning time <15 minutes
