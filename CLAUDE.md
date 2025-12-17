@@ -134,6 +134,20 @@ This monorepo uses a markdown-based backlog management system:
 
 See the [Backlog Management System](docs/backlog-management-system.md) documentation for full details.
 
+## Troubleshooting Protocol
+
+When debugging becomes difficult (3+ failed attempts, circular debugging, or complex issues):
+
+**📞 Activate Troubleshooting Protocol**:
+- Say: "Use troubleshooting protocol" or "Activate systematic troubleshooting"
+- **Auto-activates** after 3 failed attempts to resolve the same issue
+- Creates structured troubleshooting log with systematic investigation
+- Prevents circular debugging and wasted effort
+
+**Full documentation**: [docs/protocols/systematic-troubleshooting.md](docs/protocols/systematic-troubleshooting.md)
+
+**Template**: [docs/templates/troubleshooting-log-template.md](docs/templates/troubleshooting-log-template.md)
+
 ## Getting Help
 
 - For Georgetown-specific questions: See apps/georgetown/CLAUDE.md
@@ -141,6 +155,7 @@ See the [Backlog Management System](docs/backlog-management-system.md) documenta
 - For monorepo structure questions: Ask about the workspace setup
 - For deployment questions: See the deployment section above
 - For backlog management: See docs/backlog-management-system.md
+- For complex debugging: Use the troubleshooting protocol above
 
 ## How to Use This Documentation
 
