@@ -100,23 +100,41 @@ export async function onRequest(context: {
   if (url.pathname === '/projects') {
     const projectId = url.searchParams.get('id')
 
-    // DEBUG: Test if route is matching
+    // Validate UUID format
     if (projectId && UUID_REGEX.test(projectId)) {
-      // Get base HTML first
-      const response = await next()
-      const html = await response.text()
+      try {
+        // Fetch project data from Supabase
+        const { data: project, error } = await supabase
+          .from('service_projects')
+          .select('id, project_name, description, image_url, area_of_focus')
+          .eq('id', projectId)
+          .single()
 
-      // Return hardcoded test meta tags to verify route matching works
-      const modifiedHtml = injectMetaTags(html, {
-        title: 'DEBUG: Projects Route Working!',
-        description: `DEBUG: Project ID ${projectId} was matched successfully`,
-        image: '',
-        url: `${url.origin}/projects?id=${projectId}`,
-      })
+        if (error) {
+          console.error('Error fetching project:', error)
+        }
 
-      return new Response(modifiedHtml, {
-        headers: response.headers,
-      })
+        if (!error && project) {
+          // Get the base HTML response
+          const response = await next()
+          const html = await response.text()
+
+          // Inject project-specific meta tags
+          const modifiedHtml = injectMetaTags(html, {
+            title: project.project_name,
+            description: project.description || `${project.area_of_focus} project - Georgetown Rotary`,
+            image: project.image_url || '',
+            url: `${url.origin}/projects?id=${project.id}`,
+          })
+
+          // Return modified HTML
+          return new Response(modifiedHtml, {
+            headers: response.headers,
+          })
+        }
+      } catch (error) {
+        console.error('Error injecting project meta tags:', error)
+      }
     }
   }
 
