@@ -115,15 +115,17 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
           </button>
         </div>
 
-        {/* Value and Status - Prominent row */}
-        <div className="mt-2 flex items-center justify-between">
-          {project.project_value_rm && (
-            <div className="text-sm font-semibold text-[#0067c8]">
-              RM {project.project_value_rm.toLocaleString()}
-            </div>
-          )}
+        {/* Value */}
+        {project.project_value_rm && (
+          <div className="mt-2 text-sm font-semibold text-[#0067c8]">
+            RM {project.project_value_rm.toLocaleString()}
+          </div>
+        )}
+
+        {/* Status - Bottom Left */}
+        <div className="mt-2">
           <span
-            className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
+            className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
               project.status === 'Completed'
                 ? 'bg-green-100 text-green-800'
                 : project.status === 'Execution'
