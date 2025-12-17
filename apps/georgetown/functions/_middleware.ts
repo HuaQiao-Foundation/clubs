@@ -8,6 +8,7 @@
  * Supported routes:
  * - /speakers/:uuid - Speaker details with portrait, topic
  * - /projects?id=uuid - Service project details with image, description
+ * - /members/:uuid - Member details with portrait, role, classification
  *
  * How it works:
  * 1. Detect crawler user agents (Telegram, WhatsApp, Facebook, etc.)
@@ -134,6 +135,60 @@ export async function onRequest(context: {
         }
       } catch (error) {
         console.error('Error injecting project meta tags:', error)
+      }
+    }
+  }
+
+  // Process member URLs: /members/:uuid
+  const memberMatch = url.pathname.match(/^\/members\/([^/]+)$/)
+  if (memberMatch) {
+    const memberId = memberMatch[1]
+
+    // Validate UUID format
+    if (UUID_REGEX.test(memberId)) {
+      try {
+        // Fetch member data from Supabase
+        const { data: member, error } = await supabase
+          .from('members')
+          .select('id, name, portrait_url, roles, classification, job_title, company_name')
+          .eq('id', memberId)
+          .eq('active', true)
+          .single()
+
+        if (!error && member) {
+          // Get the base HTML response
+          const response = await next()
+          const html = await response.text()
+
+          // Build description from available fields
+          let description = ''
+          if (member.job_title && member.company_name) {
+            description = `${member.job_title} at ${member.company_name}`
+          } else if (member.job_title) {
+            description = member.job_title
+          } else if (member.classification) {
+            description = member.classification
+          } else if (member.roles && member.roles.length > 0) {
+            description = member.roles[0]
+          } else {
+            description = 'Georgetown Rotary Club Member'
+          }
+
+          // Inject member-specific meta tags
+          const modifiedHtml = injectMetaTags(html, {
+            title: member.name,
+            description,
+            image: member.portrait_url || '',
+            url: `${url.origin}/members/${member.id}`,
+          })
+
+          // Return modified HTML
+          return new Response(modifiedHtml, {
+            headers: response.headers,
+          })
+        }
+      } catch (error) {
+        console.error('Error injecting member meta tags:', error)
       }
     }
   }
