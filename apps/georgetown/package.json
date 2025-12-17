@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "dev:pwa": "VITE_PWA_DEV=true vite --force",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && npm run build:functions",
+    "build:functions": "cd functions && tsc --project tsconfig.json && cd ..",
     "lint": "eslint .",
     "preview": "vite preview",
     "preview:pwa": "npm run build && vite preview",
