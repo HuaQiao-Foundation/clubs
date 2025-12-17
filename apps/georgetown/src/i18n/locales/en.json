@@ -2,6 +2,7 @@
   "share": {
     "share": "Share",
     "share_project": "Share this project",
+    "share_speaker": "Share this speaker",
     "link_copied": "Link copied to clipboard",
     "copy_failed": "Unable to copy link"
   }

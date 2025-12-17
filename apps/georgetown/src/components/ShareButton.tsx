@@ -18,17 +18,19 @@ import { useState, useCallback } from 'react'
 import { Share2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Toast from './Toast'
-import { shareProject, generateProjectUrl } from '../utils/shareHelpers'
-import type { ServiceProject } from '../types/database'
+import { shareContent, generateProjectUrl, generateSpeakerUrl } from '../utils/shareHelpers'
+import type { ServiceProject, Speaker } from '../types/database'
 
 interface ShareButtonProps {
-  project: ServiceProject
+  project?: ServiceProject
+  speaker?: Speaker
   variant?: 'default' | 'icon-only'
   className?: string
 }
 
 export default function ShareButton({
   project,
+  speaker,
   variant = 'default',
   className = ''
 }: ShareButtonProps) {
@@ -46,15 +48,25 @@ export default function ShareButton({
   const handleShare = useCallback(async (e: React.MouseEvent) => {
     e.stopPropagation()
 
-    const shareUrl = generateProjectUrl(project.id)
+    // Determine content type and generate appropriate URL and data
+    const contentType = project ? 'project' : 'speaker'
+    const shareUrl = project
+      ? generateProjectUrl(project.id)
+      : speaker
+      ? generateSpeakerUrl(speaker.id)
+      : ''
+
     const shareData = {
-      title: project.project_name,
-      text: project.description?.substring(0, 150) || `${project.area_of_focus} project`,
+      title: project?.project_name || speaker?.name || '',
+      text: project?.description?.substring(0, 150) ||
+            speaker?.topic ||
+            (project ? `${project.area_of_focus} project` : ''),
       url: shareUrl,
     }
 
-    await shareProject(
+    await shareContent(
       shareData,
+      contentType,
       (method) => {
         if (method === 'clipboard') {
           setToast({
@@ -72,7 +84,7 @@ export default function ShareButton({
         })
       }
     )
-  }, [project, t])
+  }, [project, speaker, t])
 
   const handleToastClose = useCallback(() => {
     setToast((prev) => ({ ...prev, show: false }))
@@ -101,13 +113,20 @@ export default function ShareButton({
 
   const iconSize = variant === 'icon-only' ? 16 : 18
 
+  // Determine ARIA label based on content type
+  const ariaLabel = project
+    ? t('share.share_project')
+    : speaker
+    ? t('share.share_speaker')
+    : t('share.share')
+
   return (
     <>
       <button
         onClick={handleShare}
         className={`${baseClasses} ${variantClasses[variant]} ${className}`}
-        aria-label={t('share.share_project')}
-        title={t('share.share_project')}
+        aria-label={ariaLabel}
+        title={ariaLabel}
       >
         <Share2 size={iconSize} className={iconClasses} />
         {variant === 'default' && (

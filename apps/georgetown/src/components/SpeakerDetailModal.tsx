@@ -4,6 +4,7 @@ import type { Speaker, Member } from '../types/database'
 import { format } from 'date-fns'
 import SpeakerModal from './SpeakerModal'
 import LinkedInIcon from './LinkedInIcon'
+import ShareButton from './ShareButton'
 import { supabase } from '../lib/supabase'
 import { trackModal } from '../utils/analytics'
 
@@ -109,6 +110,11 @@ export default function SpeakerDetailModal({ speaker, onClose }: SpeakerDetailMo
             </div>
           </div>
           <div className="flex items-center gap-2">
+            <ShareButton
+              speaker={speaker}
+              variant="default"
+              className="!bg-white/10 hover:!bg-white/20 !border-0 !text-white !min-h-0"
+            />
             <button
               onClick={handleEdit}
               className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"

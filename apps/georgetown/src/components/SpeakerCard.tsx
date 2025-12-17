@@ -8,6 +8,7 @@ import SpeakerModal from './SpeakerModal'
 import SpeakerDetailModal from './SpeakerDetailModal'
 import LinkedInIcon from './LinkedInIcon'
 import SocialMediaIcons from './SocialMediaIcons'
+import ShareButton from './ShareButton'
 import { AVAILABLE_FIELDS } from '../lib/database-config'
 import { supabase } from '../lib/supabase'
 
@@ -132,7 +133,12 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
               </div>
             </div>
           </div>
-          <div className="flex">
+          <div className="flex gap-1">
+            <ShareButton
+              speaker={speaker}
+              variant="icon-only"
+              className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-sm border border-gray-200 !min-h-0 !min-w-0"
+            />
             <button
               onClick={handleEdit}
               className="min-h-[44px] min-w-[44px] p-3 hover:bg-blue-50 rounded-md transition-colors touch-manipulation inline-flex items-center justify-center"

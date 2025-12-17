@@ -14,9 +14,11 @@ export interface ShareData {
 
 /**
  * Main share function with Web Share API and clipboard fallback
+ * @param contentType - Type of content being shared ('project' or 'speaker')
  */
-export async function shareProject(
+export async function shareContent(
   data: ShareData,
+  contentType: 'project' | 'speaker',
   onSuccess?: (method: 'native' | 'clipboard') => void,
   onError?: (error: Error) => void
 ): Promise<{ success: boolean; method?: 'native' | 'clipboard'; error?: Error }> {
@@ -26,16 +28,17 @@ export async function shareProject(
       await navigator.share(data)
 
       // Track analytics
-      trackEvent('project-shared', {
+      const contentId = extractIdFromUrl(data.url)
+      trackEvent(`${contentType}-shared`, {
         method: 'native',
-        projectId: extractProjectIdFromUrl(data.url),
+        [`${contentType}Id`]: contentId,
       })
 
       onSuccess?.('native')
       return { success: true, method: 'native' }
     } else {
       // Fallback to clipboard
-      return await copyToClipboard(data.url, onSuccess, onError)
+      return await copyToClipboard(data.url, contentType, onSuccess, onError)
     }
   } catch (error) {
     const err = error as Error
@@ -47,8 +50,20 @@ export async function shareProject(
 
     // Actual error - try clipboard fallback
     console.error('Share failed:', err)
-    return await copyToClipboard(data.url, onSuccess, onError)
+    return await copyToClipboard(data.url, contentType, onSuccess, onError)
   }
+}
+
+/**
+ * Legacy function for backward compatibility
+ * @deprecated Use shareContent instead
+ */
+export async function shareProject(
+  data: ShareData,
+  onSuccess?: (method: 'native' | 'clipboard') => void,
+  onError?: (error: Error) => void
+): Promise<{ success: boolean; method?: 'native' | 'clipboard'; error?: Error }> {
+  return shareContent(data, 'project', onSuccess, onError)
 }
 
 /**
@@ -56,6 +71,7 @@ export async function shareProject(
  */
 export async function copyToClipboard(
   text: string,
+  contentType: 'project' | 'speaker' = 'project',
   onSuccess?: (method: 'native' | 'clipboard') => void,
   onError?: (error: Error) => void
 ): Promise<{ success: boolean; method?: 'native' | 'clipboard'; error?: Error }> {
@@ -64,16 +80,17 @@ export async function copyToClipboard(
     await navigator.clipboard.writeText(text)
 
     // Track analytics
-    trackEvent('project-shared', {
+    const contentId = extractIdFromUrl(text)
+    trackEvent(`${contentType}-shared`, {
       method: 'clipboard',
-      projectId: extractProjectIdFromUrl(text),
+      [`${contentType}Id`]: contentId,
     })
 
     onSuccess?.('clipboard')
     return { success: true, method: 'clipboard' }
   } catch (error) {
     // Fallback to execCommand for older browsers
-    return fallbackCopyToClipboard(text, onSuccess, onError)
+    return fallbackCopyToClipboard(text, contentType, onSuccess, onError)
   }
 }
 
@@ -82,6 +99,7 @@ export async function copyToClipboard(
  */
 function fallbackCopyToClipboard(
   text: string,
+  contentType: 'project' | 'speaker' = 'project',
   onSuccess?: (method: 'native' | 'clipboard') => void,
   onError?: (error: Error) => void
 ): { success: boolean; method?: 'native' | 'clipboard'; error?: Error } {
@@ -100,9 +118,10 @@ function fallbackCopyToClipboard(
     document.body.removeChild(textArea)
 
     if (successful) {
-      trackEvent('project-shared', {
+      const contentId = extractIdFromUrl(text)
+      trackEvent(`${contentType}-shared`, {
         method: 'clipboard',
-        projectId: extractProjectIdFromUrl(text),
+        [`${contentType}Id`]: contentId,
       })
 
       onSuccess?.('clipboard')
@@ -127,9 +146,18 @@ export function generateProjectUrl(projectId: string): string {
 }
 
 /**
- * Extract project ID from URL (for analytics)
+ * Generate shareable URL for a speaker
  */
-function extractProjectIdFromUrl(url: string): string | undefined {
+export function generateSpeakerUrl(speakerId: string): string {
+  const baseUrl = window.location.origin
+  return `${baseUrl}/speakers?id=${speakerId}`
+}
+
+/**
+ * Extract ID from URL (for analytics)
+ * Works for both projects and speakers
+ */
+function extractIdFromUrl(url: string): string | undefined {
   try {
     const urlObj = new URL(url)
     return urlObj.searchParams.get('id') || undefined
