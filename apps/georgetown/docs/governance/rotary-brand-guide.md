@@ -59,23 +59,23 @@ Georgetown Rotary Club applications must reflect Rotary International's professi
 
 ## Rotary Areas of Focus Colors
 
-Official colors for Rotary's seven Areas of Focus, used for cause-specific content and project categorization (extracted from official Rotary EPS files):
+Official colors for Rotary's seven Areas of Focus, used for cause-specific content and project categorization (Source: Rotary International Areas of Focus Visual Guidelines, Jan 2021):
 
 | Area of Focus | Color Name | PMS | HEX | RGB |
 |--------------|------------|-----|-----|-----|
-| Peacebuilding & Conflict Prevention | Azure | PANTONE 2175 C | `#0067C8` | 0, 103, 200 |
+| Peacebuilding & Conflict Prevention | Azure | PANTONE 2175 C | `#0067C8` | 0, 105, 200 |
 | Disease Prevention & Treatment | Cardinal | PANTONE 485 C | `#E02927` | 224, 41, 39 |
-| Water, Sanitation & Hygiene | Turquoise | PANTONE 7466 C | `#00ADBB` | 0, 173, 187 |
-| Maternal & Child Health | Orange | PANTONE 2018 C | `#FF7600` | 255, 118, 0 |
-| Basic Education & Literacy | Sky Blue | PANTONE 2202 C | `#00A2E0` | 0, 162, 224 |
-| Community Economic Development | Grass Green | PANTONE 355 C | `#009739` | 1, 151, 57 |
-| Supporting the Environment | Violet | PANTONE 2070 C | `#901F93` | 144, 31, 147 |
+| Water, Sanitation & Hygiene | Sky Blue | PANTONE 2202 C | `#00A2E0` | 0, 162, 224 |
+| Maternal & Child Health | Violet | PANTONE 2070 C | `#901F93` | 144, 31, 147 |
+| Basic Education & Literacy | Orange | PANTONE 2018 C | `#FF7600` | 255, 118, 0 |
+| Community Economic Development | Turquoise | PANTONE 7466 C | `#00ADBB` | 0, 173, 187 |
+| Supporting the Environment | Grass Green | PANTONE 355 C | `#009739` | 0, 151, 57 |
 
 ### Usage Guidelines for Areas of Focus
 - Use official colors to categorize service projects by focus area
 - Maintain color consistency when displaying project portfolios
 - Icons and colors available from [Rotary Brand Center](https://brandcenter.rotary.org/en-us/our-brand/brand-elements/logos-and-graphics/areas-of-focus-icons)
-- Color values sourced from official Rotary International EPS files (see `docs/reference-data/rotary_areas_of_focus_colors.csv`)
+- Color values sourced from official Rotary International Areas of Focus Visual Guidelines (Jan 2021)
 - Note: Peacebuilding uses Azure `#0067C8` (same as primary brand color)
 
 ### Color Usage Guidelines
