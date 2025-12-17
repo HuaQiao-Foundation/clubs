@@ -137,7 +137,7 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
             <ShareButton
               speaker={speaker}
               variant="icon-only"
-              className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-sm border border-gray-200 !min-h-0 !min-w-0"
+              className="min-h-[44px] min-w-[44px] p-3 hover:bg-blue-50 rounded-md transition-colors !border-0 !shadow-none !bg-transparent"
             />
             <button
               onClick={handleEdit}

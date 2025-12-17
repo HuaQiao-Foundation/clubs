@@ -778,7 +778,7 @@ export default function KanbanBoard() {
                           <ShareButton
                             speaker={speaker}
                             variant="icon-only"
-                            className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-sm border border-gray-200 !min-h-0 !min-w-0"
+                            className="min-h-[44px] min-w-[44px] p-2 text-gray-400 hover:text-[#0067c8] hover:bg-gray-100 rounded transition-colors !border-0 !shadow-none !bg-transparent"
                           />
                           <button
                             onClick={(e) => {
