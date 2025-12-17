@@ -10,8 +10,8 @@
  * - Rotary brand styling
  */
 
-import { useState } from 'react'
-import { X, GripVertical, Plus, Trash2, Check } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { X, GripVertical, Plus, Minus, Check } from 'lucide-react'
 import {
   DndContext,
   closestCenter,
@@ -87,10 +87,10 @@ function SortableNavItem({ item, onRemove }: SortableNavItemProps) {
       <button
         type="button"
         onClick={() => onRemove(item.id)}
-        className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg text-red-600 hover:bg-red-50 transition-colors touch-manipulation"
+        className="flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-lg text-gray-600 hover:bg-gray-100 transition-colors touch-manipulation"
         aria-label={`Remove ${item.label}`}
       >
-        <Trash2 size={18} />
+        <Minus size={20} />
       </button>
     </div>
   )
@@ -108,10 +108,12 @@ export default function BottomNavSettings({ isOpen, onClose }: BottomNavSettings
 
   const [workingItemIds, setWorkingItemIds] = useState<string[]>(selectedItemIds)
 
-  // Update working state when selected items change (e.g., on modal open)
-  useState(() => {
-    setWorkingItemIds(selectedItemIds)
-  })
+  // Reset working state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setWorkingItemIds(selectedItemIds)
+    }
+  }, [isOpen, selectedItemIds])
 
   // Configure drag-and-drop sensors
   const sensors = useSensors(

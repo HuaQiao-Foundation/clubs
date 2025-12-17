@@ -55,7 +55,11 @@
       "Bash(git mv:*)",
       "Bash(pnpm run build:georgetown:*)",
       "Bash(pnpm dev:georgetown:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(npm run build:functions:*)",
+      "Bash(pnpm list:*)",
+      "Bash(pnpm run build:functions:*)",
+      "Bash(tree:*)"
     ]
   }
 }
