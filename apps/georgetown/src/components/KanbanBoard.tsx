@@ -773,13 +773,8 @@ export default function KanbanBoard() {
                         >
                           {speaker.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                         </div>
-                        {/* Status Badge, Share and Edit Icons */}
+                        {/* Status Badge and Edit Icon */}
                         <div className="flex items-center gap-2">
-                          <ShareButton
-                            speaker={speaker}
-                            variant="icon-only"
-                            className="min-h-[44px] min-w-[44px] p-2 text-gray-400 hover:text-[#0067c8] hover:bg-gray-100 rounded transition-colors !border-0 !shadow-none !bg-transparent"
-                          />
                           <button
                             onClick={(e) => {
                               e.stopPropagation()
@@ -915,6 +910,15 @@ export default function KanbanBoard() {
                           </a>
                         </div>
                       )}
+                    </div>
+
+                    {/* Share Button - Bottom Right */}
+                    <div className="px-4 py-3 border-t border-gray-100 flex justify-end">
+                      <ShareButton
+                        speaker={speaker}
+                        variant="icon-only"
+                        className="min-h-[44px] min-w-[44px] p-2 hover:bg-gray-50 rounded transition-colors !border-0 !shadow-none !bg-transparent"
+                      />
                     </div>
                   </div>
                 ))}

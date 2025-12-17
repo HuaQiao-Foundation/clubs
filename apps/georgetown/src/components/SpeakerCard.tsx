@@ -134,11 +134,6 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
             </div>
           </div>
           <div className="flex gap-1">
-            <ShareButton
-              speaker={speaker}
-              variant="icon-only"
-              className="min-h-[44px] min-w-[44px] p-3 hover:bg-blue-50 rounded-md transition-colors !border-0 !shadow-none !bg-transparent"
-            />
             <button
               onClick={handleEdit}
               className="min-h-[44px] min-w-[44px] p-3 hover:bg-blue-50 rounded-md transition-colors touch-manipulation inline-flex items-center justify-center"
@@ -297,6 +292,15 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
             </div>
           </div>
         )}
+
+        {/* Share Button - Bottom Right */}
+        <div className="mt-2 pt-2 border-t border-gray-100 flex justify-end">
+          <ShareButton
+            speaker={speaker}
+            variant="icon-only"
+            className="min-h-[44px] min-w-[44px] p-2 hover:bg-blue-50 rounded-md transition-colors !border-0 !shadow-none !bg-transparent"
+          />
+        </div>
       </div>
 
       {isViewModalOpen && (
