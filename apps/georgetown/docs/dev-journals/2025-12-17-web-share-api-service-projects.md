@@ -72,8 +72,9 @@ Implemented native sharing capability for service projects using the Web Share A
 
 1. **`/src/main.tsx`** - Initialize i18n (line 6)
 2. **`/src/components/ServiceProjectDetailModal.tsx`** - Added share button to header (line 40)
-3. **`/src/components/ServiceProjectCard.tsx`** - Added icon-only share button (line 44)
-4. **`/src/components/ServiceProjectsPage.tsx`** - Added query parameter routing (lines 196, 210-226)
+3. **`/src/components/ServiceProjectCard.tsx`** - Added icon-only share button (line 44) - Timeline view
+4. **`/src/components/ServiceProjectPageCard.tsx`** - Added icon-only share button (line 30) - Projects page view
+5. **`/src/components/ServiceProjectsPage.tsx`** - Added query parameter routing (lines 196, 210-226)
 
 ---
 
@@ -204,6 +205,13 @@ npm install i18next react-i18next i18next-browser-languagedetector
 ---
 
 ## Lessons Learned
+
+### Component Discovery
+1. **Multiple card components exist** for different views:
+   - `ServiceProjectCard` - Timeline view (smaller cards)
+   - `ServiceProjectPageCard` - Projects page view (larger cards with images)
+   - Share button needs to be added to **both** components
+2. **Always check which component is actually rendered** on each page
 
 ### Web Share API Quirks
 1. **Must check both** `navigator.share` **and** `navigator.canShare()`

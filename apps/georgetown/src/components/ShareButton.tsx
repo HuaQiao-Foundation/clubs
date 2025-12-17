@@ -91,8 +91,15 @@ export default function ShareButton({
 
   const variantClasses = {
     default: 'px-4 py-2 min-h-[44px] text-sm font-medium text-gray-700',
-    'icon-only': 'p-2 min-h-[44px] min-w-[44px] text-gray-600',
+    'icon-only': 'p-2 min-h-[44px] min-w-[44px]',
   }
+
+  // Icon styling matches edit button: gray-400 with hover to rotary blue for icon-only
+  const iconClasses = variant === 'icon-only'
+    ? 'text-gray-400 hover:text-[#0067c8] transition-colors'
+    : ''
+
+  const iconSize = variant === 'icon-only' ? 16 : 18
 
   return (
     <>
@@ -102,9 +109,9 @@ export default function ShareButton({
         aria-label={t('share.share_project')}
         title={t('share.share_project')}
       >
-        <Share2 size={18} className="flex-shrink-0" />
+        <Share2 size={iconSize} className={iconClasses} />
         {variant === 'default' && (
-          <span className="hidden md:inline">{t('share.share')}</span>
+          <span className="text-sm font-medium">{t('share.share')}</span>
         )}
       </button>
 

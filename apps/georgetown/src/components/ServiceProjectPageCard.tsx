@@ -1,6 +1,7 @@
 import type { ServiceProject } from '../types/database'
 import { Pencil, Plus } from 'lucide-react'
 import { getAreaOfFocusColor } from '../utils/areaOfFocusColors'
+import ShareButton from './ShareButton'
 
 interface ServiceProjectPageCardProps {
   project: ServiceProject
@@ -23,15 +24,22 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
       onClick={handleCardClick}
       className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg cursor-pointer transition-shadow relative group"
     >
-      {/* Edit Icon - Top Right - Always Visible */}
-      <button
-        onClick={handleEditClick}
-        className="absolute top-2 right-2 z-10 p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 transition-all"
-        aria-label="Edit project"
-        title="Edit project"
-      >
-        <Pencil size={16} className="text-gray-400 hover:text-[#0067c8] transition-colors" />
-      </button>
+      {/* Action Buttons - Top Right - Always Visible */}
+      <div className="absolute top-2 right-2 z-10 flex gap-2">
+        <ShareButton
+          project={project}
+          variant="icon-only"
+          className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 !min-h-0 !min-w-0"
+        />
+        <button
+          onClick={handleEditClick}
+          className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 transition-all"
+          aria-label="Edit project"
+          title="Edit project"
+        >
+          <Pencil size={16} className="text-gray-400 hover:text-[#0067c8] transition-colors" />
+        </button>
+      </div>
 
       {/* Image */}
       {project.image_url ? (
