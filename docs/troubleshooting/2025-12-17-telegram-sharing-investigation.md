@@ -308,3 +308,122 @@ Build output directory: dist
 
 **Important**: This requires changing settings in Cloudflare Dashboard, cannot be done via code.
 
+
+---
+
+### Attempt 9: Fix wrangler.toml Conflict
+**Time**: 2025-12-17 22:25 SGT
+**Hypothesis**: wrangler.toml causing deployment failure
+
+**User Report**: Deployment failed immediately with error:
+```
+ERROR: Configuration file for Pages projects does not support "site"
+```
+
+**Root Cause**:
+- Changed root directory to `apps/georgetown` ✅
+- Cloudflare now finds `wrangler.toml` in that directory
+- `wrangler.toml` contains `[site]` configuration (line 21-22)
+- `[site]` is valid for Wrangler CLI local development
+- `[site]` is NOT supported by Cloudflare Pages deployments
+
+**Solution Applied**:
+1. Deleted `apps/georgetown/wrangler.toml` from git
+2. Saved locally as `wrangler.toml.local` for future reference
+3. Added `wrangler.toml.README.md` explaining why it was removed
+4. Cloudflare Pages will now use dashboard settings (no config file)
+
+**Commit**: b101f8b
+**Status**: ✅ Pushed - Ready to retry deployment
+
+---
+
+## Final Solution
+
+**Complete fix requires TWO changes:**
+
+1. ✅ **Cloudflare Dashboard Settings** (completed):
+   - Root directory: `apps/georgetown`
+   - Build command: `pnpm build`
+   - Build output: `dist`
+
+2. ✅ **Remove wrangler.toml** (completed):
+   - Deleted from git (commit b101f8b)
+   - Prevents config file conflict
+   - Cloudflare uses dashboard settings instead
+
+**Next**: Retry deployment and verify Functions deploy correctly
+
+---
+
+### Attempt 10: Verify Middleware Supabase Connection
+**Time**: 2025-12-18
+**Hypothesis**: Middleware compiles and deploys but uses wrong Supabase credentials
+
+**Discovery** 🎯:
+Checked the middleware code and found **CRITICAL BUG**:
+
+**Middleware hardcoded credentials** (line 16-18):
+```typescript
+const SUPABASE_URL = 'https://zooszmqdrdocuiuledql.supabase.co'
+const SUPABASE_ANON_KEY = 'eyJ[...]gQKg'
+```
+
+**Production environment uses** (.env file):
+```
+VITE_SUPABASE_URL=https://rmorlqozjwbftzowqmps.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJ[...]RkQ8
+```
+
+**Root Cause**:
+- Middleware connects to `zooszmqdrdocuiuledql.supabase.co` (WRONG database)
+- Production app uses `rmorlqozjwbftzowqmps.supabase.co` (CORRECT database)
+- Speaker data doesn't exist in the wrong database
+- Middleware returns 404/empty, falls through to default meta tags
+
+**Why curl returns default tags**:
+```bash
+curl -A "TelegramBot" https://georgetown-rotary.pages.dev/speakers/[UUID]
+# Middleware tries zooszmqdrdocuiuledql.supabase.co
+# Speaker not found (wrong database)
+# Falls through to next()
+# Returns default meta tags ❌
+```
+
+**Solution needed**: Update middleware to use correct Supabase credentials
+
+**Action Taken**:
+1. Updated `_middleware.ts` lines 21-23 with production credentials
+2. Changed URL from `zooszmqdrdocuiuledql.supabase.co` → `rmorlqozjwbftzowqmps.supabase.co`
+3. Changed anon key to match production environment
+4. Rebuilt functions: `pnpm run build:functions` ✅
+
+**Files Modified**:
+- `apps/georgetown/functions/_middleware.ts` - Updated Supabase credentials
+
+**Status**: ✅ FIXED - Ready to commit and deploy
+
+---
+
+## Final Solution (Updated)
+
+**The issue required THREE fixes:**
+
+1. ✅ **Cloudflare Dashboard Settings**:
+   - Root directory: `apps/georgetown`
+   - Build command: `pnpm build`
+   - Build output: `dist`
+
+2. ✅ **Remove wrangler.toml**:
+   - Deleted from git (commit b101f8b)
+   - Prevents config file conflict
+
+3. ✅ **Fix Supabase Credentials** (THIS WAS THE MISSING PIECE):
+   - Middleware was connecting to wrong database
+   - Updated to production credentials
+   - Now fetches speaker data correctly
+
+**Next**: Commit and push to trigger deployment
+
+---
+

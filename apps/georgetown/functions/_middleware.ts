@@ -16,10 +16,11 @@
 
 import { createClient } from '@supabase/supabase-js'
 
-// Supabase configuration (from environment variables)
-const SUPABASE_URL = 'https://zooszmqdrdocuiuledql.supabase.co'
+// Supabase configuration
+// Production credentials for rmorlqozjwbftzowqmps.supabase.co
+const SUPABASE_URL = 'https://rmorlqozjwbftzowqmps.supabase.co'
 const SUPABASE_ANON_KEY =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpvb3N6bXFkcmRvY3VpdWxlZHFsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzM5MDk5NTcsImV4cCI6MjA0OTQ4NTk1N30.v4jOJx7oLNvjh_ALaVnAXAYJxJHjB93kKZ7JqE7gQKg'
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtb3JscW96andiZnR6b3dxbXBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NzIwNDMsImV4cCI6MjA4MTQ0ODA0M30.RzsIZo_-kGF2sAaXWfd4K-bj5PgVvrFNUOsGNycRkQ8'
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
