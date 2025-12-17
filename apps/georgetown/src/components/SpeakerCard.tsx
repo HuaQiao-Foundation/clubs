@@ -87,7 +87,7 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
         {...attributes}
         {...listeners}
         onClick={handleCardClick}
-        className={`group bg-white rounded-lg shadow-sm border border-gray-200/60 p-4 cursor-pointer hover:shadow-md transition-all duration-200 ${
+        className={`group relative bg-white rounded-lg shadow-sm border border-gray-200/60 p-4 cursor-pointer hover:shadow-md transition-all duration-200 ${
           isDragging ? 'shadow-xl ring-2 ring-[#0067c8] ring-opacity-30 rotate-1' : 'hover:border-gray-300 hover:-translate-y-0.5'
         }`}
       >
@@ -293,12 +293,12 @@ export default function SpeakerCard({ speaker, isDragging = false }: SpeakerCard
           </div>
         )}
 
-        {/* Share Button - Bottom Right */}
-        <div className="mt-2 pt-2 border-t border-gray-100 flex justify-end">
+        {/* Share Button - Bottom Right (subtle, no extra spacing) */}
+        <div className="absolute bottom-2 right-2">
           <ShareButton
             speaker={speaker}
             variant="icon-only"
-            className="min-h-[44px] min-w-[44px] p-2 hover:bg-blue-50 rounded-md transition-colors !border-0 !shadow-none !bg-transparent"
+            className="min-h-[36px] min-w-[36px] p-2 hover:bg-blue-50 rounded-md transition-colors !border-0 !shadow-none !bg-transparent opacity-60 hover:opacity-100"
           />
         </div>
       </div>

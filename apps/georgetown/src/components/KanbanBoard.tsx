@@ -747,7 +747,7 @@ export default function KanbanBoard() {
                       trackInteraction('speaker-card-clicked', 'kanban-cards-view', speaker.id)
                       setViewingSpeaker(speaker)
                     }}
-                    className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg cursor-pointer transition-shadow group"
+                    className="relative bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg cursor-pointer transition-shadow group"
                   >
                     {/* Header with Portrait and Status Badge */}
                     <div className="p-4 border-b border-gray-100">
@@ -912,12 +912,12 @@ export default function KanbanBoard() {
                       )}
                     </div>
 
-                    {/* Share Button - Bottom Right */}
-                    <div className="px-4 py-3 border-t border-gray-100 flex justify-end">
+                    {/* Share Button - Bottom Right (subtle, no extra spacing) */}
+                    <div className="absolute bottom-2 right-2">
                       <ShareButton
                         speaker={speaker}
                         variant="icon-only"
-                        className="min-h-[44px] min-w-[44px] p-2 hover:bg-gray-50 rounded transition-colors !border-0 !shadow-none !bg-transparent"
+                        className="min-h-[36px] min-w-[36px] p-2 hover:bg-gray-50 rounded transition-colors !border-0 !shadow-none !bg-transparent opacity-60 hover:opacity-100"
                       />
                     </div>
                   </div>
