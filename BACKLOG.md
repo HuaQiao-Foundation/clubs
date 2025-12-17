@@ -13,6 +13,7 @@ See [Backlog Management System](docs/backlog-management-system.md) for process a
 | GEO-001 | P2 | Backlog | Add web sharing capability | Georgetown | Feature | M | 2025-12-17 | Enable sharing of events, speakers, and content via Web Share API |
 | GEO-002 | P2 | Backlog | Add Umami analytics integration | Georgetown | Feature | S | 2025-12-17 | Integrate Umami analytics for usage tracking |
 | GEO-003 | P2 | Backlog | Add screenshots to PWA manifest | Georgetown | Feature | S | 2025-12-17 | Add app screenshots to manifest for better app store presentation |
+| GEO-004 | P2 | Backlog | Add language switcher | Georgetown | Feature | M | 2025-12-17 | Enable users to switch between English and Chinese language options |
 | HUA-001 | P2 | Backlog | Add Umami analytics integration | HuaQiao | Feature | S | 2025-12-17 | Integrate Umami analytics for usage tracking |
 | HUA-002 | P2 | Backlog | Add screenshots to PWA manifest | HuaQiao | Feature | S | 2025-12-17 | Add app screenshots to manifest for better app store presentation |
 | PIT-001 | P2 | Backlog | Add Umami analytics integration | Pitchmasters | Feature | S | 2025-12-17 | Integrate Umami analytics for usage tracking |
@@ -57,7 +58,7 @@ See [Backlog Management System](docs/backlog-management-system.md) for process a
 
 ## Quick Stats
 
-- **Total Items**: 9
+- **Total Items**: 10
 - **P0/P1 Items**: 0
 - **In Progress**: 0
 - **Blocked**: 0
