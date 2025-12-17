@@ -9,6 +9,7 @@
  * - /speakers/:uuid - Speaker details with portrait, topic
  * - /projects?id=uuid - Service project details with image, description
  * - /members/:uuid - Member details with portrait, role, classification
+ * - /partners/:uuid - Partner organization details with logo, description
  *
  * How it works:
  * 1. Detect crawler user agents (Telegram, WhatsApp, Facebook, etc.)
@@ -189,6 +190,58 @@ export async function onRequest(context: {
         }
       } catch (error) {
         console.error('Error injecting member meta tags:', error)
+      }
+    }
+  }
+
+  // Process partner URLs: /partners/:uuid
+  const partnerMatch = url.pathname.match(/^\/partners\/([^/]+)$/)
+  if (partnerMatch) {
+    const partnerId = partnerMatch[1]
+
+    // Validate UUID format
+    if (UUID_REGEX.test(partnerId)) {
+      try {
+        // Fetch partner data from Supabase
+        const { data: partner, error } = await supabase
+          .from('partners')
+          .select('id, name, description, logo_url, type, website, city, country')
+          .eq('id', partnerId)
+          .single()
+
+        if (!error && partner) {
+          // Get the base HTML response
+          const response = await next()
+          const html = await response.text()
+
+          // Build description from available fields
+          let description = partner.description || ''
+          if (!description && partner.type) {
+            description = `${partner.type} partner`
+            if (partner.city || partner.country) {
+              const location = [partner.city, partner.country].filter(Boolean).join(', ')
+              description += ` - ${location}`
+            }
+          }
+          if (!description) {
+            description = 'Georgetown Rotary Club Partner'
+          }
+
+          // Inject partner-specific meta tags
+          const modifiedHtml = injectMetaTags(html, {
+            title: `${partner.name} - Georgetown Rotary Partner`,
+            description,
+            image: partner.logo_url || '',
+            url: `${url.origin}/partners/${partner.id}`,
+          })
+
+          // Return modified HTML
+          return new Response(modifiedHtml, {
+            headers: response.headers,
+          })
+        }
+      } catch (error) {
+        console.error('Error injecting partner meta tags:', error)
       }
     }
   }
