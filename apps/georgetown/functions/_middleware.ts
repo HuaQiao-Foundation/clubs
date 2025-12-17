@@ -1,15 +1,20 @@
 /**
  * Cloudflare Pages Functions middleware
- * Handles server-side Open Graph meta tag injection for speaker URLs
+ * Handles server-side Open Graph meta tag injection for shareable content
  *
- * This enables WhatsApp, Telegram, and iMessage to show speaker names
- * instead of "Private System" when sharing links.
+ * This enables WhatsApp, Telegram, and other platforms to show rich previews
+ * when sharing links.
+ *
+ * Supported routes:
+ * - /speakers/:uuid - Speaker details with portrait, topic
+ * - /projects/:uuid - Service project details with image, description
  *
  * How it works:
- * 1. Detect /speakers/:uuid URLs
- * 2. Fetch speaker data from Supabase
- * 3. Inject speaker-specific meta tags into HTML
- * 4. Return modified HTML to crawler
+ * 1. Detect crawler user agents (Telegram, WhatsApp, Facebook, etc.)
+ * 2. Match URL pattern and extract ID
+ * 3. Fetch data from Supabase
+ * 4. Inject content-specific meta tags into HTML
+ * 5. Return modified HTML to crawler
  *
  * Note: This runs on Cloudflare's edge network, so it's fast and serverless
  */
@@ -32,22 +37,7 @@ export async function onRequest(context: {
   const { request, next } = context
   const url = new URL(request.url)
 
-  // Only process speaker URLs: /speakers/:uuid
-  const speakerMatch = url.pathname.match(/^\/speakers\/([^/]+)$/)
-
-  if (!speakerMatch) {
-    // Not a speaker URL, pass through
-    return next()
-  }
-
-  const speakerId = speakerMatch[1]
-
-  // Validate UUID format
-  if (!UUID_REGEX.test(speakerId)) {
-    return next()
-  }
-
-  // Detect if request is from a crawler/bot
+  // Detect if request is from a crawler/bot (check once for all routes)
   const userAgent = request.headers.get('user-agent') || ''
   const isCrawler =
     userAgent.includes('WhatsApp') ||
@@ -62,43 +52,91 @@ export async function onRequest(context: {
     return next()
   }
 
-  try {
-    // Fetch speaker data from Supabase
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-    const { data: speaker, error } = await supabase
-      .from('speakers')
-      .select('id, name, topic, organization, portrait_url')
-      .eq('id', speakerId)
-      .single()
+  // Initialize Supabase client for crawler requests
+  const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-    if (error || !speaker) {
-      // Speaker not found, pass through
-      return next()
+  // Process speaker URLs: /speakers/:uuid
+  const speakerMatch = url.pathname.match(/^\/speakers\/([^/]+)$/)
+  if (speakerMatch) {
+    const speakerId = speakerMatch[1]
+
+    // Validate UUID format
+    if (UUID_REGEX.test(speakerId)) {
+      try {
+        // Fetch speaker data from Supabase
+        const { data: speaker, error } = await supabase
+          .from('speakers')
+          .select('id, name, topic, organization, portrait_url')
+          .eq('id', speakerId)
+          .single()
+
+        if (!error && speaker) {
+          // Get the base HTML response
+          const response = await next()
+          const html = await response.text()
+
+          // Inject speaker-specific meta tags
+          const modifiedHtml = injectMetaTags(html, {
+            title: speaker.name,
+            description:
+              speaker.topic ||
+              (speaker.organization ? `Speaker from ${speaker.organization}` : 'Georgetown Rotary Speaker'),
+            image: speaker.portrait_url || '',
+            url: `${url.origin}/speakers/${speaker.id}`,
+          })
+
+          // Return modified HTML
+          return new Response(modifiedHtml, {
+            headers: response.headers,
+          })
+        }
+      } catch (error) {
+        console.error('Error injecting speaker meta tags:', error)
+      }
     }
-
-    // Get the base HTML response
-    const response = await next()
-    const html = await response.text()
-
-    // Inject speaker-specific meta tags
-    const modifiedHtml = injectMetaTags(html, {
-      title: speaker.name,
-      description:
-        speaker.topic ||
-        (speaker.organization ? `Speaker from ${speaker.organization}` : 'Georgetown Rotary Speaker'),
-      image: speaker.portrait_url || '',
-      url: `${url.origin}/speakers/${speaker.id}`,
-    })
-
-    // Return modified HTML
-    return new Response(modifiedHtml, {
-      headers: response.headers,
-    })
-  } catch (error) {
-    console.error('Error injecting meta tags:', error)
-    // On error, just pass through
-    return next()
   }
+
+  // Process service project URLs: /projects/:uuid
+  const projectMatch = url.pathname.match(/^\/projects\/([^/]+)$/)
+  if (projectMatch) {
+    const projectId = projectMatch[1]
+
+    // Validate UUID format
+    if (UUID_REGEX.test(projectId)) {
+      try {
+        // Fetch project data from Supabase
+        const { data: project, error } = await supabase
+          .from('service_projects')
+          .select('id, project_name, description, image_url, area_of_focus')
+          .eq('id', projectId)
+          .single()
+
+        if (!error && project) {
+          // Get the base HTML response
+          const response = await next()
+          const html = await response.text()
+
+          // Inject project-specific meta tags
+          const modifiedHtml = injectMetaTags(html, {
+            title: project.project_name,
+            description: project.description || `${project.area_of_focus} project - Georgetown Rotary`,
+            image: project.image_url || '',
+            url: `${url.origin}/projects/${project.id}`,
+          })
+
+          // Return modified HTML
+          return new Response(modifiedHtml, {
+            headers: response.headers,
+          })
+        }
+      } catch (error) {
+        console.error('Error injecting project meta tags:', error)
+      }
+    }
+  }
+
+  // No special handling matched, pass through
+  return next()
 }
 
 /**
