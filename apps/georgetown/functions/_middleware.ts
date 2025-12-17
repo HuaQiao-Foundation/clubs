@@ -10,6 +10,7 @@
  * - /projects?id=uuid - Service project details with image, description
  * - /members/:uuid - Member details with portrait, role, classification
  * - /partners/:uuid - Partner organization details with logo, description
+ * - /events/:uuid - Event details with date, time, location
  *
  * How it works:
  * 1. Detect crawler user agents (Telegram, WhatsApp, Facebook, etc.)
@@ -242,6 +243,84 @@ export async function onRequest(context: {
         }
       } catch (error) {
         console.error('Error injecting partner meta tags:', error)
+      }
+    }
+  }
+
+  // Process event URLs: /events/:uuid
+  const eventMatch = url.pathname.match(/^\/events\/([^/]+)$/)
+  if (eventMatch) {
+    const eventId = eventMatch[1]
+
+    // Validate UUID format
+    if (UUID_REGEX.test(eventId)) {
+      try {
+        // Fetch event data from Supabase (with location join)
+        const { data: event, error } = await supabase
+          .from('events')
+          .select(`
+            id,
+            title,
+            description,
+            date,
+            start_time,
+            end_time,
+            type,
+            location:locations!events_location_id_fkey(name, address)
+          `)
+          .eq('id', eventId)
+          .single()
+
+        if (!error && event) {
+          // Get the base HTML response
+          const response = await next()
+          const html = await response.text()
+
+          // Build description from date, time, and location
+          let description = ''
+
+          // Format date (e.g., "Monday, December 18, 2025")
+          const eventDate = new Date(event.date)
+          const formattedDate = eventDate.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })
+
+          description = formattedDate
+
+          // Add time if available
+          if (event.start_time) {
+            description += ` at ${event.start_time}`
+          }
+
+          // Add location if available
+          const locationData = Array.isArray(event.location) ? event.location[0] : event.location
+          if (locationData?.name) {
+            description += ` - ${locationData.name}`
+          }
+
+          // Add brief description if available
+          if (event.description) {
+            const briefDesc = event.description.substring(0, 100)
+            description += `. ${briefDesc}${event.description.length > 100 ? '...' : ''}`
+          }
+
+          // Inject event-specific meta tags
+          const modifiedHtml = injectMetaTags(html, {
+            title: event.title,
+            description,
+            image: '', // Events don't have images yet, will use club logo fallback
+            url: `${url.origin}/events/${event.id}`,
+          })
+
+          return new Response(modifiedHtml, {
+            headers: response.headers,
+          })
+        }
+      } catch (error) {
+        console.error('Error injecting event meta tags:', error)
       }
     }
   }
