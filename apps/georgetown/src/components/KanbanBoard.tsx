@@ -21,6 +21,7 @@ import SpeakerModal from './SpeakerModal'
 import SpeakerDetailModal from './SpeakerDetailModal'
 import LinkedInIcon from './LinkedInIcon'
 import SocialMediaIcons from './SocialMediaIcons'
+import ShareButton from './ShareButton'
 import AppLayout from './AppLayout'
 import { Calendar, Pencil, BadgeCheck, LayoutGrid, Columns3, Table as TableIcon, Download, Settings, X, Link, ExternalLink } from 'lucide-react'
 import { format } from 'date-fns'
@@ -772,8 +773,13 @@ export default function KanbanBoard() {
                         >
                           {speaker.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                         </div>
-                        {/* Status Badge and Edit Icon */}
+                        {/* Status Badge, Share and Edit Icons */}
                         <div className="flex items-center gap-2">
+                          <ShareButton
+                            speaker={speaker}
+                            variant="icon-only"
+                            className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-sm border border-gray-200 !min-h-0 !min-w-0"
+                          />
                           <button
                             onClick={(e) => {
                               e.stopPropagation()
