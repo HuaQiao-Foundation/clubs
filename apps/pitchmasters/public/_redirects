@@ -1,0 +1,5 @@
+# Cloudflare Pages Redirects for Pitchmasters Toastmasters Club
+# This enables client-side routing for React Router
+
+# SPA fallback - all routes serve index.html for React Router to handle
+/* /index.html 200

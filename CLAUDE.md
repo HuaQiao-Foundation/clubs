@@ -113,12 +113,29 @@ Both apps are deployed to Cloudflare Pages:
 4. **Check app-specific docs**: Each app has its own patterns and conventions documented in its CLAUDE.md
 5. **Environment setup**: Ensure the correct `.env` file exists for the app you're working on
 
+## Project Backlog
+
+This monorepo uses a markdown-based backlog management system:
+
+- **[BACKLOG.md](BACKLOG.md)** - Active backlog with all pending/in-progress items
+- **[BACKLOG-ARCHIVE.md](BACKLOG-ARCHIVE.md)** - Completed and cancelled items
+- **[Backlog Management System](docs/backlog-management-system.md)** - Process, best practices, and workflow
+
+### Quick Workflow
+- **CEO**: "Add [feature] to the backlog"
+- **CTO**: Logs item with ID, priority, estimate, and details
+- **Weekly**: Review and groom backlog (Mondays)
+- **Implementation**: Update status → work → mark done → archive quarterly
+
+See the [Backlog Management System](docs/backlog-management-system.md) documentation for full details.
+
 ## Getting Help
 
 - For Georgetown-specific questions: See apps/georgetown/CLAUDE.md
 - For Pitchmasters-specific questions: See apps/pitchmasters/CLAUDE.md
 - For monorepo structure questions: Ask about the workspace setup
 - For deployment questions: See the deployment section above
+- For backlog management: See docs/backlog-management-system.md
 
 ## How to Use This Documentation
 
