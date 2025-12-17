@@ -18,12 +18,14 @@ import { useState, useCallback } from 'react'
 import { Share2 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import Toast from './Toast'
-import { shareContent, generateProjectUrl, generateSpeakerUrl } from '../utils/shareHelpers'
-import type { ServiceProject, Speaker } from '../types/database'
+import { shareContent, generateProjectUrl, generateSpeakerUrl, generateMemberUrl, generatePartnerUrl } from '../utils/shareHelpers'
+import type { ServiceProject, Speaker, Member, Partner } from '../types/database'
 
 interface ShareButtonProps {
   project?: ServiceProject
   speaker?: Speaker
+  member?: Member
+  partner?: Partner
   variant?: 'default' | 'icon-only'
   className?: string
 }
@@ -31,6 +33,8 @@ interface ShareButtonProps {
 export default function ShareButton({
   project,
   speaker,
+  member,
+  partner,
   variant = 'default',
   className = ''
 }: ShareButtonProps) {
@@ -49,17 +53,23 @@ export default function ShareButton({
     e.stopPropagation()
 
     // Determine content type and generate appropriate URL and data
-    const contentType = project ? 'project' : 'speaker'
+    const contentType = project ? 'project' : speaker ? 'speaker' : member ? 'member' : 'partner'
     const shareUrl = project
       ? generateProjectUrl(project.id)
       : speaker
       ? generateSpeakerUrl(speaker.id)
+      : member
+      ? generateMemberUrl(member.id)
+      : partner
+      ? generatePartnerUrl(partner.id)
       : ''
 
     const shareData = {
-      title: project?.project_name || speaker?.name || '',
+      title: project?.project_name || speaker?.name || member?.name || partner?.name || '',
       text: project?.description?.substring(0, 150) ||
             speaker?.topic ||
+            (member?.job_title && member?.company_name ? `${member.job_title} at ${member.company_name}` : member?.classification) ||
+            partner?.description?.substring(0, 150) ||
             (project ? `${project.area_of_focus} project` : ''),
       url: shareUrl,
     }
@@ -84,7 +94,7 @@ export default function ShareButton({
         })
       }
     )
-  }, [project, speaker, t])
+  }, [project, speaker, member, partner, t])
 
   const handleToastClose = useCallback(() => {
     setToast((prev) => ({ ...prev, show: false }))
@@ -118,6 +128,10 @@ export default function ShareButton({
     ? t('share.share_project')
     : speaker
     ? t('share.share_speaker')
+    : member
+    ? 'Share member profile'
+    : partner
+    ? 'Share partner'
     : t('share.share')
 
   return (

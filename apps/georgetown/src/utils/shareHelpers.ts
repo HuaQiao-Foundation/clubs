@@ -17,11 +17,11 @@ let isShareInProgress = false
 
 /**
  * Main share function with Web Share API and clipboard fallback
- * @param contentType - Type of content being shared ('project' or 'speaker')
+ * @param contentType - Type of content being shared ('project', 'speaker', 'member', or 'partner')
  */
 export async function shareContent(
   data: ShareData,
-  contentType: 'project' | 'speaker',
+  contentType: 'project' | 'speaker' | 'member' | 'partner',
   onSuccess?: (method: 'native' | 'clipboard') => void,
   onError?: (error: Error) => void
 ): Promise<{ success: boolean; method?: 'native' | 'clipboard'; error?: Error }> {
@@ -84,7 +84,7 @@ export async function shareProject(
  */
 export async function copyToClipboard(
   text: string,
-  contentType: 'project' | 'speaker' = 'project',
+  contentType: 'project' | 'speaker' | 'member' | 'partner' = 'project',
   onSuccess?: (method: 'native' | 'clipboard') => void,
   onError?: (error: Error) => void
 ): Promise<{ success: boolean; method?: 'native' | 'clipboard'; error?: Error }> {
@@ -112,7 +112,7 @@ export async function copyToClipboard(
  */
 function fallbackCopyToClipboard(
   text: string,
-  contentType: 'project' | 'speaker' = 'project',
+  contentType: 'project' | 'speaker' | 'member' | 'partner' = 'project',
   onSuccess?: (method: 'native' | 'clipboard') => void,
   onError?: (error: Error) => void
 ): { success: boolean; method?: 'native' | 'clipboard'; error?: Error } {
@@ -165,6 +165,22 @@ export function generateProjectUrl(projectId: string): string {
 export function generateSpeakerUrl(speakerId: string): string {
   const baseUrl = window.location.origin
   return `${baseUrl}/speakers/${speakerId}`
+}
+
+/**
+ * Generate shareable URL for a member
+ */
+export function generateMemberUrl(memberId: string): string {
+  const baseUrl = window.location.origin
+  return `${baseUrl}/members/${memberId}`
+}
+
+/**
+ * Generate shareable URL for a partner
+ */
+export function generatePartnerUrl(partnerId: string): string {
+  const baseUrl = window.location.origin
+  return `${baseUrl}/partners/${partnerId}`
 }
 
 /**

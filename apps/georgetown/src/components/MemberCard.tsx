@@ -5,6 +5,7 @@ import LinkedInIcon from './LinkedInIcon'
 import SocialMediaIcons from './SocialMediaIcons'
 import MemberDetailModal from './MemberDetailModal'
 import PHFPin from './PHFPin'
+import ShareButton from './ShareButton'
 
 // Birthday utility functions
 const formatBirthday = (month?: number, day?: number): string | null => {
@@ -104,7 +105,8 @@ export default function MemberCard({ member }: MemberCardProps) {
               )}
             </div>
           </div>
-          <div className="flex">
+          <div className="flex gap-1">
+            <ShareButton member={member} variant="icon-only" />
             <button
               onClick={handleEdit}
               className="min-h-[44px] min-w-[44px] p-2 hover:bg-blue-50 rounded-md transition-colors touch-manipulation inline-flex items-center justify-center"

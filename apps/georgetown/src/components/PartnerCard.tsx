@@ -2,6 +2,7 @@ import type { Partner } from '../types/database'
 import { Pencil, ExternalLink, User, Mail, Phone, Link, MapPin, Globe } from 'lucide-react'
 import { getPartnerTypeColor, getPartnerTypeIcon } from '../utils/partnerHelpers'
 import SocialMediaIcons from './SocialMediaIcons'
+import ShareButton from './ShareButton'
 
 interface PartnerCardProps {
   partner: Partner
@@ -24,15 +25,18 @@ export default function PartnerCard({ partner, onClick, onEdit }: PartnerCardPro
       onClick={handleCardClick}
       className="bg-white rounded-lg p-4 md:p-6 shadow hover:shadow-lg transition-all text-left border border-gray-200 hover:border-[#0067c8] cursor-pointer relative group"
     >
-      {/* Edit Icon - Top Right */}
-      <button
-        onClick={handleEditClick}
-        className="absolute top-2 right-2 z-10 min-h-[44px] min-w-[44px] p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 transition-all inline-flex items-center justify-center"
-        aria-label="Edit partner"
-        title="Edit partner"
-      >
-        <Pencil size={16} className="text-gray-400 hover:text-[#0067c8] transition-colors" />
-      </button>
+      {/* Action Buttons - Top Right */}
+      <div className="absolute top-2 right-2 z-10 flex gap-1">
+        <ShareButton partner={partner} variant="icon-only" className="bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200" />
+        <button
+          onClick={handleEditClick}
+          className="min-h-[44px] min-w-[44px] p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 transition-all inline-flex items-center justify-center"
+          aria-label="Edit partner"
+          title="Edit partner"
+        >
+          <Pencil size={16} className="text-gray-400 hover:text-[#0067c8] transition-colors" />
+        </button>
+      </div>
 
       {/* Logo/Icon */}
       <div className="flex items-start gap-4 mb-4">
