@@ -67,7 +67,7 @@ export default function Availability() {
             {/* Frank Yih Portrait */}
             <div className="flex-shrink-0">
               <img
-                src="https://zooszmqdrdocuiuledql.supabase.co/storage/v1/object/public/speaker-portraits/chairman-frank-yih-standing-aspirational-square2-492.jpeg"
+                src="https://rmorlqozjwbftzowqmps.supabase.co/storage/v1/object/public/speaker-portraits/chairman-frank-yih-standing-aspirational-square2-492.jpeg"
                 alt="Chairman Frank Yih"
                 className="w-64 h-64 md:w-72 md:h-72 rounded-lg shadow-lg object-cover"
               />

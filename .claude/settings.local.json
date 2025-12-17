@@ -59,7 +59,9 @@
       "Bash(npm run build:functions:*)",
       "Bash(pnpm list:*)",
       "Bash(pnpm run build:functions:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(crontab:*)",
+      "Bash(env)"
     ]
   }
 }
