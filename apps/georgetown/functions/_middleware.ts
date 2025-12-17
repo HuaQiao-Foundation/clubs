@@ -266,7 +266,7 @@ export async function onRequest(context: {
             start_time,
             end_time,
             type,
-            location:locations!events_location_id_fkey(name, address)
+            location:locations(name, address)
           `)
           .eq('id', eventId)
           .single()
