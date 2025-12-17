@@ -117,33 +117,33 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
 
         {/* Value */}
         {project.project_value_rm && (
-          <div className="mt-2 text-sm font-semibold text-[#0067c8]">
+          <div className="mt-2 mb-10 text-sm font-semibold text-[#0067c8]">
             RM {project.project_value_rm.toLocaleString()}
           </div>
         )}
+      </div>
 
-        {/* Status - Bottom Left */}
-        <div className="mt-2">
-          <span
-            className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
-              project.status === 'Completed'
-                ? 'bg-green-100 text-green-800'
-                : project.status === 'Execution'
-                ? 'bg-blue-100 text-blue-800'
-                : project.status === 'Planning'
-                ? 'bg-yellow-100 text-yellow-800'
-                : project.status === 'Dropped'
-                ? 'bg-red-100 text-red-800'
-                : 'bg-gray-100 text-gray-800'
-            }`}
-          >
-            {project.status}
-          </span>
-        </div>
+      {/* Status - Bottom Left */}
+      <div className="absolute z-10" style={{ bottom: '8px', left: '8px' }}>
+        <span
+          className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide ${
+            project.status === 'Completed'
+              ? 'bg-green-100 text-green-800'
+              : project.status === 'Execution'
+              ? 'bg-blue-100 text-blue-800'
+              : project.status === 'Planning'
+              ? 'bg-yellow-100 text-yellow-800'
+              : project.status === 'Dropped'
+              ? 'bg-red-100 text-red-800'
+              : 'bg-gray-100 text-gray-800'
+          }`}
+        >
+          {project.status}
+        </span>
       </div>
 
       {/* Share Button - Bottom Right (subtle, no extra spacing) */}
-      <div className="absolute bottom-2 right-2 z-10">
+      <div className="absolute z-10" style={{ bottom: '8px', right: '8px' }}>
         <ShareButton
           project={project}
           variant="icon-only"
