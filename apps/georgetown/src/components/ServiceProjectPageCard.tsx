@@ -1,5 +1,5 @@
 import type { ServiceProject } from '../types/database'
-import { Pencil, Plus } from 'lucide-react'
+import { Pencil } from 'lucide-react'
 import { getAreaOfFocusColor } from '../utils/areaOfFocusColors'
 import ShareButton from './ShareButton'
 
@@ -105,14 +105,6 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
           ) : (
             <span className="text-gray-400 italic">None</span>
           )}
-          <button
-            onClick={handleEditClick}
-            className="ml-2 inline-flex items-center gap-1 text-xs text-[#0067c8] hover:text-[#004080] transition-colors"
-            title="Add or manage partners"
-          >
-            <Plus size={14} />
-            <span>Add</span>
-          </button>
         </div>
 
         {/* Value */}
