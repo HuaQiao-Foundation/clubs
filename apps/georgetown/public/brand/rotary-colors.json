@@ -173,9 +173,90 @@
       "--rotary-silver": "#d0cfcd"
     }
   },
+  "areasOfFocus": {
+    "peacebuilding": {
+      "name": "Peacebuilding & Conflict Prevention",
+      "pantone": "PANTONE 2175 C",
+      "hex": "#0067c8",
+      "rgb": "0, 105, 200",
+      "colorBlindSafe": true,
+      "note": "Same as primary Azure"
+    },
+    "disease": {
+      "name": "Disease Prevention & Treatment",
+      "pantone": "PANTONE 485 C",
+      "hex": "#e02927",
+      "rgb": "224, 41, 39",
+      "colorBlindSafe": true,
+      "note": "Same as Cardinal"
+    },
+    "water": {
+      "name": "Water, Sanitation & Hygiene",
+      "pantone": "PANTONE 2202 C",
+      "hex": "#00a2e0",
+      "rgb": "0, 162, 224",
+      "colorBlindSafe": true,
+      "note": "Same as Sky Blue"
+    },
+    "maternalChild": {
+      "name": "Maternal & Child Health",
+      "pantone": "PANTONE 2070 C",
+      "hex": "#901f93",
+      "rgb": "144, 31, 147",
+      "colorBlindSafe": false,
+      "note": "May appear similar to blue for deuteranopia users"
+    },
+    "education": {
+      "name": "Basic Education & Literacy",
+      "pantone": "PANTONE 2018 C",
+      "hex": "#ff7600",
+      "rgb": "255, 118, 0",
+      "colorBlindSafe": true,
+      "note": "Same as Orange"
+    },
+    "economic": {
+      "name": "Community Economic Development",
+      "pantone": "PANTONE 7466 C",
+      "hex": "#00adbb",
+      "rgb": "0, 173, 187",
+      "colorBlindSafe": true,
+      "note": "Same as Turquoise"
+    },
+    "environment": {
+      "name": "Supporting the Environment",
+      "pantone": "PANTONE 355 C",
+      "hex": "#009739",
+      "rgb": "0, 151, 57",
+      "colorBlindSafe": false,
+      "note": "Problematic for red-green color blindness - Same as Grass"
+    }
+  },
+  "cssVariables": {
+    "note": "Recommended CSS custom properties for consistent theming",
+    "variables": {
+      "--rotary-azure": "#0067c8",
+      "--rotary-royal-blue": "#17458f",
+      "--rotary-gold": "#f7a81b",
+      "--rotary-sky-blue": "#00a2e0",
+      "--rotary-cardinal": "#e02927",
+      "--rotary-turquoise": "#00adbb",
+      "--rotary-orange": "#ff7600",
+      "--rotary-charcoal": "#54565a",
+      "--rotary-pewter": "#898a8d",
+      "--rotary-smoke": "#b1b1b1",
+      "--rotary-silver": "#d0cfcd",
+      "--aof-peacebuilding": "#0067c8",
+      "--aof-disease": "#e02927",
+      "--aof-water": "#00a2e0",
+      "--aof-maternal-child": "#901f93",
+      "--aof-education": "#ff7600",
+      "--aof-economic": "#00adbb",
+      "--aof-environment": "#009739"
+    }
+  },
   "meta": {
-    "source": "Rotary International Brand Center - Colors",
-    "lastUpdated": "2025-12-02",
+    "source": "Rotary International Brand Center - Colors & Areas of Focus Visual Guidelines (Jan 2021)",
+    "lastUpdated": "2025-12-18",
     "note": "Colors must be used in pure forms, never altered nor screened per Rotary brand guidelines"
   }
 }

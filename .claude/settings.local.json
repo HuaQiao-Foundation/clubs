@@ -73,7 +73,15 @@
       "Bash(\"https://georgetown-rotary.pages.dev/events/be5c4f24-4745-465e-bc0f-fb15f9c51ffa\")",
       "Bash(\"https://georgetown-rotary.pages.dev/events/e163a8d0-7079-4c15-8d5b-eaa14487e015\")",
       "Bash(git rev-parse:*)",
-      "Bash(it 's denied by robots.txt\" - this fix resolves that completely.\n\nRelated troubleshooting: docs/troubleshooting/2025-12-17-telegram-sharing-investigation.md\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+      "Bash(it 's denied by robots.txt\" - this fix resolves that completely.\n\nRelated troubleshooting: docs/troubleshooting/2025-12-17-telegram-sharing-investigation.md\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(SUPABASE_URL=\"https://rmorlqozjwbftzowqmps.supabase.co\":*)",
+      "Bash(SUPABASE_KEY=\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtb3JscW96andiZnR6b3dxbXBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NzIwNDMsImV4cCI6MjA4MTQ0ODA0M30.RzsIZo_-kGF2sAaXWfd4K-bj5PgVvrFNUOsGNycRkQ8\":*)",
+      "Bash(__NEW_LINE__ curl -s \"$SUPABASE_URL/rest/v1/service_projects?select=id,project_name,status,area_of_focus&order=project_name\" )",
+      "Bash(git config:*)",
+      "Bash(sips:*)",
+      "Bash(mv:*)"
     ]
   }
 }
