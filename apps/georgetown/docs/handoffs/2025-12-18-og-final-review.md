@@ -53,11 +53,11 @@ Everything is in place and ready:
 
 **After deployment completes:**
 
-1. **Open production site** - https://georgetownrotary.club/
+1. **Open production site** - https://rotary-club.app/
 2. **View page source** (Cmd+Option+U or right-click → View Source)
 3. **Search for "og:image"** and verify you see:
    ```html
-   <meta property="og:image" content="https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg" />
+   <meta property="og:image" content="https://rotary-club.app/assets/images/social/georgetown-rotary-og-default.jpg" />
    <meta property="og:image:width" content="1200" />
    <meta property="og:image:height" content="630" />
    ```
@@ -68,8 +68,8 @@ Everything is in place and ready:
    ```
 
 5. **Test image URLs directly:**
-   - https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg
-   - https://georgetownrotary.club/assets/images/social/georgetown-rotary-wechat.jpg
+   - https://rotary-club.app/assets/images/social/georgetown-rotary-og-default.jpg
+   - https://rotary-club.app/assets/images/social/georgetown-rotary-wechat.jpg
    - Both should load successfully (not 404)
 
 ---
@@ -82,8 +82,8 @@ Everything is in place and ready:
 **URL**: https://www.linkedin.com/post-inspector/
 
 **Test these URLs:**
-- Homepage: `https://georgetownrotary.club/`
-- Any speaker URL: `https://georgetownrotary.club/speakers/[uuid]`
+- Homepage: `https://rotary-club.app/`
+- Any speaker URL: `https://rotary-club.app/speakers/[uuid]`
 
 **Expected Results:**
 - ✅ Image appears (1200×630 default or speaker portrait)
@@ -99,9 +99,9 @@ Everything is in place and ready:
 **URL**: https://developers.facebook.com/tools/debug/
 
 **Test these URLs:**
-- Homepage: `https://georgetownrotary.club/`
-- Speaker URL: `https://georgetownrotary.club/speakers/[uuid]`
-- Project URL: `https://georgetownrotary.club/projects/[uuid]`
+- Homepage: `https://rotary-club.app/`
+- Speaker URL: `https://rotary-club.app/speakers/[uuid]`
+- Project URL: `https://rotary-club.app/projects/[uuid]`
 
 **Expected Results:**
 - ✅ All og: tags appear in "Meta Tags" section
@@ -116,7 +116,7 @@ Everything is in place and ready:
 **URL**: https://cards-dev.twitter.com/validator
 
 **Test:**
-- Homepage: `https://georgetownrotary.club/`
+- Homepage: `https://rotary-club.app/`
 
 **Expected Results:**
 - ✅ Card type: "summary_large_image"

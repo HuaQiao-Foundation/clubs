@@ -193,10 +193,10 @@ Enhancement of existing Cloudflare Functions middleware and static HTML meta tag
   <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Georgetown Rotary Speakers">
   <meta property="og:description" content="...">
-  <meta property="og:url" content="https://georgetownrotary.club/">
+  <meta property="og:url" content="https://rotary-club.app/">
 
   <!-- Image tags with full metadata -->
-  <meta property="og:image" content="https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg">
+  <meta property="og:image" content="https://rotary-club.app/assets/images/social/georgetown-rotary-og-default.jpg">
   <meta property="og:image:secure_url" content="https://...">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">

@@ -48,7 +48,7 @@
 - **BLOCKS** SEO scrapers and commercial data mining bots
 - **BLOCKS** Archive services (Wayback Machine, etc.)
 
-**Verification**: ✅ Accessible at https://georgetownrotary.club/robots.txt
+**Verification**: ✅ Accessible at https://rotary-club.app/robots.txt
 
 ### 2. **HTML Meta Tags** ❌ REMOVED
 **Previous Location**: `/index.html` head section
@@ -226,7 +226,7 @@ If deployed to a server environment:
 
 **Implementation Status**: COMPLETE ✅
 **Policy**: Selective blocking via robots.txt (ADR-001)
-**Production URL**: https://georgetownrotary.club/
-**robots.txt**: https://georgetownrotary.club/robots.txt
+**Production URL**: https://rotary-club.app/
+**robots.txt**: https://rotary-club.app/robots.txt
 
 **Risk Assessment**: MINIMAL - Standard robots.txt protocol, single source of truth, well-documented policy decision.

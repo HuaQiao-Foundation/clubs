@@ -144,7 +144,7 @@ cd apps/georgetown && npm run build
 
 After deployment to production:
 
-1. **Verify robots.txt accessible**: https://georgetownrotary.club/robots.txt
+1. **Verify robots.txt accessible**: https://rotary-club.app/robots.txt
 2. **Test social media link previews**:
    - LinkedIn Post Inspector
    - Facebook Sharing Debugger

@@ -15,7 +15,7 @@
 - [x] **og:locale** - "en_US"
 - [x] **og:title** - "Georgetown Rotary Speakers"
 - [x] **og:description** - Speaker management description
-- [x] **og:url** - https://georgetownrotary.club/
+- [x] **og:url** - https://rotary-club.app/
 - [x] **og:image** - Full URL to default OG image
 - [x] **og:image:secure_url** - HTTPS image URL
 - [x] **og:image:width** - 1200

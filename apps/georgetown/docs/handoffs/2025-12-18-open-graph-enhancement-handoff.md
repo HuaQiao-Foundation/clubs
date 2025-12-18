@@ -127,8 +127,8 @@ When Rotary members share speakers, events, or projects on social platforms:
 <meta property="og:locale" content="en_US">
 
 <!-- UPDATE existing og:image to include metadata: -->
-<meta property="og:image" content="https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg">
-<meta property="og:image:secure_url" content="https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg">
+<meta property="og:image" content="https://rotary-club.app/assets/images/social/georgetown-rotary-og-default.jpg">
+<meta property="og:image:secure_url" content="https://rotary-club.app/assets/images/social/georgetown-rotary-og-default.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:type" content="image/jpeg">
@@ -768,7 +768,7 @@ git revert <commit-hash>
 git push origin main
 
 # Option 2: Rollback to previous deploy (Cloudflare Pages)
-# Go to Cloudflare Dashboard → Pages → georgetownrotary.club → Deployments
+# Go to Cloudflare Dashboard → Pages → georgetown-rotary → Deployments
 # Click "..." on previous deployment → "Rollback to this deployment"
 
 # Option 3: Quick fix for broken middleware
