@@ -876,28 +876,21 @@ useRealtimeSubscription<Speaker>({
 
 ## Security & Privacy Features
 
-### Search Engine Blocking (Internal Tool)
+### Search Engine Control (Updated 2025-12-18)
 
-**Implementation:**
-```typescript
-// vite.config.ts
-{
-  name: 'robots-headers',
-  configureServer(server) {
-    server.middlewares.use('/', (_req, res, next) => {
-      res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive, nosnippet')
-      res.setHeader('X-Frame-Options', 'DENY')
-      res.setHeader('X-Content-Type-Options', 'nosniff')
-      next()
-    })
-  }
-}
-```
+**Implementation:** robots.txt only (ADR-001)
+
+**Policy:**
+- **Public content ALLOWED**: /events, /projects, /partners, /speakers
+- **Member data BLOCKED**: /members, /admin, /settings
+- **Social media crawlers**: Full access for link previews
+- **AI/ML training bots**: Blocked from all pages
 
 **Why:**
-- Georgetown's speaker contact info is private
-- Internal club tool shouldn't appear in Google searches
-- Prevents data scraping and unauthorized access
+- Public content benefits from search engine visibility
+- Member contact information remains private
+- Single source of truth simplifies maintenance
+- Social sharing works correctly with Open Graph tags
 
 ---
 

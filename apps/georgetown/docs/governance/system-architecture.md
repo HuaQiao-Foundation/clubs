@@ -268,7 +268,7 @@ Node version: 18 or later
 - Environment variables managed in Cloudflare dashboard
 
 ### Security & Privacy Configuration
-- **Search Engine Blocking** - Comprehensive noindex headers
+- **Search Engine Control** - robots.txt policy (ADR-001): public content indexed, member data blocked
 - **Frame Protection** - X-Frame-Options: DENY
 - **Content Type Protection** - X-Content-Type-Options: nosniff
 - **Referrer Policy** - strict-origin-when-cross-origin
@@ -339,7 +339,7 @@ Node version: 18 or later
 - **Optimistic updates** with conflict resolution
 
 ### Security & Privacy Features
-- **Internal tool privacy** via comprehensive SEO blocking
+- **Selective SEO control** via robots.txt (public content indexed, member data blocked)
 - **Professional security headers** for production deployment
 - **Environment variable management** for sensitive credentials
 - **Row-level security** for multi-user access control
