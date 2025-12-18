@@ -1,20 +1,23 @@
 # Cloudflare Pages Headers
-# Security and SEO blocking headers for Georgetown Rotary internal tool
+# Security headers for Georgetown Rotary club operations platform
+# Allow social media link previews while protecting member data
 
 /*
-  # Security headers for private internal tool
-  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex, nocache
+  # Security headers
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
 
-  # Prevent search engine caching
-  Cache-Control: private, no-cache, no-store, must-revalidate, max-age=0
-  Pragma: no-cache
-  Expires: 0
-
   # Additional security headers
   Permissions-Policy: geolocation=(), microphone=(), camera=()
-
-  # Block specific crawler access via headers
   X-Permitted-Cross-Domain-Policies: none
+
+# Protected member areas - block all crawlers
+/members/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex, nocache
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex, nocache
+
+/settings/*
+  X-Robots-Tag: noindex, nofollow, noarchive, nosnippet, noimageindex, nocache
