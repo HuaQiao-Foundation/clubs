@@ -72,7 +72,8 @@
       "Bash(\"https://georgetown-rotary.pages.dev/partners/12ad3db5-30a0-4fc8-a7fc-2b3c0d293838\")",
       "Bash(\"https://georgetown-rotary.pages.dev/events/be5c4f24-4745-465e-bc0f-fb15f9c51ffa\")",
       "Bash(\"https://georgetown-rotary.pages.dev/events/e163a8d0-7079-4c15-8d5b-eaa14487e015\")",
-      "Bash(git rev-parse:*)"
+      "Bash(git rev-parse:*)",
+      "Bash(it 's denied by robots.txt\" - this fix resolves that completely.\n\nRelated troubleshooting: docs/troubleshooting/2025-12-17-telegram-sharing-investigation.md\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
     ]
   }
 }

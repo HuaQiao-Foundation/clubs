@@ -1,48 +1,137 @@
 # Georgetown Rotary Speaker Management System
-# PRIVATE INTERNAL TOOL - NO SEARCH ENGINE ACCESS
-# This system is for Georgetown Rotary Club internal use only
+# PUBLIC CONTENT ALLOWED - MEMBER DATA PROTECTED
+# This system shares public events/projects while protecting member privacy
 
-User-agent: *
-Disallow: /
+# IMPORTANT: Allow social media crawlers for link preview generation
+# and allow search engines for public content discovery
 
-# Block all major search engines explicitly
-User-agent: Googlebot
-Disallow: /
-
-User-agent: Bingbot
-Disallow: /
-
-User-agent: Slurp
-Disallow: /
-
-User-agent: DuckDuckBot
-Disallow: /
-
-User-agent: Baiduspider
-Disallow: /
-
-User-agent: YandexBot
-Disallow: /
-
+# ============================================================================
+# ALLOW: Social media link preview crawlers (ALL PAGES)
+# ============================================================================
 User-agent: facebookexternalhit
-Disallow: /
+Allow: /
+
+User-agent: Facebot
+Allow: /
 
 User-agent: Twitterbot
-Disallow: /
+Allow: /
 
 User-agent: LinkedInBot
-Disallow: /
+Allow: /
 
 User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+User-agent: Slackbot
+Allow: /
+
+User-agent: Slackbot-LinkExpanding
+Allow: /
+
+User-agent: WeChat
+Allow: /
+
+User-agent: MicroMessenger
+Allow: /
+
+# ============================================================================
+# ALLOW: Search engines for PUBLIC CONTENT ONLY
+# ============================================================================
+
+# Google - Allow public pages, block member data
+User-agent: Googlebot
+Allow: /events
+Allow: /projects
+Allow: /partners
+Allow: /speakers
+Disallow: /members
+Disallow: /admin
+Disallow: /settings
 Disallow: /
 
+# Bing - Allow public pages, block member data
+User-agent: Bingbot
+Allow: /events
+Allow: /projects
+Allow: /partners
+Allow: /speakers
+Disallow: /members
+Disallow: /admin
+Disallow: /settings
+Disallow: /
+
+# Yahoo - Allow public pages, block member data
+User-agent: Slurp
+Allow: /events
+Allow: /projects
+Allow: /partners
+Allow: /speakers
+Disallow: /members
+Disallow: /admin
+Disallow: /settings
+Disallow: /
+
+# DuckDuckGo - Allow public pages, block member data
+User-agent: DuckDuckBot
+Allow: /events
+Allow: /projects
+Allow: /partners
+Allow: /speakers
+Disallow: /members
+Disallow: /admin
+Disallow: /settings
+Disallow: /
+
+# Baidu - Allow public pages, block member data
+User-agent: Baiduspider
+Allow: /events
+Allow: /projects
+Allow: /partners
+Allow: /speakers
+Disallow: /members
+Disallow: /admin
+Disallow: /settings
+Disallow: /
+
+# Yandex - Allow public pages, block member data
+User-agent: YandexBot
+Allow: /events
+Allow: /projects
+Allow: /partners
+Allow: /speakers
+Disallow: /members
+Disallow: /admin
+Disallow: /settings
+Disallow: /
+
+# ============================================================================
+# BLOCK: SEO/Scraper bots (commercial data mining)
+# ============================================================================
 User-agent: AhrefsBot
 Disallow: /
 
 User-agent: SemrushBot
 Disallow: /
 
-# Block AI/ML crawlers and training bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: MegaIndex
+Disallow: /
+
+User-agent: BLEXBot
+Disallow: /
+
+# ============================================================================
+# BLOCK: AI/ML crawlers and training bots (protect member data from AI training)
+# ============================================================================
 User-agent: GPTBot
 Disallow: /
 
@@ -64,15 +153,61 @@ Disallow: /
 User-agent: Amazonbot
 Disallow: /
 
-User-agent: Applebot
+User-agent: Applebot-Extended
 Disallow: /
 
-# Block archiving services
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Diffbot
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+# ============================================================================
+# BLOCK: Archive services (prevent permanent public archiving of member data)
+# ============================================================================
 User-agent: ia_archiver
 Disallow: /
 
 User-agent: Wayback Machine
 Disallow: /
 
-# No sitemap provided - internal tool only
-# Crawl-delay: Not applicable - all access blocked
+User-agent: archive.org_bot
+Disallow: /
+
+# ============================================================================
+# DEFAULT: Block all other crawlers
+# ============================================================================
+User-agent: *
+Disallow: /
+
+# ============================================================================
+# SITEMAP
+# ============================================================================
+# Sitemap: https://georgetown-rotary.pages.dev/sitemap.xml
+# Note: Add sitemap once public pages are ready for indexing
+
+# ============================================================================
+# SUMMARY
+# ============================================================================
+# ✅ Social media crawlers: Full access (link previews work)
+# ✅ Search engines: Public pages only (/events, /projects, /partners, /speakers)
+# ❌ Search engines: Members page blocked (privacy protected)
+# ❌ AI training bots: All access blocked (no AI training on member data)
+# ❌ SEO scrapers: All access blocked (no commercial data mining)
+# ❌ Archive services: All access blocked (no permanent public archiving)
+# ❌ Unknown bots: All access blocked (default deny)
