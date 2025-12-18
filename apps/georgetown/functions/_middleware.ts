@@ -76,7 +76,21 @@ export async function onRequest(context: {
     return next()
   }
 
-  // Initialize Supabase client for crawler requests
+  // Only initialize Supabase if we need it (for specific routes)
+  // Check if this is a route that needs meta tag injection
+  const needsMetaInjection =
+    /^\/speakers\/[^/]+$/.test(url.pathname) ||
+    /^\/projects\/[^/]+$/.test(url.pathname) ||
+    /^\/members\/[^/]+$/.test(url.pathname) ||
+    /^\/partners\/[^/]+$/.test(url.pathname) ||
+    /^\/events\/[^/]+$/.test(url.pathname)
+
+  // If crawler is requesting a non-dynamic route, just pass through
+  if (!needsMetaInjection) {
+    return next()
+  }
+
+  // Initialize Supabase client for crawler requests on dynamic routes
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
   // Process speaker URLs: /speakers/:uuid
