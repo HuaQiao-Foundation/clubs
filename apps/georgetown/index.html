@@ -13,15 +13,23 @@
     <meta name="referrer" content="no-referrer" />
 
     <!-- Open Graph tags for social sharing (updated dynamically for speakers/projects) -->
+    <meta property="og:site_name" content="Georgetown Rotary" />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:title" content="Georgetown Rotary Speakers" />
     <meta property="og:description" content="Speaker and event management for Georgetown Rotary Club" />
-    <meta property="og:image" content="https://georgetownrotary.club/assets/images/logos/rotary-wheel-azure_white.png" />
     <meta property="og:url" content="https://georgetownrotary.club/" />
+    <meta property="og:image" content="https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg" />
+    <meta property="og:image:secure_url" content="https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:alt" content="Georgetown Rotary Club - Service Above Self" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Georgetown Rotary Speakers" />
     <meta name="twitter:description" content="Speaker and event management for Georgetown Rotary Club" />
-    <meta name="twitter:image" content="https://georgetownrotary.club/assets/images/logos/rotary-wheel-azure_white.png" />
+    <meta name="twitter:image" content="https://georgetownrotary.club/assets/images/social/georgetown-rotary-og-default.jpg" />
+    <meta name="twitter:image:alt" content="Georgetown Rotary Club - Service Above Self" />
 
     <!-- Favicons -->
     <link rel="icon" type="image/svg+xml" href="/assets/images/icons/favicon.svg" />
@@ -41,6 +49,15 @@
     <title>Georgetown Rotary - Speaker Management</title>
   </head>
   <body>
+    <!-- WeChat Fallback Image
+         WeChat's crawler looks for the first large image (>300px) on the page.
+         This hidden element ensures it finds our preferred image.
+         1024×1024 works well for WeChat's circular chat thumbnails. -->
+    <img src="/assets/images/social/georgetown-rotary-wechat.jpg"
+         alt=""
+         style="position: absolute; left: -9999px; width: 1px; height: 1px;"
+         aria-hidden="true">
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
