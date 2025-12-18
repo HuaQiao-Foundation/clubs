@@ -48,7 +48,7 @@ export function OfflineIndicator() {
       <div
         className={`${
           isOffline
-            ? 'bg-amber-500 text-amber-900'
+            ? 'bg-yellow-50 border-b-4 border-yellow-400'
             : 'bg-green-500 text-green-900'
         } px-4 py-3`}
       >
@@ -57,12 +57,12 @@ export function OfflineIndicator() {
             {isOffline ? '📡' : '✅'}
           </span>
           <div className="flex-1">
-            <div className="font-semibold">
+            <div className={`font-semibold ${isOffline ? 'text-yellow-800' : ''}`}>
               {isOffline ? "You're offline" : 'Back online!'}
             </div>
-            <div className="text-sm opacity-90">
+            <div className={`text-sm ${isOffline ? 'text-yellow-700' : 'opacity-90'}`}>
               {isOffline
-                ? 'Some features may be unavailable. Viewing cached data.'
+                ? 'You can view information but editing is disabled until you reconnect.'
                 : 'Connection restored. All features available.'}
             </div>
           </div>
