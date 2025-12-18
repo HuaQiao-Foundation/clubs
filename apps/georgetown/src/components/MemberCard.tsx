@@ -42,7 +42,7 @@ export default function MemberCard({ member }: MemberCardProps) {
     <>
       <div
         onClick={handleCardClick}
-        className="group bg-white rounded-lg shadow-sm border border-gray-200/60 p-4 cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300 hover:-translate-y-0.5 touch-manipulation"
+        className="group relative bg-white rounded-lg shadow-sm border border-gray-200/60 p-4 cursor-pointer hover:shadow-md transition-all duration-200 hover:border-gray-300 hover:-translate-y-0.5 touch-manipulation"
       >
         {/* Header with Name and Role */}
         <div className="flex items-start justify-between mb-3">
@@ -106,7 +106,6 @@ export default function MemberCard({ member }: MemberCardProps) {
             </div>
           </div>
           <div className="flex gap-1">
-            <ShareButton member={member} variant="icon-only" />
             <button
               onClick={handleEdit}
               className="min-h-[44px] min-w-[44px] p-2 hover:bg-blue-50 rounded-md transition-colors touch-manipulation inline-flex items-center justify-center"
@@ -253,6 +252,11 @@ export default function MemberCard({ member }: MemberCardProps) {
             </span>
           </div>
         )}
+
+        {/* Share Button - Bottom Right (subtle, no extra spacing) */}
+        <div className="absolute bottom-2 right-2">
+          <ShareButton member={member} variant="icon-only" />
+        </div>
       </div>
 
       {isDetailModalOpen && (

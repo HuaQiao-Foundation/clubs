@@ -798,3 +798,288 @@ curl -A "TelegramBot" "https://rotary-club.app/projects?id=463bbd9f-8989-45b4-a8
 
 ---
 
+### Attempt 14: Verify Upload Forms Use New Supabase Storage
+**Time**: 2025-12-18
+**Hypothesis**: Upload forms may have hardcoded storage URLs or incorrect Supabase client imports
+
+**Action**: Comprehensive code audit of all image upload components
+
+**Results**:
+
+✅ **Upload Components Verified**:
+
+1. **ImageUpload.tsx** (lines 3, 98-103, 112-114):
+   - ✅ Imports: `import { supabase } from '../lib/supabase'` (line 3)
+   - ✅ Upload: Uses `supabase.storage.from(bucketName).upload()`
+   - ✅ Public URL: Uses `supabase.storage.from(bucketName).getPublicUrl()`
+   - ✅ No hardcoded URLs
+   - ✅ Bucket names passed as props
+
+2. **PhotoUploadModal.tsx** (lines 9, 138-154):
+   - ✅ Imports: `import { supabase } from '../lib/supabase'` (line 9)
+   - ✅ Upload: Uses `supabase.storage.from('club-photos').upload()`
+   - ✅ Public URL: Uses `supabase.storage.from('club-photos').getPublicUrl()`
+   - ✅ No hardcoded URLs
+   - ✅ Subdirectory structure: `${category}/${year}/${filename}`
+
+**Upload Forms Mapped**:
+
+All forms use the **ImageUpload** component with correct bucket names:
+
+1. **Speaker Portraits**:
+   - Component: SpeakerModal.tsx:229
+   - Bucket: `speaker-portraits`
+   - Prefix: `speaker-`
+   - ✅ Uses shared ImageUpload component
+
+2. **Member Portraits**:
+   - Component: MemberModal.tsx:191
+   - Bucket: `member-portraits`
+   - Prefix: `member-`
+   - ✅ Uses shared ImageUpload component
+
+3. **Partner Logos**:
+   - Component: PartnerModal.tsx:166
+   - Bucket: `partner-logos`
+   - Prefix: `partner-`
+   - ✅ Uses shared ImageUpload component
+
+4. **Service Project Images**:
+   - Component: ServiceProjectModal.tsx:377
+   - Bucket: `project-images`
+   - Prefix: `project-`
+   - ✅ Uses shared ImageUpload component
+
+5. **Club Photos** (Timeline/Gallery):
+   - Component: PhotoUploadModal.tsx (standalone)
+   - Bucket: `club-photos`
+   - Subdirectories: `${category}/${year}/`
+   - ✅ Uses dedicated PhotoUploadModal component
+
+**Hardcoded URLs Check**:
+
+✅ **Only one hardcoded URL found** (already fixed in Attempt 12):
+- File: Availability.tsx:70
+- URL: `https://rmorlqozjwbftzowqmps.supabase.co/.../chairman-frank-yih-...jpeg`
+- Status: ✅ Updated to NEW storage in Attempt 12
+- Reason: Aspirational portrait for availability page
+
+❌ **No old URLs found**:
+```bash
+grep -r "zooszmqdrdocuiuledql" apps/georgetown/src/ --include="*.ts" --include="*.tsx"
+# Result: (nothing) ✅
+```
+
+**Environment Configuration Verified**:
+
+✅ **apps/georgetown/.env**:
+```
+VITE_SUPABASE_URL=https://rmorlqozjwbftzowqmps.supabase.co
+VITE_SUPABASE_ANON_KEY=eyJhbGci...RkQ8
+```
+
+✅ **apps/georgetown/src/lib/supabase.ts**:
+```typescript
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || ''
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+```
+
+**Conclusion** ✅:
+
+All upload forms are **correctly configured** to use the new Supabase storage:
+
+1. ✅ All components import from `../lib/supabase`
+2. ✅ Supabase client reads from environment variables
+3. ✅ `.env` has correct new Supabase URL
+4. ✅ No hardcoded old storage URLs in upload code
+5. ✅ All bucket names match expected structure
+
+**Status**: ✅ CODE AUDIT COMPLETE - Upload forms should work correctly
+
+**Remaining Verification**:
+
+⏳ **Manual UI Testing Needed**:
+- Test actual file uploads through UI
+- Verify uploaded files go to new storage
+- Confirm uploaded images display correctly
+- Check database URLs point to new storage
+
+See handoff document: `docs/handoffs/2025-12-18-verify-upload-forms.md`
+
+---
+
+
+### Attempt 16: iOS Share Sheet Issues - Empty OG Tags and Missing Twitter Image
+**Time**: 2025-12-18
+**Issue**: iOS share sheet not showing "Copy Link" option and potentially incomplete previews
+**Hypothesis**: Empty default Open Graph tags and missing Twitter image tags
+
+**Problems Identified**:
+
+**Issue 1: Empty OG Image Tag (index.html:19)**
+```html
+<meta property="og:image" content="" />
+```
+
+**Problem**: 
+- Default `og:image` is empty string
+- When middleware tries to replace it, the regex pattern might not match consistently
+- iOS Safari may have issues with empty content attributes
+- This could affect iOS share sheet behavior
+
+**Issue 2: Empty OG URL Tag (index.html:20)**
+```html
+<meta property="og:url" content="" />
+```
+
+**Problem**:
+- Default `og:url` is empty string  
+- iOS Safari uses `og:url` to determine what URL to copy
+- Empty value may prevent "Copy Link" option from appearing
+- Could confuse iOS share sheet logic
+
+**Issue 3: Missing Twitter Image Tag**
+```html
+<!-- Current: Only has these Twitter tags -->
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Georgetown Rotary Speakers" />
+<meta name="twitter:description" content="Speaker and event management for Georgetown Rotary Club" />
+
+<!-- Missing: -->
+<meta name="twitter:image" content="" />
+```
+
+**Problem**:
+- Twitter Card has no image tag
+- iOS Safari may use Twitter Card tags for rendering share previews
+- Missing `twitter:image` could affect iOS share sheet preview rendering
+- Middleware doesn't update Twitter image either (line 176-181 in _middleware.ts only handles OG image)
+
+**Issue 4: Middleware Doesn't Update Twitter Image**
+
+Current middleware code (lines 176-181):
+```typescript
+// Add image tag if available
+if (meta.image) {
+  modifiedHtml = modifiedHtml.replace(
+    /<meta property="og:image" content="[^"]*" \/>/,
+    `<meta property="og:image" content="${escapeHtml(meta.image)}" />`
+  )
+}
+```
+
+**Problem**:
+- Only updates `og:image`
+- Doesn't update `twitter:image`
+- iOS Safari may prioritize Twitter Card tags over OG tags
+
+**Root Cause Analysis**:
+
+1. **Empty Default Tags**: Empty `content=""` attributes may not be valid or may confuse iOS Safari
+2. **Incomplete Twitter Card**: Missing `twitter:image` tag
+3. **Middleware Incomplete**: Doesn't inject Twitter image alongside OG image
+4. **iOS Safari Behavior**: May require both OG and Twitter tags, or prefer one over the other
+
+**Recommended Fixes**:
+
+**Fix 1: Add Default Fallback Images to index.html**
+```html
+<!-- Use club logo as default fallback -->
+<meta property="og:image" content="https://georgetownrotary.club/assets/images/logos/rotary-wheel-azure_white.png" />
+<meta property="og:url" content="https://georgetownrotary.club/" />
+<meta name="twitter:image" content="https://georgetownrotary.club/assets/images/logos/rotary-wheel-azure_white.png" />
+```
+
+**Benefits**:
+- Valid meta tags even for non-crawler requests
+- iOS Safari has something to work with
+- "Copy Link" option should appear (valid og:url)
+- Fallback image if middleware fails
+
+**Fix 2: Update Middleware to Inject Twitter Image**
+
+Add to `_middleware.ts` (after line 181):
+```typescript
+// Add image tag if available
+if (meta.image) {
+  modifiedHtml = modifiedHtml
+    .replace(
+      /<meta property="og:image" content="[^"]*" \/>/,
+      `<meta property="og:image" content="${escapeHtml(meta.image)}" />`
+    )
+    .replace(
+      /<meta name="twitter:image" content="[^"]*" \/>/,
+      `<meta name="twitter:image" content="${escapeHtml(meta.image)}" />`
+    )
+}
+```
+
+**Benefits**:
+- Ensures both OG and Twitter tags are updated
+- Better compatibility across platforms
+- iOS Safari gets both tag types
+
+**Fix 3: Ensure og:url is Always Valid**
+
+The middleware already does this correctly (line 164):
+```typescript
+url: `${url.origin}/speakers/${speaker.id}`,
+```
+
+But the base HTML should have a valid default too:
+```html
+<meta property="og:url" content="https://georgetownrotary.club/" />
+```
+
+**Testing Plan**:
+
+After implementing fixes:
+
+1. **Test with curl**:
+```bash
+curl -A "facebookexternalhit/1.1" https://georgetownrotary.club/speakers/[UUID] | grep -E "og:|twitter:"
+```
+
+Expected output:
+```html
+<meta property="og:image" content="https://...speaker-portrait.jpg" />
+<meta property="og:url" content="https://georgetownrotary.club/speakers/[UUID]" />
+<meta name="twitter:image" content="https://...speaker-portrait.jpg" />
+```
+
+2. **Test iOS Share Sheet**:
+   - Open link on iPhone Safari
+   - Tap share button
+   - Verify "Copy Link" option appears
+   - Verify preview shows image, title, description
+
+3. **Test Fallback Behavior**:
+   - Test URL without valid UUID
+   - Should show club logo as fallback
+   - Should show default title/description
+
+**Impact Assessment**:
+
+- **Low Risk**: Changes are additive (adding default values, adding Twitter tag update)
+- **High Benefit**: Should fix iOS share sheet "Copy Link" issue
+- **Compatibility**: Won't break existing Telegram/WhatsApp functionality
+- **Standards**: Aligns with Open Graph and Twitter Card best practices
+
+**Priority**: High (affects iOS user experience)
+
+**Status**: ⏳ FIXES IDENTIFIED - Ready for implementation
+
+**Related Files**:
+- `apps/georgetown/index.html` (lines 19-23) - Add default images and URL
+- `apps/georgetown/functions/_middleware.ts` (lines 176-181) - Add Twitter image update
+
+**Next Steps**:
+1. Implement Fix 1 (add default fallback images to index.html)
+2. Implement Fix 2 (update middleware to inject Twitter image)
+3. Rebuild and deploy
+4. Test with curl and iOS Safari
+5. Verify "Copy Link" appears in iOS share sheet
+
+---
+

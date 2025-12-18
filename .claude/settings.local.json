@@ -61,7 +61,18 @@
       "Bash(pnpm run build:functions:*)",
       "Bash(tree:*)",
       "Bash(crontab:*)",
-      "Bash(env)"
+      "Bash(env)",
+      "Bash(export PGPASSWORD='Bqj^$6jk5%WX3$fE')",
+      "Bash(git revert:*)",
+      "Bash(pnpm build:functions:*)",
+      "Bash(git show:*)",
+      "Bash(\"https://georgetown-rotary.pages.dev/speakers/b22acb96-df4b-40bc-aca9-a1f5c20305e3\")",
+      "Bash(\"https://georgetown-rotary.pages.dev/projects?id=463bbd9f-8989-45b4-a8ae-0fa727f66dbc\")",
+      "Bash(\"https://georgetown-rotary.pages.dev/members/3d3b80d2-96c9-40ea-ad6e-d63437bc9b41\")",
+      "Bash(\"https://georgetown-rotary.pages.dev/partners/12ad3db5-30a0-4fc8-a7fc-2b3c0d293838\")",
+      "Bash(\"https://georgetown-rotary.pages.dev/events/be5c4f24-4745-465e-bc0f-fb15f9c51ffa\")",
+      "Bash(\"https://georgetown-rotary.pages.dev/events/e163a8d0-7079-4c15-8d5b-eaa14487e015\")",
+      "Bash(git rev-parse:*)"
     ]
   }
 }

@@ -47,8 +47,11 @@ export async function onRequest(context: {
     userAgent.includes('Telegram') ||
     userAgent.includes('Slack') ||
     userAgent.includes('facebookexternalhit') ||
+    userAgent.includes('Facebot') ||
     userAgent.includes('Twitterbot') ||
-    userAgent.includes('LinkedInBot')
+    userAgent.includes('LinkedInBot') ||
+    userAgent.includes('WeChat') ||
+    userAgent.includes('MicroMessenger')
 
   // If not a crawler, just pass through (let React handle it)
   if (!isCrawler) {
@@ -336,7 +339,7 @@ function injectMetaTags(
   html: string,
   meta: { title: string; description: string; image: string; url: string }
 ): string {
-  // Replace the default Open Graph tags with speaker-specific ones
+  // Replace the default Open Graph tags with content-specific ones
   let modifiedHtml = html
     .replace(
       /<meta property="og:title" content="[^"]*" \/>/,
@@ -349,6 +352,10 @@ function injectMetaTags(
     .replace(
       /<meta property="og:url" content="[^"]*" \/>/,
       `<meta property="og:url" content="${escapeHtml(meta.url)}" />`
+    )
+    .replace(
+      /<meta name="twitter:card" content="[^"]*" \/>/,
+      `<meta name="twitter:card" content="summary_large_image" />`
     )
     .replace(
       /<meta name="twitter:title" content="[^"]*" \/>/,

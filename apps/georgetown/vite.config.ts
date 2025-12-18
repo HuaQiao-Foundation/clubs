@@ -2,14 +2,24 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import { VitePWA } from 'vite-plugin-pwa'
+import { execSync } from 'child_process'
 
-// Read version from package.json
-import packageJson from './package.json'
+// Get git commit hash and date
+function getGitInfo() {
+  try {
+    const hash = execSync('git rev-parse --short HEAD').toString().trim()
+    const date = execSync('git log -1 --format=%cd --date=short').toString().trim()
+    return `${hash} • ${date}`
+  } catch (error) {
+    console.warn('Failed to get git info:', error)
+    return 'dev'
+  }
+}
 
 // https://vite.dev/config/
 export default defineConfig({
   define: {
-    __APP_VERSION__: JSON.stringify(packageJson.version)
+    __APP_VERSION__: JSON.stringify(getGitInfo())
   },
   plugins: [
     react(),
