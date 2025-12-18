@@ -115,6 +115,6 @@ export function getProjectMetaTags(project: {
   return {
     title: project.project_name,
     description: project.description?.substring(0, 200) || 'Georgetown Rotary Service Project',
-    url: `${window.location.origin}/projects?id=${project.id}`,
+    url: `${window.location.origin}/projects/${project.id}`,
   }
 }

@@ -6,7 +6,7 @@ import ShareButton from './ShareButton'
 interface ServiceProjectPageCardProps {
   project: ServiceProject
   onClick: (project: ServiceProject) => void
-  onEdit: (project: ServiceProject) => void
+  onEdit?: (project: ServiceProject) => void
 }
 
 export default function ServiceProjectPageCard({ project, onClick, onEdit }: ServiceProjectPageCardProps) {
@@ -16,7 +16,9 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
 
   const handleEditClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    onEdit(project)
+    if (onEdit) {
+      onEdit(project)
+    }
   }
 
   return (
@@ -24,17 +26,19 @@ export default function ServiceProjectPageCard({ project, onClick, onEdit }: Ser
       onClick={handleCardClick}
       className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg cursor-pointer transition-shadow relative group"
     >
-      {/* Edit Button - Top Right */}
-      <div className="absolute top-2 right-2 z-10">
-        <button
-          onClick={handleEditClick}
-          className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 transition-all"
-          aria-label="Edit project"
-          title="Edit project"
-        >
-          <Pencil size={16} className="text-gray-400 hover:text-[#0067c8] transition-colors" />
-        </button>
-      </div>
+      {/* Edit Button - Top Right (only shown if onEdit callback provided) */}
+      {onEdit && (
+        <div className="absolute top-2 right-2 z-10">
+          <button
+            onClick={handleEditClick}
+            className="p-2 bg-white hover:bg-gray-50 rounded-full shadow-md border border-gray-200 transition-all"
+            aria-label="Edit project"
+            title="Edit project"
+          >
+            <Pencil size={16} className="text-gray-400 hover:text-[#0067c8] transition-colors" />
+          </button>
+        </div>
+      )}
 
       {/* Image */}
       {project.image_url ? (

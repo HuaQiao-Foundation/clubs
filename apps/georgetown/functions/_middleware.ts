@@ -7,7 +7,7 @@
  *
  * Supported routes:
  * - /speakers/:uuid - Speaker details with portrait, topic
- * - /projects?id=uuid - Service project details with image, description
+ * - /projects/:uuid - Service project details with image, description
  * - /members/:uuid - Member details with portrait, role, classification
  * - /partners/:uuid - Partner organization details with logo, description
  * - /events/:uuid - Event details with date, time, location
@@ -31,6 +31,24 @@ const SUPABASE_ANON_KEY =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJtb3JscW96andiZnR6b3dxbXBzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NzIwNDMsImV4cCI6MjA4MTQ0ODA0M30.RzsIZo_-kGF2sAaXWfd4K-bj5PgVvrFNUOsGNycRkQ8'
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+/**
+ * Determine appropriate og:type based on content
+ */
+function getOgType(pathname: string): string {
+  // Profiles have first/last name
+  if (pathname.startsWith('/speakers/') || pathname.startsWith('/members/')) {
+    return 'profile'
+  }
+
+  // Articles have timestamps
+  if (pathname.startsWith('/events/')) {
+    return 'article'
+  }
+
+  // Default for projects, partners, homepage
+  return 'website'
+}
 
 export async function onRequest(context: {
   request: Request
@@ -88,7 +106,9 @@ export async function onRequest(context: {
               speaker.topic ||
               (speaker.organization ? `Speaker from ${speaker.organization}` : 'Georgetown Rotary Speaker'),
             image: speaker.portrait_url || '',
+            imageAlt: `Portrait of ${speaker.name}`,
             url: `${url.origin}/speakers/${speaker.id}`,
+            type: 'profile',
           })
 
           // Return modified HTML
@@ -102,12 +122,13 @@ export async function onRequest(context: {
     }
   }
 
-  // Process service project URLs: /projects?id=uuid
-  if (url.pathname === '/projects') {
-    const projectId = url.searchParams.get('id')
+  // Process service project URLs: /projects/:uuid
+  const projectMatch = url.pathname.match(/^\/projects\/([^/]+)$/)
+  if (projectMatch) {
+    const projectId = projectMatch[1]
 
     // Validate UUID format
-    if (projectId && UUID_REGEX.test(projectId)) {
+    if (UUID_REGEX.test(projectId)) {
       try {
         // Fetch project data from Supabase
         const { data: project, error } = await supabase
@@ -130,7 +151,9 @@ export async function onRequest(context: {
             title: project.project_name,
             description: project.description || `${project.area_of_focus} project - Georgetown Rotary`,
             image: project.image_url || '',
-            url: `${url.origin}/projects?id=${project.id}`,
+            imageAlt: `${project.project_name} service project`,
+            url: `${url.origin}/projects/${project.id}`,
+            type: 'website',
           })
 
           // Return modified HTML
@@ -184,7 +207,9 @@ export async function onRequest(context: {
             title: member.name,
             description,
             image: member.portrait_url || '',
+            imageAlt: `Portrait of ${member.name}`,
             url: `${url.origin}/members/${member.id}`,
+            type: 'profile',
           })
 
           // Return modified HTML
@@ -236,7 +261,9 @@ export async function onRequest(context: {
             title: `${partner.name} - Georgetown Rotary Partner`,
             description,
             image: partner.logo_url || '',
+            imageAlt: `${partner.name} logo`,
             url: `${url.origin}/partners/${partner.id}`,
+            type: 'website',
           })
 
           // Return modified HTML
@@ -315,7 +342,10 @@ export async function onRequest(context: {
             title: event.title,
             description,
             image: '', // Events don't have images yet, will use club logo fallback
+            imageAlt: 'Georgetown Rotary Club - Service Above Self',
             url: `${url.origin}/events/${event.id}`,
+            type: 'article',
+            publishedTime: new Date(event.date).toISOString(),
           })
 
           return new Response(modifiedHtml, {
@@ -337,10 +367,30 @@ export async function onRequest(context: {
  */
 function injectMetaTags(
   html: string,
-  meta: { title: string; description: string; image: string; url: string }
+  meta: {
+    title: string
+    description: string
+    image: string
+    imageAlt: string
+    url: string
+    type: string
+    publishedTime?: string
+  }
 ): string {
   // Replace the default Open Graph tags with content-specific ones
   let modifiedHtml = html
+    .replace(
+      /<meta property="og:type" content="[^"]*" \/>/,
+      `<meta property="og:type" content="${meta.type}" />`
+    )
+    .replace(
+      /<meta property="og:site_name" content="[^"]*" \/>/,
+      `<meta property="og:site_name" content="Georgetown Rotary" />`
+    )
+    .replace(
+      /<meta property="og:locale" content="[^"]*" \/>/,
+      `<meta property="og:locale" content="en_US" />`
+    )
     .replace(
       /<meta property="og:title" content="[^"]*" \/>/,
       `<meta property="og:title" content="${escapeHtml(meta.title)}" />`
@@ -366,7 +416,7 @@ function injectMetaTags(
       `<meta name="twitter:description" content="${escapeHtml(meta.description)}" />`
     )
 
-  // Add image tags if available (both OG and Twitter)
+  // Image metadata tags
   if (meta.image) {
     modifiedHtml = modifiedHtml
       .replace(
@@ -374,9 +424,43 @@ function injectMetaTags(
         `<meta property="og:image" content="${escapeHtml(meta.image)}" />`
       )
       .replace(
+        /<meta property="og:image:secure_url" content="[^"]*" \/>/,
+        `<meta property="og:image:secure_url" content="${escapeHtml(meta.image)}" />`
+      )
+      .replace(
+        /<meta property="og:image:alt" content="[^"]*" \/>/,
+        `<meta property="og:image:alt" content="${escapeHtml(meta.imageAlt)}" />`
+      )
+      .replace(
         /<meta name="twitter:image" content="[^"]*" \/>/,
         `<meta name="twitter:image" content="${escapeHtml(meta.image)}" />`
       )
+      .replace(
+        /<meta name="twitter:image:alt" content="[^"]*" \/>/,
+        `<meta name="twitter:image:alt" content="${escapeHtml(meta.imageAlt)}" />`
+      )
+
+    // Add image dimensions if not present
+    if (!modifiedHtml.includes('og:image:width')) {
+      const headEnd = modifiedHtml.indexOf('</head>')
+      const imageDimensions = `
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+      `
+      modifiedHtml = modifiedHtml.slice(0, headEnd) + imageDimensions + modifiedHtml.slice(headEnd)
+    }
+  }
+
+  // Article metadata for events
+  if (meta.publishedTime) {
+    if (!modifiedHtml.includes('article:published_time')) {
+      const headEnd = modifiedHtml.indexOf('</head>')
+      const articleMeta = `
+    <meta property="article:published_time" content="${meta.publishedTime}" />
+      `
+      modifiedHtml = modifiedHtml.slice(0, headEnd) + articleMeta + modifiedHtml.slice(headEnd)
+    }
   }
 
   // Also update document title

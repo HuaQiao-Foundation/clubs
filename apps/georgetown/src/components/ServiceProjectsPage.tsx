@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useNavigate, Outlet } from 'react-router-dom'
 import { LayoutGrid, List, Columns3, Download, Settings, X } from 'lucide-react'
 import { supabase } from '../lib/supabase'
 import type { ServiceProject } from '../types/database'
 import { getAreaOfFocusColor } from '../utils/areaOfFocusColors'
 import { format } from 'date-fns'
 import ServiceProjectModal from './ServiceProjectModal'
-import ServiceProjectDetailModal from './ServiceProjectDetailModal'
 import ServiceProjectPageCard from './ServiceProjectPageCard'
 import AppLayout from './AppLayout'
 import {
@@ -169,7 +168,6 @@ export default function ServiceProjectsPage() {
   const [filtersExpanded, setFiltersExpanded] = useState(false)
   const [selectedProject, setSelectedProject] = useState<ServiceProject | null>(null)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
-  const [isViewModalOpen, setIsViewModalOpen] = useState(false)
   const [showDropped, setShowDropped] = useState(false)
   const [sortField, setSortField] = useState<keyof ServiceProject>('start_date')
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc')
@@ -193,7 +191,7 @@ export default function ServiceProjectsPage() {
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
 
   const columnSettingsRef = useRef<HTMLDivElement>(null)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -206,24 +204,6 @@ export default function ServiceProjectsPage() {
   useEffect(() => {
     loadProjects()
   }, [])
-
-  // Handle incoming share URLs (e.g., /projects?id=abc123)
-  useEffect(() => {
-    const projectId = searchParams.get('id')
-
-    if (projectId && projects.length > 0) {
-      const project = projects.find((p) => p.id === projectId)
-
-      if (project) {
-        setSelectedProject(project)
-        setIsViewModalOpen(true)
-        setSearchParams({})
-      } else {
-        console.warn(`Project with id ${projectId} not found`)
-        setSearchParams({})
-      }
-    }
-  }, [searchParams, projects, setSearchParams])
 
   // Click outside handler for column settings dropdown
   useEffect(() => {
@@ -293,19 +273,12 @@ export default function ServiceProjectsPage() {
   }
 
   const handleViewProject = (project: ServiceProject) => {
-    setSelectedProject(project)
-    setIsViewModalOpen(true)
-  }
-
-  const handleEditProject = (project: ServiceProject) => {
-    setSelectedProject(project)
-    setIsViewModalOpen(false)
-    setIsAddModalOpen(true)
+    // Navigate to project detail route instead of opening modal directly
+    navigate(`/projects/${project.id}`)
   }
 
   const handleModalClose = () => {
     setIsAddModalOpen(false)
-    setIsViewModalOpen(false)
     setSelectedProject(null)
     loadProjects()
   }
@@ -591,21 +564,21 @@ export default function ServiceProjectsPage() {
         <div className="grid grid-cols-4 gap-3 bg-white rounded-lg shadow p-4">
           <div className="text-center">
             <div className="text-2xl font-bold text-[#0067c8]">{stats.total}</div>
-            <div className="text-xs text-gray-600">Total Projects</div>
+            <div className="text-xs text-gray-600 leading-tight">Total<br />Projects</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-[#f7a81b]">{stats.active}</div>
-            <div className="text-xs text-gray-600">Active Projects</div>
+            <div className="text-xs text-gray-600 leading-tight">Active<br />Projects</div>
           </div>
           <div className="text-center">
             <div className="text-2xl font-bold text-[#f7a81b]">{stats.completedThisYear}</div>
-            <div className="text-xs text-gray-600">Completed This Year</div>
+            <div className="text-xs text-gray-600 leading-tight">Completed<br />This Year</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-[#0067c8]">
-              {stats.totalValue.toLocaleString('en-MY', { style: 'currency', currency: 'MYR', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+            <div className="text-lg sm:text-xl font-bold text-[#0067c8] leading-tight">
+              RM {(stats.totalValue / 1000).toFixed(0)}k
             </div>
-            <div className="text-xs text-gray-600">Total Value (RM)</div>
+            <div className="text-xs text-gray-600 leading-tight">Total Value<br />(RM)</div>
           </div>
         </div>
       </div>
@@ -706,7 +679,6 @@ export default function ServiceProjectsPage() {
                   key={project.id}
                   project={project}
                   onClick={handleViewProject}
-                  onEdit={handleEditProject}
                 />
               ))}
             </div>
@@ -903,12 +875,8 @@ export default function ServiceProjectsPage() {
         <ServiceProjectModal project={selectedProject} onClose={handleModalClose} />
       )}
 
-      {isViewModalOpen && selectedProject && (
-        <ServiceProjectDetailModal
-          project={selectedProject}
-          onClose={handleModalClose}
-        />
-      )}
+      {/* Nested routes render here (e.g., ProjectDetailRoute) */}
+      <Outlet />
     </AppLayout>
   )
 }

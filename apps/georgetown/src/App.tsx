@@ -20,6 +20,7 @@ const MemberDirectory = lazy(() => import('./components/MemberDirectory'))
 const SpeakerDetailRoute = lazy(() => import('./routes/SpeakerDetailRoute'))
 const SpeakerEditRoute = lazy(() => import('./routes/SpeakerEditRoute'))
 const ServiceProjectsPage = lazy(() => import('./components/ServiceProjectsPage'))
+const ProjectDetailRoute = lazy(() => import('./routes/ProjectDetailRoute'))
 const PartnersPage = lazy(() => import('./components/PartnersPage'))
 const TimelineView = lazy(() => import('./components/TimelineView'))
 const PhotoGallery = lazy(() => import('./components/PhotoGallery'))
@@ -48,7 +49,11 @@ function App() {
                 {/* Primary Sections (lazy loaded) */}
                 <Route path="/members" element={<MemberDirectory />} />
                 <Route path="/calendar" element={<CalendarView />} />
-                <Route path="/projects" element={<ServiceProjectsPage />} />
+
+                {/* Projects - Nested routes for consistent pattern with speakers */}
+                <Route path="/projects" element={<ServiceProjectsPage />}>
+                  <Route path=":projectId" element={<ProjectDetailRoute />} />
+                </Route>
 
                 {/* Speakers - Nested routes for hybrid modal + URL routing */}
                 <Route path="/speakers" element={<SpeakersPage />}>

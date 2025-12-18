@@ -152,10 +152,11 @@ function fallbackCopyToClipboard(
 
 /**
  * Generate shareable URL for a service project
+ * Uses path parameter format (RESTful routing)
  */
 export function generateProjectUrl(projectId: string): string {
   const baseUrl = window.location.origin
-  return `${baseUrl}/projects?id=${projectId}`
+  return `${baseUrl}/projects/${projectId}`
 }
 
 /**
@@ -185,20 +186,21 @@ export function generatePartnerUrl(partnerId: string): string {
 
 /**
  * Extract ID from URL (for analytics)
- * Works for both projects and speakers
- * Supports both legacy query params (?id=...) and new path params (/speakers/:id)
+ * Works for projects, speakers, members, and partners
+ * Supports both legacy query params (?id=...) and new path params (/:resource/:id)
  */
 function extractIdFromUrl(url: string): string | undefined {
   try {
     const urlObj = new URL(url)
 
-    // Try query parameter first (legacy format for projects, backwards compatibility)
+    // Try query parameter first (legacy format for backwards compatibility)
     const queryId = urlObj.searchParams.get('id')
     if (queryId) return queryId
 
-    // Try path parameter (new hybrid routing format for speakers)
+    // Try path parameter (RESTful routing format)
     const pathParts = urlObj.pathname.split('/').filter(Boolean)
-    // For /speakers/:id or /speakers/:id/edit, return the ID (second segment)
+    // For /speakers/:id, /projects/:id, /members/:id, /partners/:id, etc.
+    // Return the ID (second segment)
     if (pathParts.length >= 2) {
       return pathParts[1]
     }
