@@ -91,10 +91,16 @@ export default defineConfig(({ command }) => ({
             purpose: 'any'
           },
           {
-            src: 'icons/icon-192x192.png',
+            src: 'icons/icon-192x192-maskable.png',
             sizes: '192x192',
             type: 'image/png',
-            purpose: 'maskable' // Android adaptive icon
+            purpose: 'maskable'
+          },
+          {
+            src: 'icons/icon-512x512-maskable.png',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable'
           }
         ],
         categories: ['business', 'productivity', 'social']

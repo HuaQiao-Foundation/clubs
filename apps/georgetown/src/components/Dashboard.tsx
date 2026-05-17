@@ -163,7 +163,7 @@ export default function Dashboard() {
         <div className="bg-gradient-to-br from-[#0067c8] to-[#004a8a] text-white rounded-lg p-6 shadow-lg mb-6">
           <div className="flex items-center gap-4 mb-4">
             <img
-              src="/assets/images/logos/RotaryMBS-Simple_REV.svg"
+              src="/assets/images/logos/rotary-lockup-white.svg"
               alt="Rotary Logo"
               className="h-16 md:h-20"
             />

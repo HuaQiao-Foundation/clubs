@@ -21,7 +21,7 @@ export default function Availability() {
               <ArrowLeft size={24} className="text-white" />
             </button>
             <img
-              src="/assets/images/logos/RotaryMBS-Simple_REV.svg"
+              src="/assets/images/logos/rotary-lockup-white.svg"
               alt="Rotary International"
               className="h-6 md:h-7 w-auto"
               loading="eager"

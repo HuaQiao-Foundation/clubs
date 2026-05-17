@@ -55,7 +55,7 @@ export default function AppHeader({
             aria-label="Return to Dashboard"
           >
             <img
-              src="/assets/images/logos/RotaryMBS-Simple_REV.svg"
+              src="/assets/images/logos/rotary-lockup-white.svg"
               alt="Rotary Logo"
               className="h-8 md:h-10"
             />

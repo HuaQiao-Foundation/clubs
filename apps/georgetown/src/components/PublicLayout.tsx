@@ -45,7 +45,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
             <div className="flex-shrink-0">
               <Link to="/about" className="flex items-center gap-3 hover:opacity-90 transition-opacity">
                 <img
-                  src="/assets/images/logos/RotaryMBS-Simple_REV.svg"
+                  src="/assets/images/logos/rotary-lockup-white.svg"
                   alt="Rotary Logo"
                   className="h-8"
                 />

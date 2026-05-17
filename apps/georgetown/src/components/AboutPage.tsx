@@ -10,7 +10,7 @@ export default function AboutPage() {
         <div className="bg-white rounded-lg p-6 md:p-8 shadow-lg mb-6">
           <div className="flex items-center gap-4 mb-6">
             <img
-              src="/rotary-wheel.svg"
+              src="/assets/images/logos/rotary-wheel-azure.svg"
               alt="Rotary Logo"
               className="w-16 h-16 md:w-20 md:h-20"
             />
