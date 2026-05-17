@@ -36,7 +36,8 @@ export default function Layout({ children }: LayoutProps) {
 
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link to={user ? '/' : '/pages/about'} className="flex items-center">
+              <Link to={user ? '/' : '/pages/about'} className="flex items-center gap-2.5">
+                <img src="/assets/logos/tm-logo-white.svg" alt="Toastmasters" className="h-8 w-auto" />
                 <h1 className="text-xl font-jakarta font-semibold text-white">Pitchmasters</h1>
               </Link>
             </div>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 195">
+  <!-- Pitchmasters — Stacked Lockup — Color -->
+  <!-- TM globe logo (color), centred -->
+  <image href="tm-logo-color.svg" x="50" y="8" width="160" height="133"/>
+  <!-- Separator rule -->
+  <rect x="80" y="150" width="100" height="1.5" fill="#004165"/>
+  <!-- Club name -->
+  <text
+    x="130" y="174"
+    text-anchor="middle"
+    font-family="'Gotham', 'Montserrat', Arial, sans-serif"
+    font-weight="700"
+    font-size="13"
+    letter-spacing="2.5"
+    fill="#004165"
+  >PITCHMASTERS</text>
+</svg>
