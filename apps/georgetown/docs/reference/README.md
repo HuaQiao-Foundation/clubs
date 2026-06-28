@@ -24,33 +24,12 @@ This directory contains authoritative reference data for:
 
 ## Files
 
-### `rotary_areas_of_focus_colors.csv`
+### Areas of Focus colors
 
-**Purpose**: Official Rotary International Areas of Focus with brand-standard colors
-
-**Columns**:
-- `Area of Focus` - Official name of Rotary's service focus area
-- `Color Name` - Descriptive color name
-- `PMS` - Pantone Matching System color code
-- `HEX` - Hex color code for digital use
-- `RGB` - RGB values for digital rendering
-
-**Example**:
-```csv
-Area of Focus,Color Name,PMS,HEX,RGB
-Peacebuilding & Conflict Prevention,Azure,PANTONE 2175 C,#0067C8,"0, 103, 200"
-```
-
-**Row Count**: 7 (one per Area of Focus)
-
-**Data Authority**: Rotary International Brand Center
-**Update Frequency**: Only when Rotary International changes official Areas of Focus (rare)
-
-**Usage in Code**:
-- Event categorization system
-- Calendar event color coding
-- Service project classification
-- Reporting and analytics filtering
+> **Moved**: The standalone `rotary_areas_of_focus_colors.csv` was consolidated into
+> `public/brand/rotary-colors.json`, which is now the single source of truth for all
+> Rotary brand colors (including Areas of Focus) with CMYK, Pantone, and color-blind
+> metadata. See [rotary-color-system.md](rotary-color-system.md) for usage.
 
 ---
 
@@ -196,15 +175,12 @@ Date,Observance
 **Load Areas of Focus:**
 
 ```typescript
-import areasOfFocusCSV from '@/docs/reference-data/rotary_areas_of_focus_colors.csv';
+import rotaryColors from '@/public/brand/rotary-colors.json';
 
-// Parse CSV (using library like papaparse or csv-parser)
-const areasOfFocus = parseCSV(areasOfFocusCSV);
-
-// Use in event categorization
-const eventColor = areasOfFocus.find(
-  area => area['Area of Focus'] === 'Disease Prevention & Treatment'
-)?.HEX; // Returns: #E02927
+// Areas of Focus colors now live in the consolidated brand color JSON,
+// keyed by slug (peacebuilding, disease, water, maternalChild, education,
+// economic, environment).
+const eventColor = rotaryColors.areasOfFocus.disease.hex; // Returns: #e02927
 ```
 
 **Load Monthly Themes:**
@@ -237,14 +213,12 @@ CREATE TABLE rotary_areas_of_focus (
 );
 ```
 
-**Import CSV:**
+**Import from JSON:**
 
-```sql
-COPY rotary_areas_of_focus(area_name, color_name, pantone, hex_color, rgb_color)
-FROM '/path/to/rotary_areas_of_focus_colors.csv'
-DELIMITER ','
-CSV HEADER;
-```
+Areas of Focus colors now live in `public/brand/rotary-colors.json` (under the
+`areasOfFocus` key). Load and insert them via a small script rather than `COPY`,
+e.g. iterate the `areasOfFocus` object and `INSERT` each entry's `name`, `pantone`,
+`hex`, and `rgb` values.
 
 ---
 
@@ -275,7 +249,7 @@ CSV HEADER;
 
 | File | Created | Last Updated | Source |
 |------|---------|--------------|--------|
-| `rotary_areas_of_focus_colors.csv` | 2025-10-08 | 2025-10-08 | RI Brand Center |
+| `rotary_areas_of_focus_colors.csv` | 2025-10-08 | 2026-06-29 (removed — merged into `public/brand/rotary-colors.json`) | RI Brand Center |
 | `rotary_observances_2025_26.csv` | 2025-10-08 | 2025-10-08 | RI Official Calendar |
 | `rotary_special_days.csv` | 2025-10-08 | 2025-10-08 | RI Official Calendar |
 
