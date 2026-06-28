@@ -29,10 +29,22 @@ import { google } from "npm:googleapis@144";
 import { parse as parsePath } from "https://deno.land/std@0.224.0/path/mod.ts";
 
 // --- Club configuration ---
+
+/**
+ * A sync job copies one column from a canonical source sheet into a destination
+ * sheet, matching rows by a composite name key (preferred/rotary name + last name)
+ * rather than by position — the two sheets are sorted differently.
+ */
+interface SyncJob {
+  source: { alias: string; tab: string; keyCols: [string, string]; valueCol: string };
+  dest: { alias: string; tab: string; keyCols: [string, string]; valueCol: string };
+}
+
 interface ClubConfig {
   name: string;
   envKey: string;
   aliases: Record<string, string>;
+  syncs?: Record<string, SyncJob>;
 }
 
 const CLUBS: Record<string, ClubConfig> = {
@@ -46,6 +58,15 @@ const CLUBS: Record<string, ClubConfig> = {
       "club-folder": "1tXvyP8KdLl7gHLBNAf3-JsK5CwRtmYCt",
       "bod-folder": "1LmW-VuJM_tmbWRN2olp0sHlEI8V7V05y",
       "minutes-folder": "1N0vKcV2KZA2e9yfoMiiOv14exOPgf6O-",
+    },
+    syncs: {
+      // member-master (canonical) → member-directory, matched by name.
+      // Master: A=Preferred Name, B=Last Name, G=Birthday (mm.dd)
+      // Directory: A=Rotary Name, D=Last Name, K=Birthday (mm.dd)
+      birthday: {
+        source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "G" },
+        dest: { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "K" },
+      },
     },
   },
   pitchmasters: {
@@ -163,6 +184,90 @@ async function readSheet(club: ClubConfig, sheetId: string, tabName: string) {
   }
 }
 
+const colToIndex = (col: string) =>
+  [...col.toUpperCase()].reduce((n, c) => n * 26 + (c.charCodeAt(0) - 64), 0) - 1;
+
+async function syncField(club: ClubConfig, syncName: string, opts: { apply: boolean }) {
+  const job = club.syncs?.[syncName];
+  if (!job) {
+    console.error(`Unknown sync: "${syncName}". Available: ${Object.keys(club.syncs ?? {}).join(", ") || "(none)"}`);
+    Deno.exit(1);
+  }
+
+  const auth = await getAuthClient(club);
+  const sheets = google.sheets({ version: "v4", auth });
+  const sourceId = resolveId(club, job.source.alias);
+  const destId = resolveId(club, job.dest.alias);
+
+  // Read the full data range of each tab once (rows 2+, skipping header).
+  const read = async (id: string, tab: string) => {
+    const res = await sheets.spreadsheets.values.get({
+      spreadsheetId: id,
+      range: `${tab}!A2:AZ`,
+    });
+    return res.data.values ?? [];
+  };
+  const srcRows = await read(sourceId, job.source.tab);
+  const dstRows = await read(destId, job.dest.tab);
+
+  const key = (row: string[], cols: [string, string]) =>
+    `${(row[colToIndex(cols[0])] ?? "").trim()}|${(row[colToIndex(cols[1])] ?? "").trim()}`;
+
+  // Build source lookup: name-key -> value.
+  const srcVal = colToIndex(job.source.valueCol);
+  const lookup = new Map<string, string>();
+  for (const r of srcRows) {
+    const k = key(r, job.source.keyCols);
+    if (k !== "|") lookup.set(k, (r[srcVal] ?? "").trim());
+  }
+
+  // Walk destination rows, compute changes.
+  const dstVal = colToIndex(job.dest.valueCol);
+  const updates: { row: number; name: string; from: string; to: string }[] = [];
+  const unmatched: string[] = [];
+  dstRows.forEach((r, i) => {
+    const k = key(r, job.dest.keyCols);
+    if (k === "|") return; // blank row
+    if (!lookup.has(k)) { unmatched.push(k.replace("|", " ")); return; }
+    const to = lookup.get(k)!;
+    const from = (r[dstVal] ?? "").trim();
+    if (to !== "" && to !== from) {
+      updates.push({ row: i + 2, name: k.replace("|", " "), from, to }); // +2: skipped header + 0-index
+    }
+  });
+
+  console.log(`[${club.name}] sync "${syncName}": ${job.source.alias}.${job.source.valueCol} → ${job.dest.alias}.${job.dest.valueCol} (by name)\n`);
+  if (updates.length === 0) {
+    console.log("Nothing to update — destination already in sync.");
+  } else {
+    console.log(`${updates.length} cell(s) ${opts.apply ? "updated" : "to update"}:`);
+    for (const u of updates) {
+      console.log(`  ${job.dest.valueCol}${u.row}  ${u.name.padEnd(28)}  "${u.from}" → "${u.to}"`);
+    }
+  }
+  if (unmatched.length) {
+    console.log(`\n${unmatched.length} destination member(s) not found in source (skipped): ${unmatched.join(", ")}`);
+  }
+
+  if (!opts.apply) {
+    console.log(`\nDry run. Re-run with --apply to write these changes.`);
+    return;
+  }
+  if (updates.length === 0) return;
+
+  await sheets.spreadsheets.values.batchUpdate({
+    spreadsheetId: destId,
+    requestBody: {
+      valueInputOption: "RAW",
+      data: updates.map(u => ({
+        range: `${job.dest.tab}!${job.dest.valueCol}${u.row}`,
+        values: [[u.to]],
+      })),
+    },
+  });
+  console.log(`\n✓ Wrote ${updates.length} cell(s) to ${job.dest.alias}.`);
+}
+
 async function downloadFile(club: ClubConfig, fileId: string, outputPath?: string) {
   const auth = await getAuthClient(club);
   const drive = google.drive({ version: "v3", auth });
@@ -233,6 +338,7 @@ Commands:
   list-sheets <sheet-alias|id>          List tabs in a spreadsheet
   read-sheet <sheet-alias|id> "<tab>"   Read a sheet tab (TSV output)
   download <file-id> [output]           Download a file
+  sync <field> [--apply]                Sync a field from master → directory (dry-run by default)
 
 Aliases:
 ${aliasList}
@@ -276,6 +382,14 @@ switch (command) {
   case "download": {
     if (!args[0]) { console.error("Usage: download <file-id> [output-path]"); Deno.exit(1); }
     await downloadFile(club, args[0], args[1]);
+    break;
+  }
+  case "sync": {
+    if (!args[0]) {
+      console.error(`Usage: sync <field> [--apply]   (available: ${Object.keys(club.syncs ?? {}).join(", ") || "none"})`);
+      Deno.exit(1);
+    }
+    await syncField(club, args[0], { apply: args.includes("--apply") });
     break;
   }
   default:
