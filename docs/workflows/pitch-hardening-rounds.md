@@ -151,11 +151,28 @@ blind spot: the shaper can't see the assumption they didn't know they made, can'
 framing they're attached to, and will rate their own Appetite generously. R5 is the **independence
 break**: the first reviewer who isn't the author.
 
-In this solo-dev shop the independent reviewer is **fresh eyes from a clean context** — a new
-Claude Code session that hasn't seen the drafting, a Claude Console review, or the CEO reading it
-cold. The mechanism matters less than the independence: whoever runs R5 must *not* have authored
-or hardened the pitch. The CEO hands over the hardened pitch (with its `## Hardening log`), and the
-reviewer reads it cold and answers:
+In this solo-dev shop there is no COO role, so the independent reviewer is **fresh eyes from a
+clean context** — whoever runs R5 must *not* have authored or hardened the pitch. The mechanism
+matters less than the independence, but in practice there are three ways to get it, in rough order
+of how reliably they deliver true independence:
+
+1. **Spawn a fresh subagent** (the default, and what works best for code-grounded pitches). The
+   CTO launches a `general-purpose` (or `Explore`) agent that has *not* seen the drafting or the
+   hardening conversation, and hands it **only** the hardened pitch + the R5 prompt below. Because
+   the agent starts from a clean context, it genuinely re-derives the root from the primary files
+   rather than inheriting the author's reading. This is the closest thing to Brandmine's COO break
+   that a one-person shop has — and it scales: the agent reads the actual code, runs the disproof,
+   and returns a verdict. *(Proven on the 2026-06-29 knowledge-base-wiki run: a fresh subagent ran
+   the falsifiable root's disproof cold against `RichTextEditor.tsx` + `package.json` and
+   **falsified it** — the four self-review rounds had kept the same question framed as an open
+   toss-up the code already settled.)*
+2. **A new Claude Code / Claude Console session** the CEO opens separately and pastes the pitch into.
+3. **The CEO reading it cold** — weakest as a *disproof* engine (a human won't run the one-liner),
+   but strongest at the premise/strategic-fit questions a subagent can't judge.
+
+For a code-behavior root (most clubs pitches), prefer (1) — it's the only option that reliably
+*runs the disproof*. For a strategic-fit or premise root, (3) complements it. The CEO hands over
+the hardened pitch (with its `## Hardening log`), and the reviewer reads it cold and answers:
 
 ```text
 You are reviewing a Shape Up pitch the CTO has already hardened through four self-review rounds (the ## Hardening log shows what each round found). Your job is the one thing four rounds of self-review structurally cannot do: catch what the author can't see.
