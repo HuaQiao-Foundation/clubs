@@ -1,6 +1,7 @@
 {
   "nodeModulesDir": "auto",
   "tasks": {
-    "extract-pdf": "deno run --allow-read --allow-write --allow-env --allow-net scripts/extract-pdf.ts"
+    "extract-pdf": "deno run --allow-read --allow-write --allow-env --allow-net scripts/extract-pdf.ts",
+    "google": "deno run --allow-read --allow-write --allow-env --allow-net --env=.env scripts/google-drive.ts"
   }
 }
