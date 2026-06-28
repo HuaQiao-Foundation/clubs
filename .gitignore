@@ -44,3 +44,6 @@ Thumbs.db
 backups/
 temp/
 ~$*.docx
+
+# Python venv (Word-document toolchain — see docs/document-toolchain.md)
+.venv/

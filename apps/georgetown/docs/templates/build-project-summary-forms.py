@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """Build RC Georgetown Project Summary Word forms — matched to the house style
 of RCG_Project_Brief / Approval FINAL templates (Calibri, azure header block,
-thin grid, azure section bars, tick-boxes)."""
+thin grid, azure section bars, tick-boxes).
+
+Run with the shared monorepo venv (see docs/document-toolchain.md):
+    /Users/randaleastman/dev/clubs/.venv/bin/python build-project-summary-forms.py
+"""
 from docx import Document
 from docx.shared import Pt, RGBColor, Inches
 from docx.enum.text import WD_ALIGN_PARAGRAPH
@@ -97,7 +101,12 @@ def fields(doc, rows, label_in=2.5, ans_in=4.2):
         lp=cell_para(lc); run(lp, label, size=9.5, bold=True, color=BODY)
         if hint: run(lp, "  "+hint, size=8, italic=True, color=MUTED)
         ap=cell_para(ac)
-        if answer: run(ap, answer, size=9.5, color=BODY)
+        if answer:
+            lines=answer.split("\n")
+            r=run(ap, lines[0], size=9.5, color=BODY)
+            for extra in lines[1:]:
+                r.add_break()                       # soft line break within the cell
+                run(ap, extra, size=9.5, color=BODY)
     para(doc, after=6)  # space between sections
 
 def F(label, answer="", hint=None, tall=False): return (label, hint, answer, tall)
@@ -158,10 +167,10 @@ def build(path, *, draft_for=None, prefill=None):
     last_hint = ("the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this related?"
                  if draft_for else None)
     fields(doc, [
-        F("Photos?", "", "yes / no — where?"),
-        F("Publicity", "", "links, write-ups"),
-        F("Lessons learned / would you repeat it?", "", None, tall=True),
-        F("Anything else we should record?", "", last_hint, tall=True),
+        F("Photos?", g("Photos"), "yes / no — where?"),
+        F("Publicity", g("Publicity"), "links, write-ups"),
+        F("Lessons learned / would you repeat it?", g("Lessons"), None, tall=True),
+        F("Anything else we should record?", g("Anything else"), last_hint, tall=True),
     ])
     fp=para(doc, before=10)
     run(fp, ("Thank you, Mike. This completes the 2024-25 entry in the club's Service Projects record."
@@ -170,8 +179,46 @@ def build(path, *, draft_for=None, prefill=None):
         size=8.5, italic=True, color=MUTED)
     doc.save(path); print("wrote", path)
 
-T="/Users/randaleastman/dev/clubs/apps/georgetown/docs/templates"
-build(f"{T}/RC-Georgetown-Project-Summary-Form.docx")
-build(f"{T}/Project-Summary-Aquaponics-Workshop-for-Mike.docx", draft_for="Mike Jackman",
+# All generated .docx land in the gitignored forms/ folder (artifacts, not source).
+OUT="/Users/randaleastman/dev/clubs/apps/georgetown/forms"
+build(f"{OUT}/RC-Georgetown-Project-Summary-Form.docx")
+build(f"{OUT}/Project-Summary-Aquaponics-Workshop-for-Mike.docx", draft_for="Mike Jackman",
       prefill={"Project name":"Aquaponics Workshop","Rotary year":"2024-25","Champion":"Mike Jackman",
                "Area of Focus":"Environment","Funding":"Club","Status":"Completed","Location":"Penang"})
+
+# Shrijan Maram Pitchmasters Scholarship — completed record (DB project 96ceba73-…)
+build(f"{OUT}/Project-Summary-Shrijan-Maram-Scholarship.docx",
+      prefill={
+        "Project name":"Shrijan Maram Pitchmasters Scholarship",
+        "Rotary year":"2025-26",
+        "Champion":"Randal Eric Eastman",
+        "What was it?":("A project to sponsor the Pitchmasters charter dues (RM 388) for an 18-year-old "
+                        "student, Shrijan Maram — giving a proven young local the communication training "
+                        "and platform to grow his impact."),
+        "Why":("Shrijan is a capable, driven student who already has the skills and track record but "
+               "lacked the communication infrastructure to take his work further. For a small sum, the "
+               "club could remove the cost barrier to that training."),
+        "Impact":("“Shrijan Maram is not potential — he is proven. He has the skills. He has the drive. "
+                  "He has the track record. He needs the communication infrastructure to take his impact "
+                  "global. For USD 88, Rotary Club of Georgetown can help a local prodigy develop the voice "
+                  "to match his vision. This isn’t sponsorship — it’s partnership.”"),
+        "Area of Focus":"Education",
+        "Funding":"Club",
+        "Status":"Completed",
+        "Start date":"2025-10-01",
+        "Completion date":"2025-10-06",
+        "Location":"Penang",
+        "Beneficiaries":"1 (Shrijan Maram)",
+        "Value":"RM 388.00 (~USD 88)",
+        "Volunteer hours":"—",
+        "Partners":("PG GAMA Supermarket & Department Store — funding partner; corporate sponsor who "
+                    "underwrote the RM 388 charter dues (contact: Andrew TK Lim).\n"
+                    "Pitchmasters — program partner; the public-speaking club Shrijan joins via the "
+                    "sponsored charter dues."),
+        "Photos":"Yes — project image on file (Supabase project-images/96ceba73-…jpg).",
+        "Publicity":"— (none recorded)",
+        "Lessons":"Would repeat: Yes. No lessons-learned note recorded.",
+        "Anything else":("Possible follow-ups: confirm whether this is a one-off or the start of a recurring "
+                         "Pitchmasters scholarship; track Shrijan’s progress in Pitchmasters as an outcome "
+                         "data point."),
+      })
