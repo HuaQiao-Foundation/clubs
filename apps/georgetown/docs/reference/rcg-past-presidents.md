@@ -58,22 +58,27 @@ most needing your input.
 | 37 | 2019-2020 | _______________________ | ⬅ please fill |
 | 38 | 2020-2021 | James Low | From handover minutes (2nd term?) — please confirm |
 | 39 | 2021-2022 | Weeli Tan | Current member |
-| 40 | 2022-2023 | _______________________ | ⬅ please fill |
-| 41 | 2023-2024 | _______________________ | ⬅ please fill |
+| 40 | 2022-2023 | Andrew Khoo | Current member (2nd term) — from app |
+| 41 | 2023-2024 | Chin Tat Beh | Current member — from app |
 | 42 | 2024-2025 | Wilson Lim | Current member |
 | 43 | 2025-2026 | Howard Roscoe | Current President (from minutes) |
+
+> **Full version with RI Presidents & themes:** the canonical spreadsheet
+> "Past Presidents Roll" (in the club Drive folder) carries every year plus the
+> Rotary International President and that year's RI theme. This markdown is the
+> quick fill-in copy; sync confirmed entries back into the spreadsheet.
 
 ---
 
 ## Open questions for members
 
 1. **Who were the presidents for 2008–2020 (#26–#37)?** This is the biggest gap.
-2. **2022-2023 and 2023-2024 (#40, #41)** — who served?
-3. **James Low** appears as both #23 (2005-2006) and as Immediate Past President in July 2021
+2. **James Low** appears as both #23 (2005-2006) and as Immediate Past President in July 2021
    (i.e. 2020-2021). Did he serve twice? Please confirm both years.
-4. **Chin Tat Beh** — was he ever an RC Georgetown president? (Not in the historical roll;
-   currently unconfirmed.)
-5. Any **corrections** to spellings or years above.
+3. Any **corrections** to spellings or years above.
+
+*(Resolved: Chin Tat Beh = 2023-2024 president, and Andrew Khoo served a 2nd term in
+2022-2023 — both confirmed from the Georgetown app's rotary-years data.)*
 
 ---
 
