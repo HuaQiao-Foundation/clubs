@@ -1,105 +1,96 @@
----
-title: "RC Georgetown — Project Summary Form: Aquaponics Workshop"
----
-
 # RC Georgetown — Project Summary Form
-
 ## Aquaponics Workshop *(draft for Mike Jackman to complete)*
 
-*Hi Mike — we've started this from what we already have on record. Please **correct anything wrong** and **fill the blanks** on the lines provided. Return it however suits you. Thank you!*
-
-------------------------------------------------------------------------
+*Hi Mike — we've started this from what we already have on record. Please correct anything wrong, and type your answers in the space under each blank prompt. Return it however suits you. Thank you!*
 
 ## 1 · Project Identity
 
-**Project name:** Aquaponics Workshop   *(correct if it had a fuller name: ____________________ )*
+**Project name:** Aquaponics Workshop *(correct if it had a fuller name)*
 
 **Rotary year:** 2024-25
 
 **Champion:** Mike Jackman
 
-------------------------------------------------------------------------
-
 ## 2 · The Story
 
-**What was it?** *(one or two sentences)*
+**What was it?** (one or two sentences)
 
-_________________________________________________________________
+&nbsp;
 
-_________________________________________________________________
+&nbsp;
 
-**Why did the club do it?** *(the need or opportunity it addressed)*
+**Why did the club do it?** (the need or opportunity it addressed)
 
-_________________________________________________________________
+&nbsp;
 
-_________________________________________________________________
+&nbsp;
 
-**Impact — what changed because of it?** *(e.g. how many people attended / trained, what they took away)*
+**Impact — what changed because of it?** (e.g. how many people attended / trained, what they took away)
 
-_________________________________________________________________
+&nbsp;
 
-_________________________________________________________________
-
-------------------------------------------------------------------------
+&nbsp;
 
 ## 3 · Classification
 
-**Area of Focus:** ☒ Supporting the Environment *(our best guess — change if you disagree:)*
+**Area of Focus:** Environment *(our best guess — change if you disagree)*
 
-- ☐ Peace   ☐ Disease   ☐ Water   ☐ Maternal/Child   ☐ Education   ☐ Economy
+**Funding:** Club
 
-**Funding:** ☒ Club    *(or:  ☐ District Grant   ☐ Global Grant   ☐ Joint)*
-
-**Status:** ☒ Completed    *(or:  ☐ Planning   ☐ Execution   ☐ Paused   ☐ Dropped)*
-
-------------------------------------------------------------------------
+**Status:** Completed
 
 ## 4 · When & Where
 
-**Start date** *(month is fine, e.g. 2024-09)*:  _______________
+**Start date** (month is fine, e.g. 2024-09)**:**
 
-**Completion date:**  _______________
+&nbsp;
 
-**Location:** Penang   *(more specific venue if you have it: ____________________ )*
+**Completion date:**
 
-------------------------------------------------------------------------
+&nbsp;
+
+**Location:** Penang *(more specific venue if you have it)*
+
+&nbsp;
 
 ## 5 · By the Numbers
 
-**Beneficiaries** *(how many attended / were helped)*:  _______________
+**Beneficiaries** (how many attended / were helped)**:**
 
-**Project value (RM)** *(total spent / value delivered)*:  _______________
+&nbsp;
 
-**Volunteer hours** *(optional)*:  _______________
+**Project value (RM)** (total spent / value delivered)**:**
 
-------------------------------------------------------------------------
+&nbsp;
+
+**Volunteer hours** (optional)**:**
+
+&nbsp;
 
 ## 6 · Partners
 
-**Organisations, sponsors, or co-clubs involved** *(one per line; "none" is fine)*
+**Organisations, sponsors, or co-clubs involved** (list them, or write "none"):
 
-_________________________________________________________________
-
-------------------------------------------------------------------------
+&nbsp;
 
 ## 7 · Extras *(all optional)*
 
-**Photos?** *(yes / no — where are they?)*
+**Photos?** (yes / no — where are they?)
 
-_________________________________________________________________
+&nbsp;
 
-**Publicity** *(any links or write-ups)*
+**Publicity** (any links or write-ups):
 
-_________________________________________________________________
+&nbsp;
 
 **Lessons learned / would you repeat it?**
 
-_________________________________________________________________
+&nbsp;
 
-**Anything else we should record?**  *(For our records: the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this workshop related to that?)*
+**Anything else we should record?** *(For our records: the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this workshop related to that?)*
 
-_________________________________________________________________
+&nbsp;
 
-------------------------------------------------------------------------
+&nbsp;
 
 *Thank you, Mike. This will complete the 2024-25 entry in the club's Service Projects record.*
