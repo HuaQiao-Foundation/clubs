@@ -120,34 +120,33 @@ const CLUBS: Record<string, ClubConfig> = {
       "exco-folder": "1L0xc2mgN7_LB_t_a1yq836MKmKIKfrpW",
     },
     // member-master (canonical) → member-directory, matched by name.
-    //   Master  (Active/Alumni): B=Last, C=Preferred, A=First | F=Birthday G=Email I=Mobile V=Pathway-Code
+    //   Master  (Active/Alumni): A=Preferred, B=First, C=Last | F=Birthday G=Email I=Mobile V=Pathway-Code
     //   Dir     Members/Alumni:  A=Preferred, B=Last | C=Email D=Mobile G=Birthday H=Pathways-Level
-    // Master key uses Preferred (C) with fallback to First (A) — Alumni rows
-    // leave Preferred blank and only fill First. Master active tab "Active
-    // Members" maps to directory tab "Members".
+    // Master key uses Preferred (A) with fallback to First (B) — some rows only
+    // fill First. Master active tab "Active Members" maps to directory "Members".
     syncs: {
       birthday: [
-        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "F" },
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["A", "B"], "C"], valueCol: "F" },
           dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "G" } },
-        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "F" },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["A", "B"], "C"], valueCol: "F" },
           dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "G" } },
       ],
       email: [
-        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "G" },
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["A", "B"], "C"], valueCol: "G" },
           dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "C" } },
-        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "G" },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["A", "B"], "C"], valueCol: "G" },
           dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "C" } },
       ],
       mobile: [
-        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "I" },
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["A", "B"], "C"], valueCol: "I" },
           dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "D" } },
-        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "I" },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["A", "B"], "C"], valueCol: "I" },
           dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "D" } },
       ],
       "pathway-level": [
-        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "V" },
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["A", "B"], "C"], valueCol: "V" },
           dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "H" } },
-        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "V" },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["A", "B"], "C"], valueCol: "V" },
           dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "H" } },
       ],
     },
