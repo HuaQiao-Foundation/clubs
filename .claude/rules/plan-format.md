@@ -65,6 +65,31 @@ CEO does not need to provide the Problem/Appetite/Solution/Rabbit-holes/No-gos s
 - **App alignment**: every pitch cross-references which app(s) it touches and cites the relevant `CLAUDE.md` context — catches scope drift at draft time, not ship time
 - **Benchmark discipline**: pitches for user-facing features cite at least one comparable product (Toastmasters app, Rotary apps, club management SaaS competitors) — forces "what are we stealing from whom" to be explicit
 
+## Hardening a DRAFT before the bet
+
+Between **Shape** (step 1) and **Present** (step 2), a draft pitch goes through deliberate
+hole-poking. Every draft, challenged 4–5 times from different angles, surfaces gaps,
+contradictions, and anomalies — producing a stronger pitch to bet on. The repeatable framework is
+four CTO self-review rounds plus an optional fifth **independent** round, each from a distinct
+angle so they find *different* classes of gap (triangulation, not a single root-cause drill). Each
+round names its deepest finding; R4 distils the one **root assumption** the pitch rests on and
+hands it to R5:
+
+1. **Internal-consistency** (CTO) — does the pitch contradict itself? (inward)
+2. **Coverage / blast radius** (CTO) — what does it touch that the pitch doesn't mention? (outward — including the *other* app when a shared convention changes)
+3. **Adversary / red-team** (CTO) — is it the wrong move? simpler alternative? fragile assumption? (against)
+4. **Build-reality / pre-mortem** (CTO) — what breaks when we build it? (forward)
+5. **Independent review** (fresh eyes — a clean Claude session, Claude Console, or the CEO reading cold) — what can the *author* structurally not see? (the independence break)
+
+Three CTO rounds is the floor; Round 4 is mandatory when the appetite is ≥1 week or the change is
+hard to reverse (Supabase migrations with data loss, auth/RLS changes); Round 5 (independent) is
+blocking for big-batch, hard-to-reverse, or both-apps/shared-convention pitches. A
+`## Hardening log` in the pitch records one line per round. Stop when the findings trace to one
+root assumption (resolved or accepted) or a round surfaces nothing new. Run each as its own turn
+and fold findings in before the next.
+
+Full prompts + how-to-run guidance: **`docs/workflows/pitch-hardening-rounds.md`**.
+
 ## The five sections
 
 A pitch has exactly these five sections, in this order:
