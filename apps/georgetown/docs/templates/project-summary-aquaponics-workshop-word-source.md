@@ -1,96 +1,61 @@
-# RC Georgetown — Project Summary Form
-## Aquaponics Workshop *(draft for Mike Jackman to complete)*
+% RC Georgetown — Project Summary Form
+% Aquaponics Workshop — draft for Mike Jackman
 
-*Hi Mike — we've started this from what we already have on record. Please correct anything wrong, and type your answers in the space under each blank prompt. Return it however suits you. Thank you!*
+*Hi Mike — we've pre-filled what we have on record. Please correct anything wrong and type your answers into the blank right-hand cells. Thank you!*
 
-## 1 · Project Identity
+## Project Identity
 
-**Project name:** Aquaponics Workshop *(correct if it had a fuller name)*
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Project name** | Aquaponics Workshop *(correct if it had a fuller name)* |
+| **Rotary year** | 2024-25 |
+| **Champion** | Mike Jackman |
 
-**Rotary year:** 2024-25
+## The Story
 
-**Champion:** Mike Jackman
+| Prompt | Your answer |
+|:------------------------|:-------------------------------------------|
+| **What was it?** *(one or two sentences)* | |
+| **Why did the club do it?** *(the need it addressed)* | |
+| **Impact** *(what changed — in human terms)* | |
 
-## 2 · The Story
+## Classification
 
-**What was it?** (one or two sentences)
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Area of Focus** *(change if you disagree)* | Environment |
+| **Funding** | Club |
+| **Status** | Completed |
 
-&nbsp;
+## When & Where
 
-&nbsp;
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Start date** *(e.g. 2024-09)* | |
+| **Completion date** | |
+| **Location** | Penang *(more specific venue if you have it)* |
 
-**Why did the club do it?** (the need or opportunity it addressed)
+## By the Numbers
 
-&nbsp;
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Beneficiaries** *(how many attended / helped)* | |
+| **Project value (RM)** | |
+| **Volunteer hours** *(optional)* | |
 
-&nbsp;
+## Partners
 
-**Impact — what changed because of it?** (e.g. how many people attended / trained, what they took away)
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Organisations / sponsors / co-clubs** *(or "none")* | |
 
-&nbsp;
+## Extras *(all optional)*
 
-&nbsp;
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Photos?** *(yes / no — where?)* | |
+| **Publicity** *(links, write-ups)* | |
+| **Lessons learned / would you repeat it?** | |
+| **Anything else?** *(Note: the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this related?)* | |
 
-## 3 · Classification
-
-**Area of Focus:** Environment *(our best guess — change if you disagree)*
-
-**Funding:** Club
-
-**Status:** Completed
-
-## 4 · When & Where
-
-**Start date** (month is fine, e.g. 2024-09)**:**
-
-&nbsp;
-
-**Completion date:**
-
-&nbsp;
-
-**Location:** Penang *(more specific venue if you have it)*
-
-&nbsp;
-
-## 5 · By the Numbers
-
-**Beneficiaries** (how many attended / were helped)**:**
-
-&nbsp;
-
-**Project value (RM)** (total spent / value delivered)**:**
-
-&nbsp;
-
-**Volunteer hours** (optional)**:**
-
-&nbsp;
-
-## 6 · Partners
-
-**Organisations, sponsors, or co-clubs involved** (list them, or write "none"):
-
-&nbsp;
-
-## 7 · Extras *(all optional)*
-
-**Photos?** (yes / no — where are they?)
-
-&nbsp;
-
-**Publicity** (any links or write-ups):
-
-&nbsp;
-
-**Lessons learned / would you repeat it?**
-
-&nbsp;
-
-**Anything else we should record?** *(For our records: the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this workshop related to that?)*
-
-&nbsp;
-
-&nbsp;
-
-*Thank you, Mike. This will complete the 2024-25 entry in the club's Service Projects record.*
+*Thank you, Mike. This completes the 2024-25 entry in the club's Service Projects record.*

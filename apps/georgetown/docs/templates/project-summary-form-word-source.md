@@ -1,119 +1,62 @@
-# RC Georgetown — Project Summary Form
+% RC Georgetown — Project Summary Form
 
-*Please fill in what you know — type your answers in the space under each prompt. Blanks are fine; we can follow up. The more you complete, the faster your project goes into the club's records and onto the website. Return the completed form to the project record-keeper.*
+*Please complete the fields below — type directly into the right-hand cells. Blanks are fine; we can follow up. The more you complete, the faster your project goes into the club's records and onto the website.*
 
-## 1 · Project Identity
+## Project Identity
 
-**Project name:**
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Project name** | |
+| **Rotary year** *(e.g. 2024-25)* | |
+| **Champion** *(member who led it)* | |
 
-&nbsp;
+## The Story
 
-**Rotary year** (1 July–30 June, written short, e.g. 2024-25)**:**
+| Prompt | Your answer |
+|:------------------------|:-------------------------------------------|
+| **What was it?** *(one or two sentences)* | |
+| **Why did the club do it?** *(the need it addressed)* | |
+| **Impact** *(what changed — in human terms)* | |
 
-&nbsp;
+## Classification
 
-**Champion** (the member who led it)**:**
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Area of Focus** *(one of: Peace · Disease · Water · Maternal/Child · Education · Economy · Environment)* | |
+| **Funding** *(Club · District Grant · Global Grant · Joint)* | |
+| **Status** *(Planning · Execution · Paused · Completed · Dropped)* | |
 
-&nbsp;
+## When & Where
 
-## 2 · The Story
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Start date** *(e.g. 2024-09)* | |
+| **Completion date** *(blank if ongoing)* | |
+| **Location** | |
 
-**What was it?** (one or two sentences)
+## By the Numbers
 
-&nbsp;
+*Estimates are fine — write "approx." if unsure; leave blank if unknown.*
 
-&nbsp;
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Beneficiaries** *(people helped)* | |
+| **Project value (RM)** | |
+| **Volunteer hours** *(optional)* | |
 
-**Why did the club do it?** (the need or opportunity it addressed)
+## Partners
 
-&nbsp;
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Organisations / sponsors / co-clubs** *(or "none")* | |
 
-&nbsp;
+## Extras *(all optional)*
 
-**Impact — what changed because of it?** (the outcome in human terms — e.g. "30 members trained to build home aquaponics units")
-
-&nbsp;
-
-&nbsp;
-
-## 3 · Classification
-
-**Area of Focus** — choose ONE (Rotary's official seven). Delete the rest, or **bold** your choice:
-
-Peace  ·  Disease  ·  Water  ·  Maternal/Child  ·  Education  ·  Economy  ·  Environment
-
-&nbsp;
-
-**Funding** — how was the project funded?
-
-Club  ·  District Grant  ·  Global Grant  ·  Joint (with other clubs)
-
-&nbsp;
-
-**Status:**
-
-Planning  ·  Execution  ·  Paused  ·  Completed  ·  Dropped
-
-&nbsp;
-
-## 4 · When & Where
-
-**Start date** (e.g. 2024-09; month is fine)**:**
-
-&nbsp;
-
-**Completion date** (leave blank if ongoing)**:**
-
-&nbsp;
-
-**Location:**
-
-&nbsp;
-
-## 5 · By the Numbers
-
-*(Estimates are fine — write "approx." if unsure. Leave blank if unknown.)*
-
-**Beneficiaries** (how many people helped)**:**
-
-&nbsp;
-
-**Project value (RM)** (total spent / value delivered)**:**
-
-&nbsp;
-
-**Volunteer hours** (optional)**:**
-
-&nbsp;
-
-## 6 · Partners
-
-**Organisations, sponsors, or co-clubs involved** (list them, or write "none"):
-
-&nbsp;
-
-&nbsp;
-
-## 7 · Extras *(all optional)*
-
-**Photos?** (yes / no — where are they?)
-
-&nbsp;
-
-**Publicity** (news links, social posts, write-ups):
-
-&nbsp;
-
-**Lessons learned / would you repeat it?**
-
-&nbsp;
-
-&nbsp;
-
-**Anything else we should record?**
-
-&nbsp;
-
-&nbsp;
+| Field | Your answer |
+|:------------------------|:-------------------------------------------|
+| **Photos?** *(yes / no — where?)* | |
+| **Publicity** *(links, write-ups)* | |
+| **Lessons learned / would you repeat it?** | |
+| **Anything else we should record?** | |
 
 *Thank you. This goes into the club's Service Projects record and — once reviewed — the RC Georgetown website.*
