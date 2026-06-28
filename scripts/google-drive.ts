@@ -36,8 +36,13 @@ import { parse as parsePath } from "https://deno.land/std@0.224.0/path/mod.ts";
  * rather than by position — the two sheets are sorted differently. A single field
  * may sync across several tab-pairs (e.g. both "Active Members" and "Honorary
  * Members"), since their column layouts differ.
+ *
+ * A key component is either a single column ("C") or a fallback list (["C","A"])
+ * where the first non-empty cell wins — used when a sheet inconsistently fills
+ * Preferred Name vs First Name across rows.
  */
-interface SyncEndpoint { alias: string; tab: string; keyCols: [string, string]; valueCol: string }
+type KeyCol = string | string[];
+interface SyncEndpoint { alias: string; tab: string; keyCols: [KeyCol, KeyCol]; valueCol: string }
 interface SyncPair { source: SyncEndpoint; dest: SyncEndpoint }
 type SyncJob = SyncPair[];
 
@@ -113,6 +118,38 @@ const CLUBS: Record<string, ClubConfig> = {
       "documents-folder": "1WZoolkfT1cuI3F0tu19J4zlzspb7dJG1",
       "assets-folder": "1nXpd8Hmo0F7G0wiB__2Cym0WddCNVaUB",
       "exco-folder": "1L0xc2mgN7_LB_t_a1yq836MKmKIKfrpW",
+    },
+    // member-master (canonical) → member-directory, matched by name.
+    //   Master  (Active/Alumni): B=Last, C=Preferred, A=First | F=Birthday G=Email I=Mobile V=Pathway-Code
+    //   Dir     Members/Alumni:  A=Preferred, B=Last | C=Email D=Mobile G=Birthday H=Pathways-Level
+    // Master key uses Preferred (C) with fallback to First (A) — Alumni rows
+    // leave Preferred blank and only fill First. Master active tab "Active
+    // Members" maps to directory tab "Members".
+    syncs: {
+      birthday: [
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "F" },
+          dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "G" } },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "F" },
+          dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "G" } },
+      ],
+      email: [
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "G" },
+          dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "C" } },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "G" },
+          dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "C" } },
+      ],
+      mobile: [
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "I" },
+          dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "D" } },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "I" },
+          dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "D" } },
+      ],
+      "pathway-level": [
+        { source: { alias: "member-master", tab: "Active Members", keyCols: [["C", "A"], "B"], valueCol: "V" },
+          dest:   { alias: "member-directory", tab: "Members", keyCols: ["A", "B"], valueCol: "H" } },
+        { source: { alias: "member-master", tab: "Alumni", keyCols: [["C", "A"], "B"], valueCol: "V" },
+          dest:   { alias: "member-directory", tab: "Alumni", keyCols: ["A", "B"], valueCol: "H" } },
+      ],
     },
   },
 };
@@ -237,14 +274,38 @@ async function syncOnePair(
   const srcRows = await read(sourceId, pair.source.tab);
   const dstRows = await read(destId, pair.dest.tab);
 
-  const key = (row: string[], cols: [string, string]) =>
-    `${(row[colToIndex(cols[0])] ?? "").trim()}|${(row[colToIndex(cols[1])] ?? "").trim()}`;
+  // Resolve a key component: first non-empty cell among the listed column(s).
+  const cell = (row: string[], col: KeyCol) => {
+    for (const c of (Array.isArray(col) ? col : [col])) {
+      const v = (row[colToIndex(c)] ?? "").trim();
+      if (v) return v;
+    }
+    return "";
+  };
+  const key = (row: string[], cols: [KeyCol, KeyCol]) =>
+    `${cell(row, cols[0])}|${cell(row, cols[1])}`;
+
+  // All non-empty values for a key component (so a row indexes under every name
+  // variant it has, e.g. both Preferred and First name).
+  const cells = (row: string[], col: KeyCol) => {
+    const out: string[] = [];
+    for (const c of (Array.isArray(col) ? col : [col])) {
+      const v = (row[colToIndex(c)] ?? "").trim();
+      if (v && !out.includes(v)) out.push(v);
+    }
+    return out;
+  };
 
   const srcVal = colToIndex(pair.source.valueCol);
   const lookup = new Map<string, string>();
   for (const r of srcRows) {
-    const k = key(r, pair.source.keyCols);
-    if (k !== "|") lookup.set(k, (r[srcVal] ?? "").trim());
+    const val = (r[srcVal] ?? "").trim();
+    // Register under every (first-component × second-component) name variant.
+    for (const a of cells(r, pair.source.keyCols[0])) {
+      for (const b of cells(r, pair.source.keyCols[1])) {
+        if (!lookup.has(`${a}|${b}`)) lookup.set(`${a}|${b}`, val);
+      }
+    }
   }
 
   const dstVal = colToIndex(pair.dest.valueCol);
