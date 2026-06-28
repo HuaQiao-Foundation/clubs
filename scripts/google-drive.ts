@@ -70,40 +70,55 @@ const CLUBS: Record<string, ClubConfig> = {
     //   Master  Active:   A=Preferred, B=Last  | Honorary: A=Preferred, B=Last
     //   Dir     Active:   A=Rotary,    D=Last  | Honorary: B=Preferred, C=Last
     syncs: {
-      // Dir Active layout (trimmed to 10 cols): A=Preferred B=Prefix C=Name
-      //   D=Last E=Role2026-27 F=Classification G=Email H=Mobile I=Birthday J=Company
-      // Dir Honorary (trimmed to 9): A=Prefix B=Preferred C=Last D=Role
-      //   E=Classification F=Email G=Mobile H=Birthday I=Company
+      // Dir Active layout: A=Preferred B=Prefix C=Name D=Last E=Role2026-27
+      //   F=PastPresident G=Classification H=Email I=Mobile J=Birthday K=Company
+      // Dir Honorary: A=Prefix B=Preferred C=Last D=Role E=PastPresident
+      //   F=Classification G=Email H=Mobile I=Birthday J=Company
+      // Master (all tabs): G=Birthday H=Email J=Mobile U=Classification V=Company
+      //   AB=Role 2026-2027  AC=Past President
       birthday: [
         { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "G" },
-          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "I" } },
+          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "J" } },
         { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "G" },
-          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "H" } },
+          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "I" } },
       ],
       email: [
         { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "H" },
-          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "G" } },
+          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "H" } },
         { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "H" },
-          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "F" } },
+          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "G" } },
       ],
       mobile: [
         { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "J" },
-          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "H" } },
+          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "I" } },
         { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "J" },
-          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "G" } },
+          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "H" } },
       ],
-      // Master tabs share layout: T=Exit Date, U=Classification, V=Company.
       classification: [
         { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "U" },
-          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "F" } },
+          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "G" } },
         { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "U" },
-          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "E" } },
+          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "F" } },
       ],
       company: [
         { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "V" },
-          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "J" } },
+          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "K" } },
         { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "V" },
-          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "I" } },
+          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "J" } },
+      ],
+      // Role 2026-2027: Master AB → Dir E (Active) / Dir D (Honorary)
+      role: [
+        { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "AB" },
+          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "E" } },
+        { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "AB" },
+          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "D" } },
+      ],
+      // Past President (Rotary year(s)): Master AC → Dir F (Active) / Dir E (Honorary)
+      "past-president": [
+        { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "AC" },
+          dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "F" } },
+        { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "AC" },
+          dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "E" } },
       ],
     },
   },
