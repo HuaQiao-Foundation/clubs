@@ -102,6 +102,7 @@ function ProjectColumn({
       'Planning': 'text-blue-700',     // Matches Speakers "Approached" (blue - active preparation)
       'Approved': 'text-emerald-700',  // Matches Speakers "Agreed" (green - approved/confirmed)
       'Execution': 'text-amber-700',   // Matches Speakers "Scheduled" (amber - in progress/attention)
+      'Paused': 'text-orange-700',     // Work halted temporarily (orange - on hold)
       'Completed': 'text-gray-700',    // Matches Speakers "Spoken" (gray - finished/archived)
       'Dropped': 'text-rose-700',      // Matches Speakers "Dropped" (red - negative/terminated)
     }
@@ -470,6 +471,7 @@ export default function ServiceProjectsPage() {
         { value: 'Idea', label: 'Idea' },
         { value: 'Planning', label: 'Planning' },
         { value: 'Execution', label: 'Execution' },
+        { value: 'Paused', label: 'Paused' },
         { value: 'Completed', label: 'Completed' },
         { value: 'Dropped', label: 'Dropped' },
       ],
@@ -736,6 +738,8 @@ export default function ServiceProjectsPage() {
                                       ? 'bg-blue-100 text-blue-800'
                                       : project.status === 'Planning'
                                       ? 'bg-yellow-100 text-yellow-800'
+                                      : project.status === 'Paused'
+                                      ? 'bg-orange-100 text-orange-800'
                                       : project.status === 'Dropped'
                                       ? 'bg-red-100 text-red-800'
                                       : 'bg-gray-100 text-gray-800'
@@ -841,7 +845,7 @@ export default function ServiceProjectsPage() {
           {/* Horizontal Scroll Board - Industry Standard (Trello/Asana Pattern) */}
           <div className="overflow-x-auto overflow-y-hidden">
             <div className="flex gap-4 snap-x snap-mandatory" style={{ minHeight: '600px' }}>
-              {['Idea', 'Planning', 'Approved', 'Execution', 'Completed', ...(showDropped ? ['Dropped'] : [])].map((status) => {
+              {['Idea', 'Planning', 'Approved', 'Execution', 'Paused', 'Completed', ...(showDropped ? ['Dropped'] : [])].map((status) => {
                 const columnProjects = projects.filter((p) => p.status === status)
                 return (
                   <div key={status} className="flex-none w-[85vw] md:w-80 snap-start">

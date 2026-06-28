@@ -140,7 +140,7 @@ export type ServiceProject = {
   project_name: string
   description?: string
   area_of_focus: 'Peace' | 'Disease' | 'Water' | 'Maternal/Child' | 'Education' | 'Economy' | 'Environment'
-  status: 'Idea' | 'Planning' | 'Approved' | 'Execution' | 'Completed' | 'Dropped'
+  status: 'Idea' | 'Planning' | 'Approved' | 'Execution' | 'Paused' | 'Completed' | 'Dropped'
   type: 'Global Grant' | 'Club' | 'Joint'
   champion: string
   project_value_rm?: number

@@ -67,6 +67,8 @@ export default function ProjectsList({ projects, onProjectClick }: ProjectsListP
                           ? 'bg-blue-100 text-blue-700'
                           : project.status === 'Planning'
                           ? 'bg-yellow-100 text-yellow-700'
+                          : project.status === 'Paused'
+                          ? 'bg-orange-100 text-orange-700'
                           : 'bg-purple-100 text-purple-700'
                       }`}
                     >

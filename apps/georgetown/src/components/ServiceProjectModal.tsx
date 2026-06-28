@@ -24,7 +24,7 @@ const AREAS_OF_FOCUS: AreaOfFocus[] = [
   'Environment',
 ]
 
-const PROJECT_STATUSES = ['Idea', 'Planning', 'Approved', 'Execution', 'Completed', 'Dropped'] as const
+const PROJECT_STATUSES = ['Idea', 'Planning', 'Approved', 'Execution', 'Paused', 'Completed', 'Dropped'] as const
 const PROJECT_TYPES = ['Club', 'Joint', 'Global Grant'] as const
 
 type ProjectStatus = typeof PROJECT_STATUSES[number]
