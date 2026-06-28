@@ -27,6 +27,9 @@ dist-ssr
 exports/*.csv
 exports/*.xlsx
 
+# Word documents (generated forms/templates — regenerate, don't track)
+forms/
+
 # PWA / Lighthouse
 .lighthouseci
 lighthouseci/
