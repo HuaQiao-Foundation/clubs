@@ -91,18 +91,19 @@ const CLUBS: Record<string, ClubConfig> = {
         { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "J" },
           dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "G" } },
       ],
-      // Classification: Master Active T / Honorary S → Dir G (Active) / Dir E (Honorary)
+      // Classification: Master U (both tabs) → Dir G (Active) / Dir E (Honorary)
+      // Master tabs now share layout: T=Exit Date, U=Classification, V=Company.
       classification: [
-        { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "T" },
+        { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "U" },
           dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "G" } },
-        { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "S" },
+        { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "U" },
           dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "E" } },
       ],
-      // Company: Master Active U / Honorary T → Dir L (Active) / Dir I (Honorary)
+      // Company: Master V (both tabs) → Dir L (Active) / Dir I (Honorary)
       company: [
-        { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "U" },
+        { source: { alias: "member-master", tab: "Active Members", keyCols: ["A", "B"], valueCol: "V" },
           dest:   { alias: "member-directory", tab: "Active Members", keyCols: ["A", "D"], valueCol: "L" } },
-        { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "T" },
+        { source: { alias: "member-master", tab: "Honorary Members", keyCols: ["A", "B"], valueCol: "V" },
           dest:   { alias: "member-directory", tab: "Honorary Members", keyCols: ["B", "C"], valueCol: "I" } },
       ],
     },
