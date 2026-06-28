@@ -48,7 +48,7 @@ _________________________________________________________________
 
 - ☐ Peace   ☐ Disease   ☐ Water   ☐ Maternal/Child   ☐ Education   ☐ Economy
 
-**Type:** ☒ Club    *(or:  ☐ District Grant   ☐ Global Grant   ☐ Joint)*
+**Funding:** ☒ Club    *(or:  ☐ District Grant   ☐ Global Grant   ☐ Joint)*
 
 **Status:** ☒ Completed    *(or:  ☐ Planning   ☐ Execution   ☐ Paused   ☐ Dropped)*
 

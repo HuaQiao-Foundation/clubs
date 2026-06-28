@@ -37,7 +37,7 @@ suits you — typed here, marked up, or just reply with the answers.*
 **Area of Focus:** Environment *(our best guess — change if you disagree)*
 > *(options: Peace · Disease · Water · Maternal/Child · Education · Economy · Environment)*
 
-**Type:** Club
+**Funding:** Club
 > *(options: Club · District Grant · Global Grant · Joint)*
 
 **Status:** Completed

@@ -52,7 +52,7 @@ _________________________________________________________________
 - ☐ Community Economic Development
 - ☐ Supporting the Environment
 
-**Type** — how was it run / funded?
+**Funding** — how was the project funded?
 
 - ☐ Club (our own project)   ☐ District Grant   ☐ Global Grant   ☐ Joint (with other clubs)
 

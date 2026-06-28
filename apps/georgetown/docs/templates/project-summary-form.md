@@ -49,11 +49,11 @@ project record-keeper (or paste into email).
 >
 > **My answer:**
 
-**Type** — how was it run/funded?
-> - [ ] Club *(our own project)*
+**Funding** — how was the project funded?
+> - [ ] Club *(funded from club funds)*
 > - [ ] District Grant
 > - [ ] Global Grant
-> - [ ] Joint *(with other clubs)*
+> - [ ] Joint *(co-funded with other clubs)*
 >
 > **My answer:**
 
@@ -131,7 +131,7 @@ FIELD MAP (for the record-keeper — how each answer lands in the platform):
   Why                 -> description (cont.) / notes
   Impact              -> impact
   Area of Focus       -> area_of_focus   [Peace|Disease|Water|Maternal/Child|Education|Economy|Environment]
-  Type                -> type            [Club|District Grant|Global Grant|Joint]
+  Funding             -> type            [Club|District Grant|Global Grant|Joint]  (spreadsheet col "Funding"; DB col still `type`)
   Status              -> status          [Planning|Execution|Completed|Dropped]
   Start date          -> start_date
   Completion date     -> completion_date / end_date
