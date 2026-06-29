@@ -146,10 +146,10 @@ fill(TEMPLATE, f"{OUT}/Project-Summary-Christmas-Orphan-Care-2024.docx", {
 })
 
 # ---------------------------------------------------------------------------
-# Christmas Orphan Care Project 2025 — "4th Annual" DRAFT for Yew-Aun Soh to complete.
+# Christmas Orphan Care Project 2025 — "4th Annual", for Yew-Aun Soh to complete.
 # No 2025 DB record yet: recurring fields carried; year-specific fields are italic
 # "to fill" placeholders.
-fill(TEMPLATE, f"{OUT}/Project-Summary-Christmas-Orphan-Care-2025-DRAFT.docx", {
+fill(TEMPLATE, f"{OUT}/Project-Summary-Christmas-Orphan-Care-2025.docx", {
     "Project name":"Christmas Orphan Care Project  (4th Annual — adjust if changed)",
     "Rotary year":"2025-26",
     "Project champion":"Yew-Aun Soh",

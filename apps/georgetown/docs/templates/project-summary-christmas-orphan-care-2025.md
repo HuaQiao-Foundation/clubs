@@ -1,11 +1,11 @@
-<!-- 2025 "4th Annual" Christmas project — DRAFT skeleton for Yew-Aun Soh to complete.
+<!-- 2025 "4th Annual" Christmas project — skeleton for Yew-Aun Soh to complete.
      No 2025 record exists in the DB yet; recurring fields carried forward from the
      2024 record (gt_service_projects 463bbd9f-…). Year-specific fields are blank (⬅).
-     Regenerate Word: run build-project-summary-forms.py (Christmas 2025 build call). -->
+     Regenerate Word: run fill-project-summary.py (Christmas 2025 build call). -->
 
 # ROTARY CLUB OF GEORGETOWN
 ## Project Summary Form
-#### Christmas Orphan Care Project (2025) — draft for Yew-Aun Soh to complete
+#### Christmas Orphan Care Project (2025) — for Yew-Aun Soh to complete
 
 *Hi Yew-Aun — we've carried forward what we know from last year's (3rd Annual) project.
 Please **correct anything wrong** and **fill the blanks** (marked ⬅) with this year's
