@@ -260,7 +260,13 @@ def build(path, *, draft_for=None, prefill=None, extras_hint=None):
 
 # All generated .docx land in the gitignored forms/ folder (artifacts, not source).
 OUT="/Users/randaleastman/dev/clubs/apps/georgetown/forms"
-build(f"{OUT}/RC-Georgetown-Project-Summary-Form.docx")
+
+# NOTE: this script does NOT generate the blank template
+# `RC-Georgetown-Project-Summary-Form.docx` — that file is the CEO's canonical,
+# hand-made (Claude Console) template and must never be overwritten by this script.
+# Likewise `Project-Summary-Aquaponics-Workshop-Mike.docx` (no "for") is CEO-authored.
+# This script only emits the PRE-FILLED project summaries below.
+
 build(f"{OUT}/Project-Summary-Aquaponics-Workshop-for-Mike.docx", draft_for="Mike Jackman",
       extras_hint="the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this related?",
       prefill={"Project name":"Aquaponics Workshop","Rotary year":"2024-25","Champion":"Mike Jackman",
