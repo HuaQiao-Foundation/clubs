@@ -2,7 +2,7 @@
 """Fill the CEO's canonical RC Georgetown Project Summary template with real data.
 
 This does NOT build a form from scratch — it OPENS the canonical template
-(docs/templates/_source-templates/RC-Georgetown-Project-Summary-Form.docx),
+(docs/templates/RC-Georgetown-Project-Summary-Form.docx),
 finds each field by its label, and replaces the placeholder hint in the
 answer cell with the project's value. All of the CEO's styling, section
 bars, layout, and the reference appendix are preserved exactly.
@@ -15,7 +15,7 @@ from docx import Document
 from docx.shared import Pt, RGBColor
 from docx.oxml.ns import qn
 
-TEMPLATE = "/Users/randaleastman/dev/clubs/apps/georgetown/docs/templates/_source-templates/RC-Georgetown-Project-Summary-Form.docx"
+TEMPLATE = "/Users/randaleastman/dev/clubs/apps/georgetown/docs/templates/RC-Georgetown-Project-Summary-Form.docx"
 OUT      = "/Users/randaleastman/dev/clubs/apps/georgetown/forms"
 BODY     = RGBColor(0x22,0x22,0x22)
 
@@ -33,6 +33,11 @@ def set_answer(cell, text, *, draft=False):
         extra._element.getparent().remove(extra._element)
     for r in list(p.runs):
         r._element.getparent().remove(r._element)
+    # keep rows snug: clamp any large trailing space (the template's 30pt story
+    # fields) down to 3pt so filled cells don't carry a tall empty gap below the text
+    sa = p.paragraph_format.space_after
+    if sa is None or sa.pt > 3:
+        p.paragraph_format.space_after = Pt(3)
     # support multi-line via \n (soft breaks)
     lines = str(text).split("\n")
     r = p.add_run(lines[0])

@@ -28,23 +28,37 @@ python3 -m venv .venv
 Run any document script with the venv's Python (no activation needed):
 
 ```bash
-.venv/bin/python apps/georgetown/docs/templates/build-project-summary-forms.py
+.venv/bin/python apps/georgetown/docs/templates/fill-project-summary.py
 ```
+
+## Where forms live — templates vs. filled output
+
+The single rule: **`docs/templates/` is tracked source; `forms/` is gitignored output.**
+
+| Folder | Holds | In git? |
+|---|---|---|
+| `apps/georgetown/docs/templates/` | **Blank templates** (hand-authored masters: `RC-Georgetown-Project-Summary-Form.docx`, `RCG_Project_*`, the `Aquaponics-Workshop-Mike` source draft) + the fill script + `.md` content sources | **tracked** — irreplaceable source |
+| `apps/georgetown/docs/templates/_backups/` | Timestamped `.BACKUP-*` copies taken before edits | tracked |
+| `apps/georgetown/forms/` | **Filled-out forms** + their PDFs | **gitignored** — regenerated on demand |
+
+Why: a blank template is authored by hand and can't be reproduced, so it's *source*.
+A filled form is produced by the script from a template + data, so it's an *artifact*.
+The folder name tells you which — no per-file `.gitignore` patterns.
 
 ## Common recipes
 
-**Fill the RC Georgetown project-summary forms** (populates the CEO's canonical template):
+**Fill the RC Georgetown project-summary forms** (populates the canonical template):
 ```bash
 .venv/bin/python apps/georgetown/docs/templates/fill-project-summary.py
-# → opens docs/templates/_source-templates/RC-Georgetown-Project-Summary-Form.docx
-#   (the CEO's hand-made template), fills each field's answer cell with real data,
-#   and writes the filled .docx to apps/georgetown/forms/. The template itself is
-#   never modified — it is the read-only source of structure/styling.
+# → opens docs/templates/RC-Georgetown-Project-Summary-Form.docx (the canonical
+#   hand-made template), fills each field's answer cell with real data, and writes
+#   the filled .docx to apps/georgetown/forms/. The template is never modified —
+#   it is the read-only source of structure/styling.
 ```
 
-> **Do not regenerate the template from code.** `RC-Georgetown-Project-Summary-Form.docx`
-> is CEO-authored in Claude Console; the filler *opens and populates* it, never rebuilds it.
-> The canonical copy is backed up (tracked) at `docs/templates/_source-templates/`.
+> **Do not regenerate a template from code.** The templates in `docs/templates/`
+> are hand-authored (Claude Console); the filler *opens and populates* them, never
+> rebuilds them. Before editing a template, drop a copy in `_backups/`.
 
 **Convert a `.docx` to PDF** (LibreOffice — the reliable path on macOS):
 ```bash

@@ -27,7 +27,9 @@ dist-ssr
 exports/*.csv
 exports/*.xlsx
 
-# Word documents (generated forms/templates — regenerate, don't track)
+# Filled-out forms + PDFs — GENERATED output, regenerate with
+# docs/templates/fill-project-summary.py. Blank TEMPLATES live (tracked) in
+# docs/templates/. Folder name = the rule: templates/ tracked, forms/ ignored.
 forms/
 
 # PWA / Lighthouse
