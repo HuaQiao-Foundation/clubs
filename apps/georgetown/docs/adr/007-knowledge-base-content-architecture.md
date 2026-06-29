@@ -243,7 +243,8 @@ each item carries a target **wiki tier** for Phase-2 selective publishing. Migra
    ASSETS/Photo Archive/                        → members
    Public Images/                               → public
    georgetown-member-directory.gsheet           → members  (readable roster)
-   Past Presidents Roll                         → public/members (one canonical copy)
+   Past Presidents Roll.gsheet                  → public/members (CANONICAL — the sheet,
+                                                  ID 1rHLvcWMAaFIq3lbnfO-cn0aATqKKaTxnJ0tYPExsREI)
 
 📁 _SOURCE (not shared; raw working material)   → never published
    Rotary manuals, scans, drafts authored FROM  → corpus only
@@ -251,9 +252,14 @@ each item carries a target **wiki tier** for Phase-2 selective publishing. Migra
 
 **Cleanups to resolve before/at migration (the "rough" in the current Drive):**
 
-1. **`Past Presidents Roll` exists 3×** — a `.gsheet` in Club, a `.gdoc` in BOD, and a
-   `.gsheet` inside MEETINGS. Pick **one canonical** (the BOD `.gdoc` reads as the
-   authoritative narrative); delete or alias the others.
+1. **`Past Presidents Roll` — canonical = the spreadsheet** (CEO, 2026-06-29).
+   The **`Club/Past Presidents Roll.gsheet`** (ID `1rHLvcWMAaFIq3lbnfO-cn0aATqKKaTxnJ0tYPExsREI`)
+   is the source of truth — it carries every year plus the RI President and that year's
+   RI theme. The `Board/RC Georgetown — Past Presidents Roll.gdoc` (ID `1mkFfcUl…`) is a
+   secondary narrative copy; treat the sheet as canon and reconcile or retire the doc.
+   The third (MEETINGS `.gsheet`) appears already removed. The repo's
+   `docs/reference/rcg-past-presidents.md` already names the spreadsheet as canonical —
+   consistent. No code hardcodes the roll's ID, so nothing breaks.
 2. **`Public Image` appears ~3×** across DOCUMENTS and ASSETS — **merge into one**
    `Club/Public Images/` to stop drift.
 3. **MEETINGS gap** — 2020-21, 2021-22, 2022-23, then 2025-26. **2023-24 and 2024-25
