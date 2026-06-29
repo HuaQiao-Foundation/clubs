@@ -246,8 +246,13 @@ each item carries a target **wiki tier** for Phase-2 selective publishing. Migra
    Past Presidents Roll.gsheet                  → public/members (CANONICAL — the sheet,
                                                   ID 1rHLvcWMAaFIq3lbnfO-cn0aATqKKaTxnJ0tYPExsREI)
 
-📁 _SOURCE (not shared; raw working material)   → never published
-   Rotary manuals, scans, drafts authored FROM  → corpus only
+📁 _SOURCE (My Drive ROOT — NOT shared with anyone)   → never published
+   Rotary manuals, scans, drafts authored FROM        → corpus only
+   • Lives at Drive root, outside both Board and Club — deliberately private to
+     the author. Not in a share group; the sync service account does not see it
+     (and does not need to — the tooling only touches the shared folders).
+   • This is the author's working pile, not a club asset. Material graduates OUT
+     of _SOURCE into Club/Board (and later the wiki) once it's ready to share.
 ```
 
 **Cleanups to resolve before/at migration (the "rough" in the current Drive):**
