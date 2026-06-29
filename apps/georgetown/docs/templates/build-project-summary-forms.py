@@ -81,13 +81,27 @@ def header_block(doc, subtitle):
     run(p3, subtitle, size=9, color=LTBLUE)
     para(doc, after=4)  # gap after header
 
-# ---------- section bar ----------
+# ---------- section bar (canonical: darker azure, uppercase) ----------
 def section(doc, title):
     t=doc.add_table(rows=1, cols=1); t.alignment=WD_TABLE_ALIGNMENT.LEFT; t.allow_autofit=False
     c=t.rows[0].cells[0]; c.width=Inches(6.7)
-    shade(c, AZURE); borders(c, AZURE, 4); margins(c, t=40,b=40,l=110,r=110); row_height(t.rows[0], 300)
-    p=cell_para(c); run(p, title, size=10.5, bold=True, color=WHITE)
+    shade(c, AZURE_DK); borders(c, AZURE_DK, 4); margins(c, t=40,b=40,l=110,r=110); row_height(t.rows[0], 300)
+    p=cell_para(c); run(p, title.upper(), size=10, bold=True, color=WHITE)
     para(doc, after=0, before=0)  # tight gap; table spacing handles it
+
+# ---------- reference appendix table (azure-dk header row + grid body) ----------
+def appendix_table(doc, headers, rows, widths):
+    t=doc.add_table(rows=0, cols=len(headers)); t.alignment=WD_TABLE_ALIGNMENT.LEFT; t.allow_autofit=False
+    hr=t.add_row(); row_height(hr, 300)
+    for i,h in enumerate(headers):
+        c=hr.cells[i]; c.width=Inches(widths[i]); shade(c, AZURE_DK); borders(c); margins(c)
+        run(cell_para(c), h, size=10, bold=True, color=WHITE)
+    for row in rows:
+        rr=t.add_row(); row_height(rr, 280)
+        for i,val in enumerate(row):
+            c=rr.cells[i]; c.width=Inches(widths[i]); borders(c); margins(c)
+            run(cell_para(c), val, size=10, color=BODY)
+    para(doc, after=6)
 
 # ---------- field rows (label | answer) ----------
 def fields(doc, rows, label_in=2.5, ans_in=4.2):
@@ -98,7 +112,7 @@ def fields(doc, rows, label_in=2.5, ans_in=4.2):
         lc.width=Inches(label_in); ac.width=Inches(ans_in)
         shade(lc, GREY_BG)
         for c in (lc,ac): borders(c); margins(c)
-        lp=cell_para(lc); run(lp, label, size=9.5, bold=True, color=BODY)
+        lp=cell_para(lc); run(lp, label, size=10, bold=True, color=BODY)
         if hint: run(lp, "  "+hint, size=8, italic=True, color=MUTED)
         ap=cell_para(ac)
         if answer:
@@ -111,7 +125,7 @@ def fields(doc, rows, label_in=2.5, ans_in=4.2):
 
 def F(label, answer="", hint=None, tall=False): return (label, hint, answer, tall)
 
-def build(path, *, draft_for=None, prefill=None):
+def build(path, *, draft_for=None, prefill=None, extras_hint=None):
     pf=prefill or {}
     doc=Document()
     sec=doc.sections[0]
@@ -122,10 +136,8 @@ def build(path, *, draft_for=None, prefill=None):
                 else "Record of a club service project")
     header_block(doc, subtitle)
 
-    intro = ("Hi Mike — we've pre-filled what we have on record. Please correct anything wrong and type your "
-             "answers into the blank right-hand cells. Thank you!" if draft_for else
-             "Type your answers directly into the right-hand cells. Blanks are fine; we can follow up.")
-    ip=para(doc, after=8); run(ip, intro, size=9, italic=True, color="555555")
+    first_name = draft_for.split()[0] if draft_for else None
+    # (No greeting/intro paragraph in the form body — per CEO, removed 2026-06-29.)
 
     g=lambda k: pf.get(k,"")
 
@@ -133,19 +145,20 @@ def build(path, *, draft_for=None, prefill=None):
     fields(doc, [
         F("Project name", g("Project name")),
         F("Rotary year", g("Rotary year"), "e.g. 2024-25"),
-        F("Champion", g("Champion"), "member who led it"),
+        F("Project champion", g("Champion"), "member who led it"),
     ])
     section(doc,"The Story")
     fields(doc, [
         F("What was it?", g("What was it?"), "one or two sentences", tall=True),
-        F("Why did the club do it?", g("Why"), "the need it addressed", tall=True),
-        F("Impact", g("Impact"), "what changed — in human terms", tall=True),
+        F("Why did the club do it?", g("Why"), "the need or opportunity it addressed", tall=True),
+        F("What was the impact?", g("Impact"), "what changed — in human terms", tall=True),
     ])
     section(doc,"Classification")
     fields(doc, [
-        F("Area of Focus", g("Area of Focus"), "Peace · Disease · Water · Maternal/Child · Education · Economy · Environment"),
-        F("Funding", g("Funding"), "Club · District Grant · Global Grant · Joint"),
-        F("Status", g("Status"), "Planning · Execution · Paused · Completed · Dropped"),
+        F("Area of Focus", g("Area of Focus"), "see appendix — pick one of the seven"),
+        F("UN SDG", g("UN SDG"), "see appendix — e.g. SDG 6 Clean Water & Sanitation"),
+        F("Funding source", g("Funding"), "Club · District Grant · Global Grant · Joint"),
+        F("Project status", g("Status"), "Planning · Execution · Completed · Dropped"),
     ])
     section(doc,"When & Where")
     fields(doc, [
@@ -155,36 +168,77 @@ def build(path, *, draft_for=None, prefill=None):
     ])
     section(doc,"By the Numbers")
     fields(doc, [
-        F("Beneficiaries", g("Beneficiaries"), "people helped"),
-        F("Project value (RM)", g("Value")),
-        F("Volunteer hours", g("Volunteer hours"), "optional"),
+        F("Beneficiaries", g("Beneficiaries"), "number of people helped"),
+        F("Project value (RM)", g("Value"), "total cost or value"),
+        F("Volunteer hours", g("Volunteer hours"), "optional — estimate is fine"),
     ])
     section(doc,"Partners")
     fields(doc, [
-        F("Organisations / sponsors / co-clubs", g("Partners"), "or “none”", tall=True),
+        F("Partner organisations", g("Partners"), "sponsors, co-clubs, NGOs, or “none”", tall=True),
+    ])
+    section(doc,"Sustainability & Community Participation")
+    fields(doc, [
+        F("Sustainability measures", g("Sustainability"), "how will benefits continue after Rotary's involvement ends?", tall=True),
+        F("Community participation", g("Community participation"), "how did the target community contribute to or have a stake in this?", tall=True),
     ])
     section(doc,"Extras  (all optional)")
-    last_hint = ("the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this related?"
-                 if draft_for else None)
     fields(doc, [
-        F("Photos?", g("Photos"), "yes / no — where?"),
-        F("Publicity", g("Publicity"), "links, write-ups"),
-        F("Lessons learned / would you repeat it?", g("Lessons"), None, tall=True),
-        F("Anything else we should record?", g("Anything else"), last_hint, tall=True),
+        F("Photos available?", g("Photos"), "yes / no — and where to find them"),
+        F("Publicity", g("Publicity"), "links to articles, social media, write-ups"),
+        F("Lessons learned", g("Lessons"), "would you do it again? what would you change?", tall=True),
+        F("Anything else?", g("Anything else"), extras_hint or "anything the club should record", tall=True),
     ])
     fp=para(doc, before=10)
-    run(fp, ("Thank you, Mike. This completes the 2024-25 entry in the club's Service Projects record."
-             if draft_for else
-             "Thank you. This goes into the club's Service Projects record and — once reviewed — the RC Georgetown website."),
+    run(fp, "Thank you. This helps us build our Service Projects archive and keeps all members — "
+            "new and long-standing — familiar with our club's accomplishments.",
         size=8.5, italic=True, color=MUTED)
+
+    # ---- Reference appendix (Areas of Focus + UN SDGs) ----
+    para(doc, before=8)
+    rp=para(doc, after=2); run(rp, "REFERENCE APPENDIX", size=11, bold=True, color=AZURE_DK)
+    rp2=para(doc, after=6); run(rp2, "Use these tables when filling in the Classification section above.", size=9, italic=True, color=MUTED)
+    sp=para(doc, after=2); run(sp, "Rotary Areas of Focus", size=10, bold=True, color=BODY)
+    appendix_table(doc,
+        ["Area of Focus","Typical activities"],
+        [["Peacebuilding & Conflict Prevention","Training, mediation, refugee support"],
+         ["Disease Prevention & Treatment","Health infrastructure, immunisation, clean clinics"],
+         ["Water, Sanitation & Hygiene","Wells, latrines, water filters, WASH education"],
+         ["Maternal & Child Health","Pre-natal care, nutrition, infant survival"],
+         ["Basic Education & Literacy","Schools, teacher training, reading programs"],
+         ["Community Economic Development","Microfinance, vocational training, livelihoods"],
+         ["Supporting the Environment","Reforestation, waste management, sustainability"]],
+        [2.7,4.0])
+    sp2=para(doc, after=2); run(sp2, "United Nations Sustainable Development Goals (SDGs)", size=10, bold=True, color=BODY)
+    appendix_table(doc,
+        ["#","Goal","Description"],
+        [["SDG 1","No Poverty","End poverty in all its forms"],
+         ["SDG 2","Zero Hunger","Food security and better nutrition"],
+         ["SDG 3","Good Health","Healthy lives and well-being for all ages"],
+         ["SDG 4","Quality Education","Access to good education and lifelong learning"],
+         ["SDG 5","Gender Equality","Empower all women and girls"],
+         ["SDG 6","Clean Water & Sanitation","Safe water and sanitation for all"],
+         ["SDG 7","Clean Energy","Affordable, reliable, modern energy"],
+         ["SDG 8","Decent Work","Economic growth and fair employment"],
+         ["SDG 9","Innovation & Infrastructure","Resilient infrastructure and industry"],
+         ["SDG 10","Reduced Inequalities","Less inequality within and between countries"],
+         ["SDG 11","Sustainable Cities","Safe, resilient, well-planned communities"],
+         ["SDG 12","Responsible Consumption","Produce and consume sustainably"],
+         ["SDG 13","Climate Action","Act on climate change and its impacts"],
+         ["SDG 14","Life Below Water","Protect oceans and marine life"],
+         ["SDG 15","Life on Land","Protect forests, land, and biodiversity"],
+         ["SDG 16","Peace & Justice","Peaceful societies and strong institutions"],
+         ["SDG 17","Partnerships","Work together to achieve the goals"]],
+        [0.8,2.2,3.7])
     doc.save(path); print("wrote", path)
 
 # All generated .docx land in the gitignored forms/ folder (artifacts, not source).
 OUT="/Users/randaleastman/dev/clubs/apps/georgetown/forms"
 build(f"{OUT}/RC-Georgetown-Project-Summary-Form.docx")
 build(f"{OUT}/Project-Summary-Aquaponics-Workshop-for-Mike.docx", draft_for="Mike Jackman",
+      extras_hint="the club ran an earlier aquaponics installation at St Nicholas Home for the Blind in 2021-22 — was this related?",
       prefill={"Project name":"Aquaponics Workshop","Rotary year":"2024-25","Champion":"Mike Jackman",
-               "Area of Focus":"Environment","Funding":"Club","Status":"Completed","Location":"Penang"})
+               "Area of Focus":"Supporting the Environment","UN SDG":"SDG 12 — Responsible Consumption",
+               "Funding":"Club","Status":"Completed","Location":"Penang"})
 
 # Shrijan Maram Pitchmasters Scholarship — completed record (DB project 96ceba73-…)
 build(f"{OUT}/Project-Summary-Shrijan-Maram-Scholarship.docx",
@@ -202,7 +256,8 @@ build(f"{OUT}/Project-Summary-Shrijan-Maram-Scholarship.docx",
                   "He has the track record. He needs the communication infrastructure to take his impact "
                   "global. For USD 88, Rotary Club of Georgetown can help a local prodigy develop the voice "
                   "to match his vision. This isn’t sponsorship — it’s partnership.”"),
-        "Area of Focus":"Education",
+        "Area of Focus":"Basic Education & Literacy",
+        "UN SDG":"SDG 4 — Quality Education",
         "Funding":"Club",
         "Status":"Completed",
         "Start date":"2025-10-01",
@@ -221,4 +276,49 @@ build(f"{OUT}/Project-Summary-Shrijan-Maram-Scholarship.docx",
         "Anything else":("Possible follow-ups: confirm whether this is a one-off or the start of a recurring "
                          "Pitchmasters scholarship; track Shrijan’s progress in Pitchmasters as an outcome "
                          "data point."),
+      })
+
+# Christmas Orphan Care Project 2024 — completed record (DB project 463bbd9f-…)
+build(f"{OUT}/Project-Summary-Christmas-Orphan-Care-2024.docx",
+      prefill={
+        "Project name":"Christmas Orphan Care Project",
+        "Rotary year":"2024-25",
+        "Champion":"Yew-Aun Soh",
+        "What was it?":"The club's 3rd Annual Christmas celebration and gift distribution for a local orphanage.",
+        "Why":("A now-annual commitment: bringing a Christmas celebration and gifts to children in a local "
+               "orphanage who would otherwise go without."),
+        "Impact":"3 community organizations helping 300 families (record figure); 20 children directly celebrated and received gifts.",
+        "Area of Focus":"Maternal & Child Health",
+        "UN SDG":"SDG 3 — Good Health & Well-being",
+        "Funding":"Club",
+        "Status":"Completed",
+        "Start date":"2024-12-14",
+        "Completion date":"2024-12-14 (single-day event)",
+        "Location":"Georgetown, Penang",
+        "Beneficiaries":"20 (children at the orphanage; wider note: 300 families via 3 community organizations)",
+        "Value":"RM 4,999.00",
+        "Volunteer hours":"—",
+        "Partners":"None recorded. The impact note references “3 community organizations” — if these were formal partners, name them and we can add them to the record.",
+        "Photos":"Yes — project image on file (Supabase project-images/463bbd9f-…jpg).",
+        "Publicity":"— (none recorded)",
+        "Lessons":"Would repeat: Yes. No lessons-learned note recorded.",
+        "Anything else":("This is the 3rd Annual edition — part of a recurring Christmas series. "
+                         "Worth naming the orphanage and the 3 community organizations for the record."),
+      })
+
+# Christmas Orphan Care Project 2025 — "4th Annual" DRAFT skeleton for Yew-Aun Soh to complete
+# (no 2025 DB record yet; recurring fields carried forward, year-specific fields left blank)
+build(f"{OUT}/Project-Summary-Christmas-Orphan-Care-2025-DRAFT.docx", draft_for="Yew-Aun Soh",
+      extras_hint=("this is the recurring annual Christmas series — the 2021, 2022, and 2024 editions are known; "
+                   "was there a 2023 edition? Naming the orphanage would help the record."),
+      prefill={
+        "Project name":"Christmas Orphan Care Project  (4th Annual — adjust if changed)",
+        "Rotary year":"2025-26",
+        "Champion":"Yew-Aun Soh",
+        "Area of Focus":"Maternal & Child Health  (carried — change if you disagree)",
+        "UN SDG":"SDG 3 — Good Health  (carried — confirm)",
+        "Funding":"Club  (carried — confirm)",
+        "Location":"Georgetown, Penang  (carried — confirm venue / orphanage)",
+        # Year-specific fields intentionally blank: What was it?, Why, Impact, Status,
+        # Start/Completion date, Beneficiaries, Value, Volunteer hours, Partners, Photos, etc.
       })

@@ -34,9 +34,10 @@
 
 | Field | Answer |
 |---|---|
-| **Area of Focus** *(Peace · Disease · Water · Maternal/Child · Education · Economy · Environment)* | Education |
-| **Funding** *(Club · District Grant · Global Grant · Joint)* | Club |
-| **Status** *(Planning · Execution · Completed · Dropped)* | Completed |
+| **Area of Focus** | Basic Education & Literacy |
+| **UN SDG** | SDG 4 — Quality Education |
+| **Funding source** *(Club · District Grant · Global Grant · Joint)* | Club |
+| **Project status** *(Planning · Execution · Completed · Dropped)* | Completed |
 
 ---
 
@@ -69,11 +70,20 @@
 
 ---
 
+### Sustainability & Community Participation
+
+| Field | Answer |
+|---|---|
+| **Sustainability measures** *(how will benefits continue after Rotary's involvement ends?)* | The training Shrijan gains through Pitchmasters is a durable skill he carries forward independently — the benefit continues without further club input. |
+| **Community participation** *(how did the target community contribute or have a stake?)* | — *(not recorded; the sponsorship was underwritten by a local business partner, Gama)* |
+
+---
+
 ### Extras *(all optional)*
 
 | Field | Answer |
 |---|---|
-| **Photos?** *(yes / no — where?)* | Yes — project image on file (Supabase `project-images/96ceba73-…jpg`). |
+| **Photos available?** *(yes / no — where?)* | Yes — project image on file (Supabase `project-images/96ceba73-…jpg`). |
 | **Publicity** *(links, write-ups)* | — *(none recorded)* |
 | **Lessons learned / would you repeat it?** | Would repeat: **Yes**. No lessons-learned note recorded. |
 | **Anything else we should record?** | Possible follow-ups: confirm whether this is a one-off or the start of a recurring Pitchmasters scholarship; track Shrijan's progress in Pitchmasters as an outcome data point. |
