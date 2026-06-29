@@ -6,7 +6,7 @@
 **Appetite**: Small batch (~1–1.5 days, 2–3 sessions)
 **Parent**: BACKLOG (new item)
 
-> **Bet decisions (CEO, 2026-06-29):** (1) Editor: **BlockNote** — R5 advised reshaping to TipTap; CEO overrode to keep block-grade authoring. (2) Visibility: **three-state enum** (`draft`/`members`/`public`), author-selectable per page. (3) Write roles: **admin · officer · chair** can author/edit; delete = admin only. (4) Image upload: **in scope** — build the `wiki-images` bucket + RLS in the 074 migration.
+> **Bet decisions (CEO, 2026-06-29):** (1) Editor: **BlockNote** — R5 advised reshaping to TipTap; CEO overrode to keep block-grade authoring. (2) Visibility: **four-tier enum** `draft`/`members`/`board`/`public`, author-selectable per page (the `board` tier added per [ADR-007](../adr/007-knowledge-base-content-architecture.md) — officer-only, the wiki home for Drive `Board`-folder material; supersedes the earlier three-state references in the body below). (3) Write roles: **admin · officer · chair** can author/edit; delete = admin only. (4) Image upload: **in scope** — build the `wiki-images` bucket + RLS in the 074 migration. (5) Content architecture: governed by **ADR-007** — raw corpus in Google Drive (`Board`/`Club` folders), published pages + downloads in Supabase; a **`wiki-docs`** bucket for member-downloadable files.
 
 ---
 

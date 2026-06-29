@@ -50,6 +50,29 @@ Concretely:
   and absent from GitHub. We pull files from Drive (via the existing `deno google`
   task) only while authoring a page.
 
+  **Drive sharing = two folders (CEO, 2026-06-29).** Google Drive enforces access at
+  the *folder* level, so the corpus is organized into exactly two shared top-level
+  folders, matching Drive's two natural share groups:
+
+  ```
+  📁 Board   → shared with officers/board only   (member-master, attendance,
+  │                                                suppliers, membership, archives)
+  📁 Club    → shared with all club members       (meetings, service projects,
+                                                   photos, logos, directory…)
+       └── group by category inside: Meetings / Documents / Assets
+  ```
+
+  This is simpler than tagging every folder with a wiki tier — Drive only has two
+  share levels anyway, so two folders is the right grain *for Drive*. The finer
+  public/members/board distinction is a **wiki concern, enforced by RLS — not a Drive
+  concern.**
+
+  **The wiki's distinctive job is the `public` tier.** Drive does `Board` and `Club`
+  (two member-only share groups) well. What Drive *cannot* gracefully do is "anyone on
+  the internet, no Google login" — a genuinely public page. That is precisely what the
+  wiki adds. So the wiki isn't only an easier-UX restatement of Drive; it provides the
+  **public front door Drive structurally lacks**, on top of the members/board tiers.
+
   **Interim vs. destination (CEO, 2026-06-29):** Drive is *cheap and good* and is the
   **interim** member-facing home *until the wiki exists*. But for members, a
   **dedicated site is easier** than navigating a Drive folder — so once the wiki is
@@ -152,10 +175,15 @@ material to the code lifecycle; repo grows without bound.
 
 ## Implementation Notes
 
+- **Visibility tiers (4).** The wiki visibility model is **public · members · board ·
+  draft** (extends GEO-006's three-state with a `board` tier added 2026-06-29). Mapping
+  to Georgetown roles: `board` = `admin`/`officer`/`chair`; `members` = `member`/
+  `readonly`; `public` = unauthenticated; `draft` = author-only. The `board` tier is the
+  wiki home for material currently in the Drive `Board` folder.
 - Add a **`wiki-docs`** Supabase storage bucket alongside the GEO-006 `wiki-images`
-  bucket, created in the same `074-*.sql` migration. RLS: `public/` prefix →
-  public read; `members/` prefix → authenticated read; write → `admin`/`officer`/
-  `chair` (mirrors the page write-role set).
+  bucket, created in the same `074-*.sql` migration. RLS prefixes mirror the tiers:
+  `public/` → public read; `members/` → authenticated read; `board/` → officer-role
+  read; write → `admin`/`officer`/`chair`.
 - The wiki page editor needs an "attach downloadable document" action that uploads to
   `wiki-docs` and inserts a download link into the page.
 - Keep using the existing `deno google` task to pull corpus files from Drive during
@@ -174,3 +202,45 @@ material to the code lifecycle; repo grows without bound.
   against the actual editor implementation).
 - Trigger for review: if download volume/size grows enough to warrant a CDN, or if the
   club moves off Google Drive as its corpus home.
+
+## Appendix: Google Drive → Wiki migration map
+
+The current Drive (as of 2026-06-29) is consolidated into **two shared folders** (the
+two Drive share groups), and each item carries a target **wiki tier** for Phase-2
+selective publishing. Migration is "publish item → its wiki tier," never a bulk dump.
+
+```
+📁 Board   (shared: officers only)              → wiki tier when published
+   georgetown-member-master.gsheet              → board  (SENSITIVE — source of sync-members)
+   rcgt-attendance-roster.gsheet                → board
+   Membership/                                  → board
+   Suppliers/                                   → board
+   Archives/                                    → board (or stays Drive-only)
+
+📁 Club    (shared: all members)                → wiki tier when published
+   MEETINGS/ 2020-21 … 2025-26                  → members
+   DOCUMENTS/Service Projects/                  → public   (the wiki's public core)
+   ASSETS/Logos/                                → public   → wiki-docs downloads
+   ASSETS/Themes (Brand)/                       → public   → wiki-docs downloads
+   ASSETS/Photo Archive/                        → members
+   Public Images/                               → public
+   georgetown-member-directory.gsheet           → members  (readable roster)
+   Past Presidents Roll                         → public/members (one canonical copy)
+
+📁 _SOURCE (not shared; raw working material)   → never published
+   Rotary manuals, scans, drafts authored FROM  → corpus only
+```
+
+**Cleanups to resolve before/at migration (the "rough" in the current Drive):**
+
+1. **`Past Presidents Roll` exists 3×** — a `.gsheet` in Club, a `.gdoc` in BOD, and a
+   `.gsheet` inside MEETINGS. Pick **one canonical** (the BOD `.gdoc` reads as the
+   authoritative narrative); delete or alias the others.
+2. **`Public Image` appears ~3×** across DOCUMENTS and ASSETS — **merge into one**
+   `Club/Public Images/` to stop drift.
+3. **MEETINGS gap** — 2020-21, 2021-22, 2022-23, then 2025-26. **2023-24 and 2024-25
+   are missing** — backfill or note as lost.
+4. **member-master vs member-directory** — keep distinct: *master* is the sensitive
+   source-of-truth (`sync-members` reads it) → **Board/board tier**; *directory* is the
+   readable roster → **Club/members tier**. The current Drive already separates them
+   (master in BOD, directory in Club) — preserve that.
