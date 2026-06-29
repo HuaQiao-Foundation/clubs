@@ -61,8 +61,11 @@ const CLUBS: Record<string, ClubConfig> = {
       "member-directory": "1SVlgSKCQ0oWx0tfOjGTYidltsSYbKLPs_1uVVooNPvw",
       "member-master": "1GNhFF7syJKFUgonEdxk4hKH4i8dZIfqc5GD-h0Weqo8",
       "attendance-roster": "1L2MpF-TN8JW80DJUrSZiqZ_SmErbS52FqTobKS71f2s",
-      "club-folder": "1tXvyP8KdLl7gHLBNAf3-JsK5CwRtmYCt",
-      "bod-folder": "1LmW-VuJM_tmbWRN2olp0sHlEI8V7V05y",
+      // Drive display names: "Club" (was "RC Georgetown Club", members) and
+      // "Board" (was "RC Georgetown BOD", officers). IDs are stable across
+      // rename/move, so these aliases keep working — see ADR-007.
+      "club-folder": "1tXvyP8KdLl7gHLBNAf3-JsK5CwRtmYCt",   // → "Club" (members)
+      "bod-folder": "1LmW-VuJM_tmbWRN2olp0sHlEI8V7V05y",    // → "Board" (officers)
       "minutes-folder": "1N0vKcV2KZA2e9yfoMiiOv14exOPgf6O-",
     },
     // member-master (canonical) → member-directory, matched by name.

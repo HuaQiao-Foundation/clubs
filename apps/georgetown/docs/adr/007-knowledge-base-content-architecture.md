@@ -205,9 +205,27 @@ material to the code lifecycle; repo grows without bound.
 
 ## Appendix: Google Drive → Wiki migration map
 
-The current Drive (as of 2026-06-29) is consolidated into **two shared folders** (the
-two Drive share groups), and each item carries a target **wiki tier** for Phase-2
-selective publishing. Migration is "publish item → its wiki tier," never a bulk dump.
+**Folder rename is sync-safe.** `scripts/google-drive.ts` resolves every Drive object
+by **ID, not name/path** (the `aliases` map holds IDs like `1tXvyP8KdLl…`). Google
+Drive IDs are stable across rename and move — so renaming `RC Georgetown BOD → Board`
+and `RC Georgetown Club → Club`, and moving files between them, does **not** break the
+sync. The only thing that breaks it is *deleting and recreating* a synced file (new
+file = new ID): never delete-and-recreate `member-master`, `member-directory`, or
+`attendance-roster`; rename/move them instead.
+
+Canonical IDs (from `scripts/google-drive.ts`, 2026-06-29):
+- `Club` folder (was "RC Georgetown Club") — `1tXvyP8KdLl7gHLBNAf3-JsK5CwRtmYCt`
+- `Board` folder (was "RC Georgetown BOD") — `1LmW-VuJM_tmbWRN2olp0sHlEI8V7V05y`
+- `member-master.gsheet` (sensitive → Board) — `1GNhFF7syJKFUgonEdxk4hKH4i8dZIfqc5GD-h0Weqo8`
+- `member-directory.gsheet` (roster → Club) — `1SVlgSKCQ0oWx0tfOjGTYidltsSYbKLPs_1uVVooNPvw`
+- `attendance-roster.gsheet` (→ Board) — `1L2MpF-TN8JW80DJUrSZiqZ_SmErbS52FqTobKS71f2s`
+
+> If the folder display names change in Drive, update only the **comments/labels** in
+> `scripts/google-drive.ts` — the IDs (which do the work) stay the same.
+
+The Drive is consolidated into **two shared folders** (the two Drive share groups), and
+each item carries a target **wiki tier** for Phase-2 selective publishing. Migration is
+"publish item → its wiki tier," never a bulk dump.
 
 ```
 📁 Board   (shared: officers only)              → wiki tier when published
