@@ -33,11 +33,18 @@ Run any document script with the venv's Python (no activation needed):
 
 ## Common recipes
 
-**Build the RC Georgetown project-summary Word forms** (blank template + pre-filled records):
+**Fill the RC Georgetown project-summary forms** (populates the CEO's canonical template):
 ```bash
-.venv/bin/python apps/georgetown/docs/templates/build-project-summary-forms.py
-# → writes .docx to apps/georgetown/forms/  (and the blank template + aquaponics to docs/templates/)
+.venv/bin/python apps/georgetown/docs/templates/fill-project-summary.py
+# → opens docs/templates/_source-templates/RC-Georgetown-Project-Summary-Form.docx
+#   (the CEO's hand-made template), fills each field's answer cell with real data,
+#   and writes the filled .docx to apps/georgetown/forms/. The template itself is
+#   never modified — it is the read-only source of structure/styling.
 ```
+
+> **Do not regenerate the template from code.** `RC-Georgetown-Project-Summary-Form.docx`
+> is CEO-authored in Claude Console; the filler *opens and populates* it, never rebuilds it.
+> The canonical copy is backed up (tracked) at `docs/templates/_source-templates/`.
 
 **Convert a `.docx` to PDF** (LibreOffice — the reliable path on macOS):
 ```bash
