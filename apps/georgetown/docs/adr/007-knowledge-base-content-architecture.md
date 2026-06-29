@@ -288,6 +288,31 @@ Club/Board once it goes live and collects real responses (it can't stay author-o
 Note how two forms in the *same* folder split to *different* tiers — proof the rule is
 "follow the response data," not "keep all forms together."
 
+**⚠️ PRIVACY ISSUE — forms with PII/financial data sitting in Club (2026-06-29).**
+A full scan of `Club/DOCUMENTS/Service Projects/` (all 11 per-project folders) found
+**3 forms + their response sheets** buried in the 2021-22 projects — all currently
+visible to **every club member** because Club is the all-members share group. Their
+response data is sensitive:
+
+| Form (+ Responses sheet) | Project | Response columns | Move to |
+|---|---|---|---|
+| **Blessing Shelf** (`1EpJfV…` / resp `1ePR_z…`) | 21-22 | Name · phone · email · **donation amount · bank-in slip · receipt** | **Board** (financial PII — highest priority) |
+| **Magical** (`1PCQ3f…` / resp `1CYCXn…`) | 21-22 Sell Yourself | Name · contact number · email | **Board** (contact PII) |
+| **Sell Yourself — Feedback** (`1fnjD1…` / resp `1uYWm0…`) | 21-22 Sell Yourself | event ratings + Rotary-interest + Name · phone | **Board** (or de-PII → Club) |
+
+The other 9 project folders have **no forms** — their narrative/photos correctly stay
+in Club. The fix:
+
+1. Create **`Board/Project Forms/`** as the home for service-project form data.
+2. Move all 3 forms **with their paired response sheets** there (keep each pair
+   together). Club project folders keep descriptions/photos.
+3. **Blessing Shelf first** — it exposes donation amounts + bank-in slips to all
+   members today; that's the real data-protection weight.
+
+These are historical (2021), so there's no live workflow to preserve — relocating is
+clean and ID-stable (no code references them). Drive moves are manual (the
+`google-drive.ts` CLI is read + sheet-write only, no file-move).
+
 **Cleanups to resolve before/at migration (the "rough" in the current Drive):**
 
 1. **`Past Presidents Roll` — canonical = the spreadsheet** (CEO, 2026-06-29).
