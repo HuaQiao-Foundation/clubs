@@ -442,6 +442,62 @@ async function downloadFile(club: ClubConfig, fileId: string, outputPath?: strin
   console.log(`[${club.name}] Downloaded: ${destPath} (${new Uint8Array(data).length} bytes)`);
 }
 
+// Move a file/folder into a new parent folder (Drive ID is preserved — sync-safe).
+// dryRun (default) just reports what would move.
+async function moveFile(club: ClubConfig, fileId: string, destFolderId: string, apply: boolean) {
+  const auth = await getAuthClient(club);
+  const drive = google.drive({ version: "v3", auth });
+  const meta = await drive.files.get({ fileId, fields: "name, parents" });
+  const name = meta.data.name ?? fileId;
+  const oldParents = (meta.data.parents ?? []).join(",");
+  const destMeta = await drive.files.get({ fileId: destFolderId, fields: "name" });
+  if (!apply) {
+    console.log(`[${club.name}] DRY-RUN move: "${name}"`);
+    console.log(`   from parents [${oldParents}] → "${destMeta.data.name}" (${destFolderId})`);
+    console.log(`   (re-run with --apply to perform; ID ${fileId} is unchanged → sync-safe)`);
+    return;
+  }
+  await drive.files.update({
+    fileId,
+    addParents: destFolderId,
+    removeParents: oldParents,
+    fields: "id, parents",
+  });
+  console.log(`[${club.name}] Moved "${name}" → "${destMeta.data.name}" (ID ${fileId} unchanged)`);
+}
+
+// Create a folder inside a parent folder. Prints the new folder's ID. dryRun by default.
+async function makeFolder(club: ClubConfig, name: string, parentFolderId: string, apply: boolean) {
+  const auth = await getAuthClient(club);
+  const drive = google.drive({ version: "v3", auth });
+  const parentMeta = await drive.files.get({ fileId: parentFolderId, fields: "name" });
+  if (!apply) {
+    console.log(`[${club.name}] DRY-RUN mkdir: "${name}" inside "${parentMeta.data.name}" (${parentFolderId})`);
+    console.log(`   (re-run with --apply to create)`);
+    return;
+  }
+  const res = await drive.files.create({
+    requestBody: { name, mimeType: "application/vnd.google-apps.folder", parents: [parentFolderId] },
+    fields: "id, name",
+  });
+  console.log(`[${club.name}] Created folder "${res.data.name}" → ID ${res.data.id} (in "${parentMeta.data.name}")`);
+}
+
+// Send a file to Trash (recoverable for 30 days). dryRun by default.
+async function trashFile(club: ClubConfig, fileId: string, apply: boolean) {
+  const auth = await getAuthClient(club);
+  const drive = google.drive({ version: "v3", auth });
+  const meta = await drive.files.get({ fileId, fields: "name" });
+  const name = meta.data.name ?? fileId;
+  if (!apply) {
+    console.log(`[${club.name}] DRY-RUN trash: "${name}" (${fileId})`);
+    console.log(`   (re-run with --apply to trash; recoverable from Drive Trash for 30 days)`);
+    return;
+  }
+  await drive.files.update({ fileId, requestBody: { trashed: true } });
+  console.log(`[${club.name}] Trashed "${name}" (${fileId}) — recoverable from Drive Trash`);
+}
+
 // --- CLI ---
 const rawArgs = Deno.args.filter(a => a !== "--");
 const [clubArg, command, ...args] = rawArgs;
@@ -473,6 +529,9 @@ Commands:
   read-sheet <sheet-alias|id> "<tab>"   Read a sheet tab (TSV output)
   download <file-id> [output]           Download a file
   sync <field|all> [--apply]            Sync field(s) master → directory by name (dry-run by default)
+  move <file-id> <dest-folder> [--apply]  Move a file/folder to another folder (dry-run by default; ID preserved)
+  trash <file-id> [--apply]             Send a file to Trash (dry-run by default; recoverable 30 days)
+  mkdir "<name>" <parent-folder> [--apply]  Create a folder inside a parent (dry-run by default)
 
 Aliases:
 ${aliasList}
@@ -524,6 +583,24 @@ switch (command) {
       Deno.exit(1);
     }
     await syncField(club, args[0], { apply: args.includes("--apply") });
+    break;
+  }
+  case "move": {
+    const posArgs = args.filter(a => a !== "--apply");
+    if (!posArgs[0] || !posArgs[1]) { console.error("Usage: move <file-id> <dest-folder-alias|id> [--apply]"); Deno.exit(1); }
+    await moveFile(club, posArgs[0], resolveId(club, posArgs[1]), args.includes("--apply"));
+    break;
+  }
+  case "trash": {
+    const posArgs = args.filter(a => a !== "--apply");
+    if (!posArgs[0]) { console.error("Usage: trash <file-id> [--apply]"); Deno.exit(1); }
+    await trashFile(club, posArgs[0], args.includes("--apply"));
+    break;
+  }
+  case "mkdir": {
+    const posArgs = args.filter(a => a !== "--apply");
+    if (!posArgs[0] || !posArgs[1]) { console.error('Usage: mkdir "<name>" <parent-folder-alias|id> [--apply]'); Deno.exit(1); }
+    await makeFolder(club, posArgs[0], resolveId(club, posArgs[1]), args.includes("--apply"));
     break;
   }
   default:
