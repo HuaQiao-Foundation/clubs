@@ -67,6 +67,9 @@ const CLUBS: Record<string, ClubConfig> = {
       "club-folder": "1tXvyP8KdLl7gHLBNAf3-JsK5CwRtmYCt",   // → "Club" (members)
       "bod-folder": "1LmW-VuJM_tmbWRN2olp0sHlEI8V7V05y",    // → "Board" (officers)
       "minutes-folder": "1N0vKcV2KZA2e9yfoMiiOv14exOPgf6O-",
+      // _SOURCE: private author corpus at My Drive root; shared with the SA only
+      // (not members/board). Holds FORMS/ (Databank-RCGT, event forms). See ADR-007.
+      "source-folder": "1GnzG-N9uVDaI4pI9zs6zXD8DaSztnDjQ",
     },
     // member-master (canonical) → member-directory, matched by name.
     // Key cols differ per tab/sheet because layouts differ:

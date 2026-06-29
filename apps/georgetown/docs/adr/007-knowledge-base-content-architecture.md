@@ -246,11 +246,15 @@ each item carries a target **wiki tier** for Phase-2 selective publishing. Migra
    Past Presidents Roll.gsheet                  → public/members (CANONICAL — the sheet,
                                                   ID 1rHLvcWMAaFIq3lbnfO-cn0aATqKKaTxnJ0tYPExsREI)
 
-📁 _SOURCE (My Drive ROOT — NOT shared with anyone)   → never published
+📁 _SOURCE (My Drive ROOT — private to author; shared with the SA only) → never published
+   ID 1GnzG-N9uVDaI4pI9zs6zXD8DaSztnDjQ                → corpus only
+   FORMS/ (Databank-RCGT, event Google Forms)         → operational source material
    Rotary manuals, scans, drafts authored FROM        → corpus only
-   • Lives at Drive root, outside both Board and Club — deliberately private to
-     the author. Not in a share group; the sync service account does not see it
-     (and does not need to — the tooling only touches the shared folders).
+   • Lives at Drive root, outside both Board and Club. Shared with the sync service
+     account (sheets-editor@rcgeorgetown-ops.iam.gserviceaccount.com) so tooling can
+     read it — but NOT with the member or board groups, so it stays private to people.
+     "Shared with a service account" ≠ "shared with members": automation can reach it;
+     no human member sees it.
    • This is the author's working pile, not a club asset. Material graduates OUT
      of _SOURCE into Club/Board (and later the wiki) once it's ready to share.
 ```
