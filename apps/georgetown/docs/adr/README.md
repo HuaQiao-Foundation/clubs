@@ -20,6 +20,9 @@ Create an ADR when you make a significant decision about:
 | ADR | Title | Status | Date |
 |-----|-------|--------|------|
 | [0001](0001-supabase-singapore-migration.md) | Migrate Database to Singapore Region | Accepted | 2025-12-16 |
+| [002](002-social-sharing-open-graph-limitations.md) | Social Sharing / Open Graph Limitations | Accepted | — |
+| [006](006-no-map-embedding-china-policy.md) | No Map Embedding (China Policy) | Accepted | — |
+| [007](007-knowledge-base-content-architecture.md) | Knowledge Base / Wiki Content Architecture | Accepted | 2026-06-29 |
 
 ## ADR Status Definitions
 

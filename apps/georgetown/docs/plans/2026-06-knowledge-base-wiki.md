@@ -74,6 +74,14 @@ Georgetown already ships **TipTap** ([RichTextEditor.tsx](../../src/components/R
 
 **One decision drives three sections (R2): what is the wiki's default visibility?** Public-vs-member is not independent — it determines the nav surface (public top bar vs. the `ALL_NAV_ITEMS` bottom-nav registry), the route wrapper (`PublicLayout` vs. `ProtectedRoute`), and the page/bucket RLS shape. Decide once with CEO; everything downstream follows. The pitch's intent (projects public-readable, drafts gated) implies a *mixed* default — confirm the per-page default and who can flip it.
 
+### Content sources & storage (per ADR-007)
+
+The wiki's content architecture is governed by **[ADR-007](../adr/007-knowledge-base-content-architecture.md)** — three layers, each with a distinct home:
+
+- **Raw reference corpus → Google Drive** (source/interim). The club's Rotary manuals, PDFs, scans, and records stay in Drive — shared, backed up, already populated. We author wiki pages *from* this corpus (pulling files via the existing `deno google` task), but we **never commit it to the repo** and **never link the live wiki directly to Drive files**. Drive is also the *interim* member-facing home until the wiki is live; once the wiki works well, it becomes the easier member-facing **destination** and Drive recedes to a back-of-house archive. Migration is **selective** — publish materials to the wiki as they earn a place, not a bulk dump.
+- **Published page content → Supabase** — `wiki_pages` table (text) + `wiki-images` bucket (inline images), already in this pitch.
+- **Downloadable documents → a new `wiki-docs` Supabase bucket** (adds to scope). Members download bylaws, minutes, logo packs, etc. served from the bucket under our own RLS — a `public/` prefix (anyone) and a `members/` prefix (authenticated), mirroring the page-visibility model. Created in the same `074-*.sql` migration as `wiki-images`. The editor needs an "attach downloadable document" action that uploads to `wiki-docs` and inserts a download link. **(R2 scope note: this is a second bucket + its RLS + an editor action — fold into the appetite or defer downloads to a follow-up if it pushes past 1.5 days.)**
+
 ### New dependencies
 
 `@blocknote/core`, `@blocknote/react`, `@blocknote/mantine` (pin **0.47.x** to match PM), plus peers `@mantine/core@^8.3`, `@mantine/hooks@^8.3`, `@floating-ui/dom`. Per Georgetown's China-friendly constraint, confirm these bundle locally (they do — pure npm, no external CDN/font calls at runtime, **as long as Mantine's global CSS is never imported** — see Mantine rabbit hole). Mantine CSS scoped to wiki components only.
