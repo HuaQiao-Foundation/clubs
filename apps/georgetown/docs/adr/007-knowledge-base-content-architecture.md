@@ -258,7 +258,7 @@ each item carries a target **wiki tier** for Phase-2 selective publishing. Migra
    RI theme. The `Board/RC Georgetown — Past Presidents Roll.gdoc` (ID `1mkFfcUl…`) is a
    secondary narrative copy; treat the sheet as canon and reconcile or retire the doc.
    The third (MEETINGS `.gsheet`) appears already removed. The repo's
-   `docs/reference/rcg-past-presidents.md` already names the spreadsheet as canonical —
+   `docs/_sources/rcg-past-presidents.md` already names the spreadsheet as canonical —
    consistent. No code hardcodes the roll's ID, so nothing breaks.
 2. **`Public Image` appears ~3×** across DOCUMENTS and ASSETS — **merge into one**
    `Club/Public Images/` to stop drift.
