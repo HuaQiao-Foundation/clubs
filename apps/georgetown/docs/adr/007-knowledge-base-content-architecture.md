@@ -259,6 +259,35 @@ each item carries a target **wiki tier** for Phase-2 selective publishing. Migra
      of _SOURCE into Club/Board (and later the wiki) once it's ready to share.
 ```
 
+### Google Forms & their response sheets — placement rule
+
+A Google Form is two parts: the **form** (questions — usually harmless) and its
+**response sheet** (the submitted data — possibly sensitive). The pair moves together
+and lives wherever the *response data* belongs. The sorting question is one line:
+
+> **Who may see the answers people submit?**
+
+| Response data | Examples | Tier |
+|---|---|---|
+| Public / harmless | event RSVP, public sign-up | **Club** (or public) |
+| Member-only, ordinary | meeting RSVP, volunteer sign-up, feedback survey | **Club** |
+| Personal / financial / governance | membership apps w/ PII, dues/payments, board voting, COI declarations | **Board** |
+
+Tie-breaker when unsure: read the **response sheet's columns**. Names + emails + phones
++ payment info → Board. "Name + dinner choice" → Club. Keep form and sheet together;
+never split form→Club, responses→Board. A form drafted in `_SOURCE` **graduates** to
+Club/Board once it goes live and collects real responses (it can't stay author-only).
+
+**Classification of existing `_SOURCE/FORMS/` items (2026-06-29):**
+- **Databank-RCGT** (`1y4-z0bqZov…`) → **Board.** Columns are `Salutation · Name ·
+  Contact · Email · Date · Source/Event` — a ~997-row contact database of event
+  attendees/guests. That's PII (phone + email of individuals) → officers only.
+- **World's Greatest Meal** (`1Nk0ZoyOR…`, the End-Polio fundraiser dinner form) →
+  **Club** (or public for sign-ups). Responses are event-RSVP data, not sensitive.
+
+Note how two forms in the *same* folder split to *different* tiers — proof the rule is
+"follow the response data," not "keep all forms together."
+
 **Cleanups to resolve before/at migration (the "rough" in the current Drive):**
 
 1. **`Past Presidents Roll` — canonical = the spreadsheet** (CEO, 2026-06-29).
