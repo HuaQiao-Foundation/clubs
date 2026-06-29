@@ -50,6 +50,31 @@ def margins(cell, t=70, b=70, l=110, r=110):
 def row_height(row, tw):
     row._tr.get_or_add_trPr().append(el('w:trHeight', w_val=tw, w_hRule='atLeast'))
 
+def fixed_layout(table, col_inches):
+    """Force Word to honor explicit column widths: fixed layout + total width + a tblGrid.
+    Without this, Word auto-fits columns and ignores per-cell .width (the cause of the
+    over-wide column 1 in the SDG table)."""
+    tw=sum(col_inches); twips=[int(round(w*1440)) for w in col_inches]
+    tblPr=table._tbl.tblPr
+    # fixed layout
+    lay=tblPr.find(qn('w:tblLayout'))
+    if lay is None: lay=el('w:tblLayout'); tblPr.append(lay)
+    lay.set(qn('w:type'),'fixed')
+    # total table width
+    w=tblPr.find(qn('w:tblW'))
+    if w is None: w=el('w:tblW'); tblPr.append(w)
+    w.set(qn('w:w'), str(int(round(tw*1440)))); w.set(qn('w:type'),'dxa')
+    # explicit grid
+    old=table._tbl.find(qn('w:tblGrid'))
+    if old is not None: table._tbl.remove(old)
+    grid=el('w:tblGrid')
+    for tp in twips: grid.append(el('w:gridCol', w_w=tp))
+    table._tbl.insert(list(table._tbl).index(tblPr)+1, grid)
+    # and set every cell width to match (belt and suspenders)
+    for r in table.rows:
+        for i,c in enumerate(r.cells):
+            c.width=Inches(col_inches[i])
+
 def run(p, text, *, size=9.5, bold=False, italic=False, color=BODY, font=FONT):
     r=p.add_run(text); r.font.name=font; r.font.size=Pt(size); r.bold=bold; r.italic=italic; r.font.color.rgb=_rgb(color)
     rpr=r._element.get_or_add_rPr(); rf=rpr.find(qn('w:rFonts'))
@@ -101,6 +126,7 @@ def appendix_table(doc, headers, rows, widths):
         for i,val in enumerate(row):
             c=rr.cells[i]; c.width=Inches(widths[i]); borders(c); margins(c)
             run(cell_para(c), val, size=10, color=BODY)
+    fixed_layout(t, widths)   # make Word honor the column ratio
     para(doc, after=6)
 
 # ---------- field rows (label | answer) ----------
@@ -121,6 +147,7 @@ def fields(doc, rows, label_in=2.5, ans_in=4.2):
             for extra in lines[1:]:
                 r.add_break()                       # soft line break within the cell
                 run(ap, extra, size=9.5, color=BODY)
+    fixed_layout(t, [label_in, ans_in])             # honor label/answer column widths
     para(doc, after=6)  # space between sections
 
 def F(label, answer="", hint=None, tall=False): return (label, hint, answer, tall)
@@ -228,7 +255,7 @@ def build(path, *, draft_for=None, prefill=None, extras_hint=None):
          ["SDG 15","Life on Land","Protect forests, land, and biodiversity"],
          ["SDG 16","Peace & Justice","Peaceful societies and strong institutions"],
          ["SDG 17","Partnerships","Work together to achieve the goals"]],
-        [0.8,2.2,3.7])
+        [1.12, 2.23, 3.35])   # narrow # : medium Goal : wide Description = 1 : 2 : 3
     doc.save(path); print("wrote", path)
 
 # All generated .docx land in the gitignored forms/ folder (artifacts, not source).
